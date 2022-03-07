@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+</head>
+<body>
+<header hidden></header>
+<div id="all">
+    <div th:if="${param.error}" class="alert alert-error">
+        Неправильные Email или пароль.
+    </div>
+    <div th:if="${param.logout}" class="alert alert-success">
+        You have been logged out.
+    </div>
+    <form name="f" th:action="@{/login}" method="post">
+        <div id="beforeTable">Авторизация</div>
+        <table>
+            <tr>
+                <td class="tdWithIcon">
+                    <div class="divWithIcon">
+                        <img id="firstImg" th:src="@{images/1.png}">
+                    </div>
+                    <label hidden for="user">Email</label>
+                    <input type="text" id="user" name="username" placeholder="Email" class="inputWithIcon">
+                </td>
+            </tr>
+            <tr>
+                <td class="tdWithIcon">
+                    <div class="divWithIcon">
+                        <img id="secondImg" th:src="@{images/2.jpg}">
+                    </div>
+                    <label hidden for="pass">Пароль</label>
+                    <input type="password" id="pass" name="password" placeholder="Пароль" class="inputWithIcon"/>
+                </td>
+            </tr>
+        </table>
+        <div class="form-actions" id="div">
+            <button type="submit" class="btn" id="signInButton">Войти</button>
+        </div>
+        <div id="toSignUp">Нет аккаунта? <a href="/signup">Зарегистрируйтесь</a></div>
+    </form>
+</div>
+<footer hidden></footer>
+</body>
+</html>

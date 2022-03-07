@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" type="text/css" href="css/signUp.css">
+</head>
+<body>
+<header hidden></header>
+<div id="divWithForm">
+    <div th:text="${error}" id="email_error"></div>
+    <form th:method="POST" th:action="@{/signup}" th:object="${client}">
+        <div id="textBeforeForm">Регистрация</div>
+        <input hidden type="text" th:value="USER" name="role_name"/>
+        <table>
+            <tr>
+                <td>
+                    <label hidden for="name">Имя: </label>
+                    <input type="text" th:field="*{name}" id="name" placeholder="Имя"/>
+                    <label hidden for="surname">Фамилия: </label>
+                    <input type="text" th:field="*{surname}" id="surname" placeholder="Фамилия"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdWithIcon">
+                    <div class="divWithIcon">
+                        <img id="firstImg" th:src="@{images/1.png}">
+                    </div>
+                    <label hidden for="email">Email: </label>
+                    <input type="text" th:field="*{email}" id="email" placeholder="Email"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdWithIcon">
+                    <div class="divWithIcon">
+                        <img id="secondImg" th:src="@{images/2.jpg}">
+                    </div>
+                    <label hidden for="password">Пароль: </label>
+                    <input type="text" th:field="*{password}" id="password" placeholder="Пароль"/>
+                </td>
+            </tr>
+        </table>
+        <div id="signUpDiv"><input type="submit" value="Регистрация" id="signUpButton"/></div>
+        <div id="toLogin">Уже есть аккаунт? <a href="/login">Войти</a></div>
+    </form>
+</div>
+<footer hidden></footer>
+</body>
+</html>

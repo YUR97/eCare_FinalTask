@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <td th:text="${client.getName()} + ' ' + ${client.getSurname()}"></td>
+            <td th:text="${client.getRole().getName()}"></td>
+        </tr>
+        <tr>
+            <td th:text="${client.getAddress()}"></td>
+            <td th:text="${client.getEmail()}"></td>
+        </tr>
+        <tr>
+            <div th:each= "contract : ${client.getContracts()}">
+                <table>
+                    <tr>
+                        <td th:text="'Number: ' + ${contract.getContract_number()} +', status: ' + ${contract.getStatus()}"></td>
+                    </tr>
+                </table>
+            </div>
+        </tr>
+    </table>
+    <button th:onclick="'location.href= \'' + @{/admin/{id}/edit(id=${client.getId()})} + '\''">Edit</button>
+    <button th:onclick="'location.href= \'' + @{/admin/{id}/delete(id=${client.getId()})} + '\''">Delete</button>
+</div>
+<hr>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="css/home.css">
+</head>
+<body>
+<header>
+    <form>
+        <input type="submit" value="Профиль"/>
+    </form>
+    <button>Мои контракты</button>
+    <button>Тарифы</button>
+    <button>Корзина</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <input type="submit" value="Выход"/>
+    </form>
+</header>
+</body>
+</html>

@@ -65,20 +65,26 @@ main form:not(.statusForm) {
     margin-top: 40px;
     display: flex;
     flex-direction: column;
-    background-color: dodgerblue;
+    background-color: lightsteelblue;
     width: 500px;
     font-size: 20px;
     font-family: "Trebuchet MS", sans-serif;
+    border-right: 2px solid;
+    border-left: 2px solid;
+    border-top: 2px solid;
 }
 
 .statusForm {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    background-color: wheat;
+    background-color: lightsteelblue;
     padding-top: 10px;
     padding-bottom: 10px;
     width: 500px;
+    border-right: 2px solid;
+    border-left: 2px solid;
+    border-bottom: 2px solid;
 }
 
 #divInnerForm {
@@ -96,11 +102,11 @@ main form:not(.statusForm) {
 
 #divAddedOptions {
     overflow: auto;
-    height: 200px;
+    height: 140px;
     background-color: #999999;
 }
 
-form button:not(.statusButton):not(header form button){
+form button:not(.statusButton):not(header form button) {
     margin: 20px auto;
     width: 400px;
     height: 60px;
@@ -121,7 +127,7 @@ form button:not(.statusButton):not(header form button){
     border-radius: 8px;
 }
 
-form button:hover {
+#changeButton:hover, button:hover {
     transition: 0.5s;
     color: black;
     background-color: #A8E4A0;

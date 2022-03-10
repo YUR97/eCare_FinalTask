@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.example.demo.model.DTO.ContractDTO;
 import ru.example.demo.model.DTO.OptionDTO;
 import ru.example.demo.model.DTO.TariffDTO;
+import ru.example.demo.constants.Constant;
 import ru.example.demo.service.ClientService;
 import ru.example.demo.service.ContractService;
 import ru.example.demo.service.OptionService;
@@ -27,8 +28,6 @@ public class ClientController {
     private ContractService contractService;
     private ClientService clientService;
     private TariffService tariffService;
-
-    private static final String redirect = "redirect:/client/contracts";
 
     @Autowired
     public ClientController(OptionService optionService, ContractService contractService,
@@ -75,25 +74,21 @@ public class ClientController {
     }
 
     @PostMapping("/saveEdit")
-    public String saveEdit(@RequestParam("contract_number") String contract_number, @RequestParam("tariffChoice") String tariffChoice,
-                           @RequestParam(name = "option") List<String> options) {
+    public String saveEdit(@RequestParam("contract_number") String contract_number,
+                           @RequestParam(value = "tariffChoice", defaultValue = Constant.NOTHING) String tariffChoice,
+                           @RequestParam(name = "option", defaultValue = Constant.NOTHING) List<String> options,
+                           @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete) {
         contractService.setOptions(contract_number, options);
         contractService.setTariff(contract_number, tariffChoice);
-        return redirect;
-    }
-
-    @PostMapping("/deleteAddedOption")
-    public String deleteAddedOption(@RequestParam("contract") String contract_number,
-                                    @RequestParam("optionToDelete") String option) {
-        contractService.removeOption(contract_number, option);
-        return redirect;
+        contractService.removeOption(contract_number, optionsToDelete);
+        return Constant.REDIRECT;
     }
 
     @PostMapping("/changeStatus")
     public String changeStatus(@RequestParam("contract_number") String contract_number,
                                @RequestParam("status") String status) {
         contractService.setStatus(contract_number, status);
-        return redirect;
+        return Constant.REDIRECT;
     }
 
 }

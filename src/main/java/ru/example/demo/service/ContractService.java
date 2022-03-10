@@ -7,6 +7,7 @@ import ru.example.demo.model.Client;
 import ru.example.demo.model.Contract;
 import ru.example.demo.model.DTO.ContractDTO;
 import ru.example.demo.model.DTO.converter.ContractConverterDTO;
+import ru.example.demo.constants.Constant;
 import ru.example.demo.repo.ClientRepository;
 import ru.example.demo.repo.ContractRepository;
 import ru.example.demo.repo.OptionRepository;
@@ -61,28 +62,30 @@ public class ContractService {
 
     @Transactional
     public void setTariff(String contract_number, String nameTariff) {
-        contractRepository.findContractByContract_number(contract_number)
-                .setTariff(tariffRepository.findTariffByName(nameTariff));
-    }
-
-    @Transactional
-    public void setOption(String contract_number, String option) {
-        contractRepository.findContractByContract_number(contract_number)
-                .addOption(optionRepository.findByName(option));
+        if (!nameTariff.contains(Constant.NOTHING)) {
+            contractRepository.findContractByContract_number(contract_number)
+                    .setTariff(tariffRepository.findTariffByName(nameTariff));
+        }
     }
 
     @Transactional
     public void setOptions(String contract_number, List<String> options) {
         for (String option : options) {
-            contractRepository.findContractByContract_number(contract_number)
-                    .addOption(optionRepository.findByName(option));
+            if (!option.contains(Constant.NOTHING)) {
+                contractRepository.findContractByContract_number(contract_number)
+                        .addOption(optionRepository.findByName(option));
+            }
         }
     }
 
     @Transactional
-    public void removeOption(String contract_number, String option) {
-        contractRepository.findContractByContract_number(contract_number)
-                .removeOption(optionRepository.findByName(option));
+    public void removeOption(String contract_number, List<String> options) {
+        for (String option : options) {
+            if (!option.contains(Constant.NOTHING)) {
+                contractRepository.findContractByContract_number(contract_number)
+                        .removeOption(optionRepository.findByName(option));
+            }
+        }
     }
 
     @Transactional

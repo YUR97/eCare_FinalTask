@@ -37,7 +37,7 @@
                 <div th:text="${contract.getStatus()}" class="info"></div>
             </div>
             <input hidden type="text" name="contract_number" th:value="${contract.getContract_number()}"/>
-            <button>Изменить</button>
+            <button id="changeButton" th:if="${contract.getStatus()}=='open'">Изменить</button>
         </form>
         <form th:method="POST" th:action="@{/client/changeStatus}" class="statusForm">
             <input hidden type="text" name="contract_number" th:value="${contract.getContract_number()}"/>

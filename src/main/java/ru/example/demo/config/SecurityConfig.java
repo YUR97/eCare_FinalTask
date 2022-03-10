@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.example.demo.reference.Reference;
+import ru.example.demo.constants.Constant;
 import ru.example.demo.service.ClientDetailService;
 
 @Configuration
@@ -33,8 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole(Reference.ADMIN)
-                .antMatchers("/client/**").hasRole(Reference.USER)
+                .antMatchers("/admin/**").hasRole(Constant.ADMIN)
+                .antMatchers("/client/**").hasRole(Constant.USER)
                 .and()
                 .formLogin().loginPage("/login")
                 .loginProcessingUrl("/login")

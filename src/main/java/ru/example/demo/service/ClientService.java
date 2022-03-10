@@ -1,28 +1,39 @@
 package ru.example.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.demo.model.Client;
 import ru.example.demo.model.DTO.ClientDTO;
+import ru.example.demo.model.DTO.ContractDTO;
 import ru.example.demo.model.DTO.converter.ClientConverterDTO;
 import ru.example.demo.repo.ClientRepository;
+import ru.example.demo.repo.ContractRepository;
 import ru.example.demo.repo.RoleRepository;
+import ru.example.demo.repo.TariffRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ClientService {
 
+
+    private ContractRepository contractRepository;
+    private TariffRepository tariffRepository;
     private ClientRepository clientRepository;
     private RoleRepository roleRepository;
     private ClientConverterDTO clientConverterDTO;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ClientService(ClientRepository clientRepository, RoleRepository roleRepository, ClientConverterDTO clientConverterDTO, PasswordEncoder passwordEncoder) {
+    public ClientService(ContractRepository contractRepository, TariffRepository tariffRepository, ClientRepository clientRepository,
+                         RoleRepository roleRepository, ClientConverterDTO clientConverterDTO, PasswordEncoder passwordEncoder) {
+        this.contractRepository = contractRepository;
+        this.tariffRepository = tariffRepository;
         this.clientRepository = clientRepository;
         this.roleRepository = roleRepository;
         this.clientConverterDTO = clientConverterDTO;
@@ -51,7 +62,7 @@ public class ClientService {
     }
 
     @Transactional
-    public void signUp(ClientDTO clientDTO, String role){
+    public void signUp(ClientDTO clientDTO, String role) {
         Client clientToSave = new Client();
         clientToSave.setEmail(clientDTO.getEmail());
         clientToSave.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
@@ -65,6 +76,7 @@ public class ClientService {
         clientRepository.save(client);
     }
 
+    @Transactional
     public void update(int id, Client client) {
         Client clientToUpdate = clientRepository.findClientById(id);
         clientToUpdate.setName(client.getName());
@@ -72,8 +84,18 @@ public class ClientService {
         clientRepository.save(clientToUpdate);
     }
 
+    @Transactional
+    public void setTariff(UserDetails user, String nameTariff) {
+        Client client = clientRepository.findClientByEmail(user.getUsername());
+        ClientDTO clientDTO = clientConverterDTO.convert(client);
+        Set<ContractDTO> contractDTO = clientDTO.getContractsDTO();
+        for (ContractDTO contract : contractDTO) {
+            contractRepository.findContractByContract_number(contract.getContract_number())
+                    .setTariff(tariffRepository.findTariffByName(nameTariff));
+        }
+    }
+
     public void delete(int id) {
         clientRepository.delete(clientRepository.findClientById(id));
     }
-
 }

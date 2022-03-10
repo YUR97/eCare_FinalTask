@@ -9,4 +9,6 @@ public interface TariffRepository extends JpaRepository<Tariff, Integer> {
 
     Tariff findTariffById(int id);
 
+    Tariff findTariffByName(String name);
+
 }

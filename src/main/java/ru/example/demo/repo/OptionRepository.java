@@ -6,4 +6,7 @@ import ru.example.demo.model.Option;
 
 @Repository
 public interface OptionRepository extends JpaRepository<Option, Integer> {
+
+    Option findByName(String name);
+
 }

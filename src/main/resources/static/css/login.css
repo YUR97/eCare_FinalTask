@@ -28,7 +28,7 @@ form {
     margin-right: auto;
     height: 430px;
     width: 450px;
-    background: linear-gradient(dodgerblue, white);
+    background: linear-gradient(dodgerblue,white);
     border-radius: 12px;
     box-shadow: 4px 4px 4px 4px #6a90b4;
 }
@@ -77,7 +77,7 @@ button {
     height: 55px;
     width: 310px;
     border-radius: 4px;
-    background: dodgerblue;
+    background: royalblue;
     color: white;
     font-family: "Comic Sans MS", serif;
     font-weight: bold;
@@ -97,19 +97,19 @@ button:hover {
 }
 
 .alert-error {
-    color: yellow;
-    font-size: 24px;
+    color: darkred;
+    font-size: 22px;
     font-weight: bold;
-    font-family: "Comic Sans MS", serif;
+    font-family: "Trebuchet MS", serif;
     padding-bottom: 10px;
     text-align: center;
 }
 
 .alert-success {
-    color: greenyellow;
-    font-size: 24px;
+    color: darkgreen;
+    font-size: 22px;
     font-weight: bold;
-    font-family: "Comic Sans MS", serif;
+    font-family: "Trebuchet MS", serif;
     padding-bottom: 10px;
     text-align: center;
 }
@@ -128,7 +128,7 @@ button:hover {
 }
 
 #beforeTable {
-    background: dodgerblue;
+    background: royalblue;
     padding-top: 30px;
     padding-bottom: 30px;
     margin-bottom: 35px;

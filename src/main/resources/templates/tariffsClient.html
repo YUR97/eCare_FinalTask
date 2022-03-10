@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Tariffs</title>
+    <link rel="stylesheet" type="text/css" href="../css/tariffsClient.css">
+</head>
+<body>
+<header>
+    <button onclick="location.href='/home'">Домашняя</button>
+    <button onclick="location.href='/client/contracts'">Мои контракты</button>
+    <button onclick="location.href='/client/tariffs'">Тарифы</button>
+    <button>Корзина</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <button>Выход</button>
+    </form>
+</header>
+<main>
+    <div class="outerDiv">
+        <div class="caption">Тарифы</div>
+        <div class="innerDiv">
+            <div th:each="tariff : ${tariffs}">
+                <table>
+                    <tr>
+                        <td>
+                            <div th:text="${tariff.getName()}" class="info"></div>
+                        </td>
+                        <td>
+                            <div th:text="${tariff.getPayment()}" class="info"></div>
+                        </td>
+                        <td>
+                            <div id="divOptions">
+                                <div th:each="option : ${tariff.getOptionsDTO()}">
+                                    <div th:text="${option.getName()}" class="infoList"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="outerDiv">
+        <div class="caption">Опции</div>
+        <div class="innerDiv">
+            <div th:each="option : ${options}">
+                <table>
+                    <tr>
+                        <td>
+                            <div th:text="${option.getName()}" class="infoList"></div>
+                        </td>
+                        <td>
+                            <div th:text="${option.getPayment()}" class="infoList"></div>
+                        </td>
+                        <td>
+                            <div th:text="${option.getConnection_price()}" class="infoList"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

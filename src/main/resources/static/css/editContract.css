@@ -1,0 +1,171 @@
+body {
+    opacity: 0;
+    animation: ani 0.5s forwards;
+    animation-timing-function: linear;
+}
+
+@keyframes ani {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+body {
+    background-color: #54B0FF;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 3px solid;
+    border-left: 3px solid;
+    border-right: 3px solid;
+    width: 98%;
+    height: 100px;
+    background-color: #A8E4A0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+header button {
+    width: 200px;
+    height: 50px;
+    background-color: royalblue;
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+header button:hover {
+    transition: 0.5s;
+    background-color: #A8E4A0;
+    color: black;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    width: 98%;
+    height: 780px;
+    border: 3px solid;
+    background-color: #7AC7FA;
+}
+
+.divForm {
+    width: 450px;
+    height: 600px;
+    margin-top: 40px;
+}
+
+.title {
+    padding-top: 12px;
+    text-align: center;
+    align-content: center;
+    height: 50px;
+    background-color: royalblue;
+    color: white;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 40px;
+    padding-top: 12px;
+    background-color: wheat;
+}
+
+.infoList {
+    display: flex;
+    justify-content: left;
+    align-content: center;
+    height: 40px;
+    padding-top: 8px;
+}
+
+#divAddedOptions {
+    overflow: auto;
+    height: 200px;
+    background-color: #999999;
+}
+
+.divFormChange {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 900px;
+    height: 650px;
+    margin-top: 40px;
+    background-color: wheat;
+    border: 2px solid;
+}
+
+.divFormChangeInner {
+    margin: 20px auto;
+    padding: 20px;
+    width: 800px;
+    height: 220px;
+    background-color: #54B0FF;
+    border: 2px solid;
+    overflow: auto;
+}
+
+.tableTariffs td {
+    margin: 5px;
+    width: 150px;
+    height: 50px;
+    background-color: wheat;
+    border: 2px solid;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.radioInput {
+    transform: scale(2.5);
+}
+
+.tableOptions td:first-child {
+    margin: 5px;
+    width: 150px;
+    height: 50px;
+    background-color: wheat;
+    border: 2px solid;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tableOptions td:nth-child(2) {
+    width: 50px;
+    padding-left: 20px;
+}
+
+.tableOptions td:nth-child(2) input {
+    transform: scale(2);
+}
+
+#changeButton {
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: royalblue;
+    color: wheat;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#changeButton:hover {
+    background-color: #A8E4A0;
+    color: black;
+}

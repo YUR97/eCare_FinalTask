@@ -13,7 +13,7 @@ import ru.example.demo.service.ClientService;
 @Controller
 public class LoginController {
 
-    private ClientService clientService;
+    private final ClientService clientService;
 
     @Autowired
     public LoginController(ClientService clientService) {
@@ -30,18 +30,15 @@ public class LoginController {
         return "signUp";
     }
 
-
     @PostMapping("/signup")
     public String signUp(@ModelAttribute("client") ClientDTO clientDTO, @RequestParam(name = "role_name") String role, Model model) {
         try {
             clientService.signUp(clientDTO, role);
             return "redirect:/login";
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             model.addAttribute("error", "Выбранный Email уже используется");
             return "signUp";
         }
     }
-
 
 }

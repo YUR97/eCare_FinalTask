@@ -8,8 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.example.demo.model.DTO.ContractDTO;
+import ru.example.demo.model.DTO.OptionDTO;
 import ru.example.demo.model.DTO.TariffDTO;
 import ru.example.demo.service.ClientService;
+import ru.example.demo.service.ContractService;
+import ru.example.demo.service.OptionService;
 import ru.example.demo.service.TariffService;
 
 import java.util.List;
@@ -18,11 +23,18 @@ import java.util.List;
 @RequestMapping("/client")
 public class ClientController {
 
+    private OptionService optionService;
+    private ContractService contractService;
     private ClientService clientService;
     private TariffService tariffService;
 
+    private static final String redirect = "redirect:/client/contracts";
+
     @Autowired
-    public ClientController(ClientService clientService, TariffService tariffService) {
+    public ClientController(OptionService optionService, ContractService contractService,
+                            ClientService clientService, TariffService tariffService) {
+        this.optionService = optionService;
+        this.contractService = contractService;
         this.clientService = clientService;
         this.tariffService = tariffService;
     }
@@ -31,16 +43,57 @@ public class ClientController {
     public String showMe(Authentication authentication, Model model) {
         UserDetails user = (UserDetails) authentication.getPrincipal();
         model.addAttribute("client", clientService.getByEmail(user.getUsername()));
-        return "viewOneClient";
+        return "redirect:/home";
     }
 
     @GetMapping("/tariffs")
-    public String showTariffs(Authentication authentication, Model model) {
-        UserDetails user = (UserDetails) authentication.getPrincipal();
+    public String showTariffs(Model model) {
         List<TariffDTO> tariffsDTO = tariffService.getAll();
+        List<OptionDTO> optionsDTO = optionService.getAll();
+        model.addAttribute("options", optionsDTO);
         model.addAttribute("tariffs", tariffsDTO);
-        model.addAttribute("client", clientService.getByEmail(user.getUsername()));
-        return "homeClient";
+        return "tariffsClient";
+    }
+
+    @GetMapping("/contracts")
+    public String showContracts(Authentication authentication, Model model) {
+        UserDetails user = (UserDetails) authentication.getPrincipal();
+        List<ContractDTO> contractDTOS = contractService.getAllByClientEmail(user.getUsername());
+        model.addAttribute("contracts", contractDTOS);
+        return "contractsClient";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@RequestParam(name = "contract_number") String contract_number, Model model) {
+        ContractDTO contractDTO = contractService.getByContract_number(contract_number);
+        List<TariffDTO> tariffsDTO = tariffService.getAll();
+        List<OptionDTO> optionDTOS = optionService.getAll();
+        model.addAttribute("options", optionDTOS);
+        model.addAttribute("tariffs", tariffsDTO);
+        model.addAttribute("contract", contractDTO);
+        return "editContract";
+    }
+
+    @PostMapping("/saveEdit")
+    public String saveEdit(@RequestParam("contract_number") String contract_number, @RequestParam("tariffChoice") String tariffChoice,
+                           @RequestParam(name = "option") List<String> options) {
+        contractService.setOptions(contract_number, options);
+        contractService.setTariff(contract_number, tariffChoice);
+        return redirect;
+    }
+
+    @PostMapping("/deleteAddedOption")
+    public String deleteAddedOption(@RequestParam("contract") String contract_number,
+                                    @RequestParam("optionToDelete") String option) {
+        contractService.removeOption(contract_number, option);
+        return redirect;
+    }
+
+    @PostMapping("/changeStatus")
+    public String changeStatus(@RequestParam("contract_number") String contract_number,
+                               @RequestParam("status") String status) {
+        contractService.setStatus(contract_number, status);
+        return redirect;
     }
 
 }

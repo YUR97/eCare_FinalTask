@@ -79,7 +79,7 @@ table input:-webkit-autofill {
     height: 55px;
     width: 360px;
     border-radius: 4px;
-    background: dodgerblue;
+    background: royalblue;
     color: white;
     font-family: "Comic Sans MS", serif;
     font-weight: bold;
@@ -88,7 +88,7 @@ table input:-webkit-autofill {
 }
 
 #textBeforeForm {
-    background: dodgerblue;
+    background: royalblue;
     padding-top: 30px;
     padding-bottom: 30px;
     margin-bottom: 30px;
@@ -147,10 +147,10 @@ footer button {
 }
 
 #email_error {
-    color: yellow;
-    font-size: 20px;
+    color: darkred;
+    font-size: 22px;
     font-weight: bold;
-    font-family: "Comic Sans MS", serif;
+    font-family: "Trebuchet MS", serif;
     padding-top: 20px;
     text-align: center;
     height: 30px;

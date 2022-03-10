@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Контракты</title>
+    <link rel="stylesheet" type="text/css" href="../css/contractsClient.css">
+</head>
+<body>
+<header>
+    <button onclick="location.href='/home'">Домашняя</button>
+    <button onclick="location.href='/client/contracts'">Мои контракты</button>
+    <button onclick="location.href='/client/tariffs'">Тарифы</button>
+    <button>Корзина</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <button>Выход</button>
+    </form>
+</header>
+<main>
+    <div th:each="contract : ${contracts}">
+        <form th:method="POST" th:action="@{/client/edit}">
+            <div id="divInnerForm">
+                <div class="title">Номер:</div>
+                <div th:text="${contract.getContract_number()}" class="info"></div>
+                <div class="title">Тариф:</div>
+                <div th:text="${contract.getTariffDTO().getName()}" class="info"></div>
+                <div class="title">Доп. опции контракта:</div>
+                <div id="divAddedOptions">
+                    <ul>
+                        <div th:each="option : ${contract.getOptionsDTO()}">
+                            <li>
+                                <div th:text="${option.getName()}" class="infoList"></div>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+                <div class="title">Статус:</div>
+                <div th:text="${contract.getStatus()}" class="info"></div>
+            </div>
+            <input hidden type="text" name="contract_number" th:value="${contract.getContract_number()}"/>
+            <button>Изменить</button>
+        </form>
+        <form th:method="POST" th:action="@{/client/changeStatus}" class="statusForm">
+            <input hidden type="text" name="contract_number" th:value="${contract.getContract_number()}"/>
+            <button class="statusButton" name="status" value="closed">Заблокировать</button>
+            <button class="statusButton" name="status" value="open">Разблокировать</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

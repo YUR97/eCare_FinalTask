@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/home.css">
 </head>
 <body>
 <header>
-    <form>
-        <input type="submit" value="Профиль"/>
-    </form>
+    <button onclick="location.href='/home'">Домашняя</button>
     <button>Пользователи</button>
     <button>Тарифы</button>
     <button>Опции</button>
     <button>Заключение контракта</button>
     <form th:method="POST" th:action="@{/logout}">
-        <input type="submit" value="Выход"/>
+        <button>Выход</button>
     </form>
 </header>
+<main></main>
 </body>
 </html>

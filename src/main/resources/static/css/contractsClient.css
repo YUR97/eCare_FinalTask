@@ -1,0 +1,137 @@
+body {
+    opacity: 0;
+    animation: ani 0.5s forwards;
+    animation-timing-function: linear;
+}
+
+@keyframes ani {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+body {
+    background-color: #54B0FF;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 3px solid;
+    border-left: 3px solid;
+    border-right: 3px solid;
+    width: 98%;
+    height: 100px;
+    background-color: #A8E4A0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+header button, header form button {
+    width: 200px;
+    height: 50px;
+    background-color: royalblue;
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+header button:hover {
+    transition: 0.5s;
+    background-color: #A8E4A0;
+    color: black;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    width: 98%;
+    height: 820px;
+    border: 3px solid;
+    background-color: #7AC7FA;
+    overflow: auto;
+}
+
+main form:not(.statusForm) {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    background-color: dodgerblue;
+    width: 500px;
+    font-size: 20px;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.statusForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: wheat;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 500px;
+}
+
+#divInnerForm {
+    width: 500px;
+}
+
+.title {
+    padding-top: 8px;
+    text-align: center;
+    align-content: center;
+    height: 42px;
+    background-color: royalblue;
+    color: white;
+}
+
+#divAddedOptions {
+    overflow: auto;
+    height: 200px;
+    background-color: #999999;
+}
+
+form button:not(.statusButton):not(header form button){
+    margin: 20px auto;
+    width: 400px;
+    height: 60px;
+    background-color: royalblue;
+    color: white;
+    font-size: 20px;
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+}
+
+.statusButton {
+    width: 200px;
+    height: 70px;
+    background-color: royalblue;
+    color: white;
+    font-size: 20px;
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+}
+
+form button:hover {
+    transition: 0.5s;
+    color: black;
+    background-color: #A8E4A0;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 40px;
+    padding-top: 8px;
+    background-color: wheat;
+}

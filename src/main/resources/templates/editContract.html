@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменение</title>
+    <link rel="stylesheet" type="text/css" href="../css/editContract.css">
+</head>
+<body>
+<header>
+    <button onclick="location.href='/home'">Домашняя</button>
+    <button onclick="location.href='/client/contracts'">Мои контракты</button>
+    <button onclick="location.href='/client/tariffs'">Тарифы</button>
+    <button>Корзина</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <button>Выход</button>
+    </form>
+</header>
+<main>
+    <div th:object="${contract}" class="divForm">
+        <form th:method="POST" th:action="@{/client/deleteAddedOption}">
+            <div class="title">Номер:</div>
+            <div th:text="${contract.getContract_number()}" class="info"></div>
+            <div class="title">Тариф:</div>
+            <div th:text="${contract.getTariffDTO().getName()}" class="info"></div>
+            <div class="title">Доп. опции контракта:</div>
+            <div id="divAddedOptions">
+                <input hidden th:value="${contract.getContract_number()}" name="contract">
+                <ul>
+                    <div th:each="addedOption : ${contract.getOptionsDTO()}">
+                        <li>
+                            <div th:text="${addedOption.getName()}" class="infoList"></div>
+                            <button name="optionToDelete" th:value="${addedOption.getName()}">Удалить</button>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+            <div class="title">Статус:</div>
+            <div th:text="${contract.getStatus()}" class="info"></div>
+        </form>
+    </div>
+    <div class="divFormChange">
+        <form th:method="POST" th:action="@{/client/saveEdit}">
+            <div class="divFormChangeInner">
+                <div th:each="tariff : ${tariffs}">
+                    <table class="tableTariffs">
+                        <tr>
+                            <td>
+                                <div th:text="${tariff.getName()}"></div>
+                            </td>
+                            <td>
+                                <div th:text="${tariff.getPayment()}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div th:each="option : ${tariff.getOptionsDTO()}">
+                                    <div th:text="${option.getName()}"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <label for="${tariff.getName()}" class="radioLabel">Выбрать</label>
+                                    <input name="tariffChoice" type="radio" id="${tariff.getName()}"
+                                           th:value="${tariff.getName()}" class="radioInput">
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <input hidden name="contract_number" th:value="${contract.getContract_number()}">
+            </div>
+            <div class="divFormChangeInner">
+                <div id="options" th:each="option : ${options}">
+                    <table class="tableOptions">
+                        <tr>
+                            <td>
+                                <div th:text="${option.getName()}"></div>
+                            </td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="${option.getName()}" name="option"
+                                           th:value="${option.getName()}">
+                                    <label for="${option.getName()}"></label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <input id="changeButton" type="submit" value="Изменить!">
+        </form>
+    </div>
+</main>
+</body>
+</html>

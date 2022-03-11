@@ -8,14 +8,15 @@
 <body>
 <header>
     <button onclick="location.href='/home'">Домашняя</button>
-    <button>Пользователи</button>
+    <button onclick="location.href='/admin/clients'">Пользователи</button>
     <button>Тарифы</button>
     <button>Опции</button>
-    <button>Заключение контракта</button>
+    <button onclick="location.href='/admin/conclusionContract'">Заключение контракта</button>
     <form th:method="POST" th:action="@{/logout}">
         <button>Выход</button>
     </form>
 </header>
-<main></main>
+<main>
+</main>
 </body>
 </html>

@@ -1,0 +1,137 @@
+body {
+    opacity: 0;
+    animation: ani 0.5s forwards;
+    animation-timing-function: linear;
+}
+
+@keyframes ani {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+body {
+    background-color: #54B0FF;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 3px solid;
+    border-left: 3px solid;
+    border-right: 3px solid;
+    width: 98%;
+    height: 100px;
+    background-color: #A8E4A0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+header button {
+    width: 200px;
+    height: 50px;
+    background-color: royalblue;
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+button:hover {
+    transition: 1s;
+    background-color: greenyellow;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    width: 98%;
+    height: 820px;
+    border: 3px solid;
+    background-color: #7AC7FA;
+}
+
+.divForm {
+    width: 500px;
+    height: 720px;
+    margin-top: 40px;
+    background-color: wheat;
+    border: 3px solid;
+}
+
+form {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form input:not(.optionList input) {
+    padding: 10px;
+    width: 310px;
+    height: 30px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+form select {
+    width: 200px;
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.divChooseOption {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.titleLabel {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#signUpButton {
+    width: 300px;
+    height: 50px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: royalblue;
+    color: white;
+    font-size: 16px;
+}
+
+#signUpButton:hover {
+    background-color: #A8E4A0;
+    color: black;
+}
+
+.optionList {
+    width: 300px;
+    height: 200px;
+    border: 2px solid;
+    overflow: auto;
+    margin: 10px;
+    padding: 20px;
+    background-color: royalblue;
+}
+
+.optionList input {
+    width: 20px;
+    height: 20px;
+}
+
+table td:not(.checkboxTd) {
+    background-color: wheat;
+    width: 100px;
+    height: 30px;
+    border: 2px solid;
+}

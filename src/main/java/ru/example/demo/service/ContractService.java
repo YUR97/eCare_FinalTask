@@ -8,13 +8,16 @@ import ru.example.demo.model.Contract;
 import ru.example.demo.model.DTO.ContractDTO;
 import ru.example.demo.model.DTO.converter.ContractConverterDTO;
 import ru.example.demo.constants.Constant;
+import ru.example.demo.model.Option;
 import ru.example.demo.repo.ClientRepository;
 import ru.example.demo.repo.ContractRepository;
 import ru.example.demo.repo.OptionRepository;
 import ru.example.demo.repo.TariffRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ContractService {
@@ -91,6 +94,24 @@ public class ContractService {
     @Transactional
     public void setStatus(String contract_number, String status) {
         contractRepository.findContractByContract_number(contract_number).setStatus(status);
+    }
+
+    @Transactional
+    public void save(String contract_number, String email, String tariffName, String status, List<String> options) {
+        if (contractRepository.findContractByContract_number(contract_number) == null) {
+            Contract contract = new Contract();
+            contract.setContract_number(contract_number);
+            contract.setStatus(status);
+            Set<Option> optionsToSave = new HashSet<>();
+            for (String option : options) {
+                optionsToSave.add(optionRepository.findByName(option));
+            }
+            contract.setOptions(optionsToSave);
+            contract.setTariff(tariffRepository.findTariffByName(tariffName));
+            Client client = clientRepository.findClientByEmail(email);
+            client.addContract(contract);
+            clientRepository.save(client);
+        }
     }
 
 }

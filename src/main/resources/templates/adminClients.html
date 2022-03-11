@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Клиенты</title>
+    <link rel="stylesheet" type="text/css" href="../css/adminClients.css">
+</head>
+<body>
+<header>
+    <button onclick="location.href='/home'">Домашняя</button>
+    <button onclick="location.href='/admin/clients'">Пользователи</button>
+    <button>Тарифы</button>
+    <button>Опции</button>
+    <button onclick="location.href='/admin/conclusionContract'">Заключение контракта</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <button>Выход</button>
+    </form>
+</header>
+<main>
+    <div class="containerClients">
+        <div class="title">Клиенты:</div>
+        <div class="innerContainer">
+            <table>
+                <tr>
+                    <th class="thInfo">Имя</th>
+                    <th class="thInfo">Фамилия</th>
+                    <th class="thInfo">Роль</th>
+                    <th class="thInfo">Email</th>
+                    <th>Контракты</th>
+                </tr>
+            </table>
+            <div th:each="client : ${clients}">
+                <table>
+                    <tr>
+                        <td class="tdInfo">
+                            <div th:text="${client.getName()}" class="info"></div>
+                        </td>
+                        <td class="tdInfo">
+                            <div th:text="${client.getSurname()}" class="info"></div>
+                        </td>
+                        <td class="tdInfo">
+                            <div th:text="${client.getRoleDTO().getName()}" class="info"></div>
+                        </td>
+                        <td class="tdInfo">
+                            <div th:text="${client.getEmail()}" class="info"></div>
+                        </td>
+                        <td>
+                            <div th:if="${client.getContractsDTO().size}!='0'" class="divList">
+                                <div th:each="contract : ${client.getContractsDTO()}">
+                                    <div th:text="${contract.getContract_number()}" class="infoList"></div>
+                                </div>
+                            </div>
+                            <div th:if="${client.getContractsDTO().size}=='0'">
+                                Контрактов нет!
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

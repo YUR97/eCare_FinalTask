@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Заключение контракта</title>
+    <link rel="stylesheet" type="text/css" href="../css/adminConclusionContract.css">
+</head>
+<body>
+<header>
+    <button onclick="location.href='/home'">Домашняя</button>
+    <button onclick="location.href='/admin/clients'">Пользователи</button>
+    <button>Тарифы</button>
+    <button>Опции</button>
+    <button onclick="location.href='/admin/conclusionContract'">Заключение контракта</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <button>Выход</button>
+    </form>
+</header>
+<main>
+    <div class="divForm">
+        <form th:method="POST" th:action="@{/admin/conclusionContract}">
+            <label class="titleLabel" for="number">Введите номер:</label>
+            <input type="text" name="contract" placeholder="Номер" id="number">
+            <label class="titleLabel" for="email">Введите Email:</label>
+            <input type="text" name="email" placeholder="Email" id="email">
+            <label class="titleLabel" for="tariff">Выберите тариф:</label>
+            <select name="tariffName" id="tariff">
+                <div th:each="tariff : ${tariffs}">
+                    <option th:value="${tariff.getName()}" th:text="${tariff.getName()}"></option>
+                </div>
+            </select>
+            <div class="divChooseOption">Выберите дополнительные опции:</div>
+            <div class="optionList">
+                <div th:each="option : ${options}">
+                    <table>
+                        <tr>
+                            <td>
+                                <label for="${option.getName()}" th:text="${option.getName()}"></label>
+                            </td>
+                            <td class="checkboxTd">
+                                <input type="checkbox" th:value="${option.getName()}" name="options"
+                                       id="${option.getName()}">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <input hidden name="status" value="open">
+            <button id="signUpButton">Зарегистрировать контракт</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

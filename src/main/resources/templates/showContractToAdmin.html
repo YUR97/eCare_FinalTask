@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/showContractToAdmin.css">
+</head>
+<body>
+<header>
+    <button onclick="location.href='/home'">Домашняя</button>
+    <button onclick="location.href='/admin/clients'">Пользователи</button>
+    <button onclick="location.href='/admin/tariffs'">Тарифы</button>
+    <button onclick="location.href='/admin/options'">Опции</button>
+    <button onclick="location.href='/admin/conclusionContract'">Заключение контракта</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <button>Выход</button>
+    </form>
+</header>
+<main>
+    <div class="DivShowContract">
+        <table>
+            <tr>
+                <td>
+                    <div th:text="'Номер:'"></div>
+                </td>
+                <td>
+                    <div th:text="${contract.getContract_number()}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div th:text="'Тариф:'"></div>
+                </td>
+                <td>
+                    <div th:text="${contract.getTariffDTO().getName()}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div th:text="'Статус:'"></div>
+                </td>
+                <td>
+                    <div th:text="${contract.getStatus()}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div th:text="'Опции: '"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div th:each="option : ${contract.getOptionsDTO()}" th:if="${contract.getOptionsDTO().size()!=0}">
+                        <div th:text="${option.getName()}"></div>
+                    </div>
+                    <div th:if="${contract.getOptionsDTO().size()==0}" th:text="'Дополнительных опций нет'"></div>
+                </td>
+            </tr>
+        </table>
+        <div class="buttons">
+            <button>Изменить</button>
+        </div>
+    </div>
+</main>
+</body>
+</html>

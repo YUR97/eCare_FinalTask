@@ -9,8 +9,8 @@
 <header>
     <button onclick="location.href='/home'">Домашняя</button>
     <button onclick="location.href='/admin/clients'">Пользователи</button>
-    <button>Тарифы</button>
-    <button>Опции</button>
+    <button onclick="location.href='/admin/tariffs'">Тарифы</button>
+    <button onclick="location.href='/admin/options'">Опции</button>
     <button onclick="location.href='/admin/conclusionContract'">Заключение контракта</button>
     <form th:method="POST" th:action="@{/logout}">
         <button>Выход</button>

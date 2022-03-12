@@ -9,8 +9,8 @@
 <header>
     <button onclick="location.href='/home'">Домашняя</button>
     <button onclick="location.href='/admin/clients'">Пользователи</button>
-    <button>Тарифы</button>
-    <button>Опции</button>
+    <button onclick="location.href='/admin/tariffs'">Тарифы</button>
+    <button onclick="location.href='/admin/options'">Опции</button>
     <button onclick="location.href='/admin/conclusionContract'">Заключение контракта</button>
     <form th:method="POST" th:action="@{/logout}">
         <button>Выход</button>
@@ -18,6 +18,10 @@
 </header>
 <main>
     <div class="containerClients">
+        <form th:method="POST" th:action="@{/admin/clients}">
+            <input type="text" name="finder" placeholder="Отображение всех: введите «all»">
+            <button>Найти</button>
+        </form>
         <div class="title">Клиенты:</div>
         <div class="innerContainer">
             <table>
@@ -29,7 +33,7 @@
                     <th>Контракты</th>
                 </tr>
             </table>
-            <div th:each="client : ${clients}">
+            <div th:each="client : ${clients}" th:if="${finder.contains('all')}">
                 <table>
                     <tr>
                         <td class="tdInfo">
@@ -42,16 +46,50 @@
                             <div th:text="${client.getRoleDTO().getName()}" class="info"></div>
                         </td>
                         <td class="tdInfo">
-                            <div th:text="${client.getEmail()}" class="info"></div>
+                            <a th:href="@{/admin/client/{id}(id=${client.getId()})}">
+                                <div th:text="${client.getEmail()}" class="info"></div>
+                            </a>
                         </td>
                         <td>
                             <div th:if="${client.getContractsDTO().size}!='0'" class="divList">
                                 <div th:each="contract : ${client.getContractsDTO()}">
-                                    <div th:text="${contract.getContract_number()}" class="infoList"></div>
+                                    <a th:href="@{/admin/contract/{id}(id=${contract.getContract_number()})}">
+                                        <div th:text="${contract.getContract_number()}" class="infoList"></div>
+                                    </a>
                                 </div>
                             </div>
                             <div th:if="${client.getContractsDTO().size}=='0'">
                                 Контрактов нет!
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div th:each="client : ${clients}" th:if="${!finder.contains('all')}">
+                <table>
+                    <tr>
+                        <td class="tdInfo">
+                            <div th:text="${client.getName()}" class="info"></div>
+                        </td>
+                        <td class="tdInfo">
+                            <div th:text="${client.getSurname()}" class="info"></div>
+                        </td>
+                        <td class="tdInfo">
+                            <div th:text="${client.getRoleDTO().getName()}" class="info"></div>
+                        </td>
+                        <td class="tdInfo">
+                            <a th:href="@{/admin/client/{id}(id=${client.getId()})}">
+                                <div th:text="${client.getEmail()}" class="info"></div>
+                            </a>
+                        </td>
+                        <td>
+                            <div class="divList">
+                                <div th:each="contract : ${client.getContractsDTO()}">
+                                    <a th:href="@{/admin/contract/{id}(id=${contract.getContract_number()})}">
+                                        <div th:text="${contract.getContract_number()}" class="infoList"
+                                             th:if="${contract.getContract_number().contains(finder)}"></div>
+                                    </a>
+                                </div>
                             </div>
                         </td>
                     </tr>

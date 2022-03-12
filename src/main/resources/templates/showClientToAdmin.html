@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="../css/home.css">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/showClientToAdmin.css">
 </head>
 <body>
 <header>
@@ -17,12 +17,11 @@
     </form>
 </header>
 <main>
-    <div class="divOuter">
-        <div class="title">Ваши данные:</div>
+    <div class="DivShowClient">
         <table>
             <tr>
                 <td>
-                    <div th:text="'Имя: '"></div>
+                    <div th:text="'Имя:'"></div>
                 </td>
                 <td>
                     <div th:text="${client.getName()}"></div>
@@ -30,7 +29,7 @@
             </tr>
             <tr>
                 <td>
-                    <div th:text="'Фамилия: '"></div>
+                    <div th:text="'Фамилия:'"></div>
                 </td>
                 <td>
                     <div th:text="${client.getSurname()}"></div>
@@ -38,46 +37,35 @@
             </tr>
             <tr>
                 <td>
-                    <div th:text="'Дата рождения: '"></div>
+                    <div th:text="'Дата рождения:'"></div>
                 </td>
                 <td>
-                    <div th:text="${client.getBirthday()}"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div th:text="'Пасспортные данные: '"></div>
-                </td>
-                <td>
-                    <div th:text="${client.getPassport()}"></div>
+                    <div th:if="${client.getBirthday() == null}" th:text="'Не указано'"></div>
+                    <div th:if="${!(client.getBirthday() == null)}" th:text="${client.getBirthday()}"></div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div th:text="'Адрес: '"></div>
+                    <div th:text="'Адрес:'"></div>
                 </td>
                 <td>
-                    <div th:text="${client.getAddress()}"></div>
+                    <div th:if="${client.getAddress() == null}" th:text="'Не указано'"></div>
+                    <div th:if="${!(client.getAddress() == null)}" th:text="${client.getAddress()}"></div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div th:text="'Почта: '"></div>
+                    <div th:text="'Почта:'"></div>
                 </td>
                 <td>
                     <div th:text="${client.getEmail()}"></div>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <div th:text="'Роль: '"></div>
-                </td>
-                <td>
-                    <div th:text="${client.getRoleDTO().getName()}"></div>
-                </td>
-            </tr>
         </table>
-        <button onclick="location.href='/admin/edit'">Изменить</button>
+        <div class="buttons">
+            <button id="buttonLock">Заблокировать</button>
+            <button id="buttonUnlock">Разблокировать</button>
+        </div>
     </div>
 </main>
 </body>

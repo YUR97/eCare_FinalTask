@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.example.demo.constants.Constant;
 import ru.example.demo.model.DTO.ContractDTO;
 import ru.example.demo.model.DTO.OptionDTO;
 import ru.example.demo.model.DTO.TariffDTO;
-import ru.example.demo.constants.Constant;
 import ru.example.demo.service.ClientService;
 import ru.example.demo.service.ContractService;
 import ru.example.demo.service.OptionService;
@@ -30,8 +30,7 @@ public class ClientController {
     private TariffService tariffService;
 
     @Autowired
-    public ClientController(OptionService optionService, ContractService contractService,
-                            ClientService clientService, TariffService tariffService) {
+    public ClientController(OptionService optionService, ContractService contractService, ClientService clientService, TariffService tariffService) {
         this.optionService = optionService;
         this.contractService = contractService;
         this.clientService = clientService;
@@ -74,10 +73,7 @@ public class ClientController {
     }
 
     @PostMapping("/saveEdit")
-    public String saveEdit(@RequestParam("contract_number") String contract_number,
-                           @RequestParam(value = "tariffChoice", defaultValue = Constant.NOTHING) String tariffChoice,
-                           @RequestParam(name = "option", defaultValue = Constant.NOTHING) List<String> options,
-                           @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete) {
+    public String saveEdit(@RequestParam("contract_number") String contract_number, @RequestParam(value = "tariffChoice", defaultValue = Constant.NOTHING) String tariffChoice, @RequestParam(name = "option", defaultValue = Constant.NOTHING) List<String> options, @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete) {
         contractService.setOptions(contract_number, options);
         contractService.setTariff(contract_number, tariffChoice);
         contractService.removeOption(contract_number, optionsToDelete);
@@ -85,10 +81,27 @@ public class ClientController {
     }
 
     @PostMapping("/changeStatus")
-    public String changeStatus(@RequestParam("contract_number") String contract_number,
-                               @RequestParam("status") String status) {
+    public String changeStatus(@RequestParam("contract_number") String contract_number, @RequestParam("status") String status) {
         contractService.setStatus(contract_number, status);
         return Constant.REDIRECT;
+    }
+
+    @GetMapping("/editClient")
+    public String editClient(Authentication auth, Model model) {
+        UserDetails user = (UserDetails) auth.getPrincipal();
+        model.addAttribute("client", clientService.getByEmail(user.getUsername()));
+        return "editClient";
+    }
+
+    @PostMapping("/editClient")
+    public String saveEdit(@RequestParam(name = "name") String name, @RequestParam(name = "surname") String surname, @RequestParam(name = "birthday") String birthday, @RequestParam(name = "address") String address, @RequestParam(name = "passport") String passport, @RequestParam(name = "password") String password) {
+        System.out.println(name);
+        System.out.println(surname);
+        System.out.println(birthday);
+        System.out.println(address);
+        System.out.println(passport);
+        System.out.println(password);
+        return "redirect:/home";
     }
 
 }

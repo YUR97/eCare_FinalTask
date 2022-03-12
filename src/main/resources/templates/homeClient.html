@@ -15,6 +15,69 @@
         <button>Выход</button>
     </form>
 </header>
-<main></main>
+<main>
+    <div class="divOuter">
+        <div class="title">Ваши данные:</div>
+        <table>
+            <tr>
+                <td>
+                    <div th:text="'Имя: '"></div>
+                </td>
+                <td>
+                    <div th:text="${client.getName()}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div th:text="'Фамилия: '"></div>
+                </td>
+                <td>
+                    <div th:text="${client.getSurname()}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div th:text="'Дата рождения: '"></div>
+                </td>
+                <td>
+                    <div th:text="${client.getBirthday()}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div th:text="'Пасспортные данные: '"></div>
+                </td>
+                <td>
+                    <div th:text="${client.getPassport()}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div th:text="'Адрес: '"></div>
+                </td>
+                <td>
+                    <div th:text="${client.getAddress()}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div th:text="'Почта: '"></div>
+                </td>
+                <td>
+                    <div th:text="${client.getEmail()}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div th:text="'Роль: '"></div>
+                </td>
+                <td>
+                    <div th:text="${client.getRoleDTO().getName()}"></div>
+                </td>
+            </tr>
+        </table>
+        <button onclick="location.href='/client/editClient'">Изменить</button>
+    </div>
+</main>
 </body>
 </html>

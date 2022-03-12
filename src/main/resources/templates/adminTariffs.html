@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../css/tariffsAdmin.css">
+</head>
+<body>
+<header>
+    <button onclick="location.href='/home'">Домашняя</button>
+    <button onclick="location.href='/admin/clients'">Пользователи</button>
+    <button onclick="location.href='/admin/tariffs'">Тарифы</button>
+    <button onclick="location.href='/admin/options'">Опции</button>
+    <button onclick="location.href='/admin/conclusionContract'">Заключение контракта</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <button>Выход</button>
+    </form>
+</header>
+<main>
+    <div class="outerDiv">
+        <div th:each="tariff : ${tariffs}">
+            <table>
+                <tr>
+                    <td>
+                        <div th:text="${tariff.getName()}"></div>
+                    </td>
+                    <td>
+                        <div th:text="${tariff.getPayment()}"></div>
+                    </td>
+                    <td>
+                        <div th:each="option : ${tariff.getOptionsDTO()}">
+                            <div th:text="${option.getName()}"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -57,57 +57,26 @@ main {
     height: 820px;
     border: 3px solid;
     background-color: #7AC7FA;
+}
+
+.outerDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    padding-top: 40px;
+    background-color: wheat;
+    width: 800px;
+    height: 600px;
+    border: 2px solid;
     overflow: auto;
 }
 
-.divOuter {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    height: 600px;
-    background-color: wheat;
-    margin:40px;
-    padding: 20px;
-    border: 2px solid black;
-}
-
-.title {
-    width: 410px;
-    height: 40px;
-    margin-top: 15px;
-    font-size: 16px;
+table td {
     text-align: center;
-    background-color: #7AC7FA;
-    border: 2px solid black;
-    padding-top: 15px;
-}
-
-.divOuter table td {
     width: 200px;
     height: 50px;
+    font-size: 16px;
     background-color: darkgrey;
-    color: black;
-    border: 2px solid black;
-    font-size: 16px;
-}
-
-.divOuter table div {
-    text-align: center;
-}
-
-.divOuter button {
-    margin-top: 15px;
-    width: 414px;
-    height: 50px;
-    border-radius: 10px;
-    background-color: royalblue;
-    color: white;
-    font-size: 16px;
-}
-
-.divOuter button:hover {
-    background-color: #A8E4A0;
-    color: black;
+    border: 2px solid;
 }

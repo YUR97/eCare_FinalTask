@@ -40,9 +40,14 @@
             <button id="changeButton" th:if="${contract.getStatus()}=='open'">Изменить</button>
         </form>
         <form th:method="POST" th:action="@{/client/changeStatus}" class="statusForm">
+            <div class="infoLock" th:if="${contract.getStatus().contains('lockByAdmin')}">
+                Заблокировано администатором.
+                <br>
+                Вы не можете изменить статус.
+            </div>
             <input hidden type="text" name="contract_number" th:value="${contract.getContract_number()}"/>
-            <button class="statusButton" name="status" value="closed">Заблокировать</button>
-            <button class="statusButton" name="status" value="open">Разблокировать</button>
+            <button th:if="${!contract.getStatus().contains('lockByAdmin')}" class="statusButton" name="status" value="closed">Заблокировать</button>
+            <button th:if="${!contract.getStatus().contains('lockByAdmin')}" class="statusButton" name="status" value="open">Разблокировать</button>
         </form>
     </div>
 </main>

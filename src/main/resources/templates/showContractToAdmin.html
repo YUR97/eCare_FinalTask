@@ -18,6 +18,9 @@
 </header>
 <main>
     <div class="DivShowContract">
+        <div class="contractInfo">
+            Параметры контракта:
+        </div>
         <table>
             <tr>
                 <td>
@@ -49,16 +52,31 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
-                    <div th:each="option : ${contract.getOptionsDTO()}" th:if="${contract.getOptionsDTO().size()!=0}">
-                        <div th:text="${option.getName()}"></div>
+                <td colspan="2" class="listOfOptionsTd">
+                    <div class="listOfOptions" th:if="${contract.getOptionsDTO().size()!=0}">
+                        <ul>
+                            <div th:each="option : ${contract.getOptionsDTO()}"
+                                 th:if="${contract.getOptionsDTO().size()!=0}">
+                                <li>
+                                    <div th:text="${option.getName()}"></div>
+                                </li>
+                            </div>
+                        </ul>
                     </div>
-                    <div th:if="${contract.getOptionsDTO().size()==0}" th:text="'Дополнительных опций нет'"></div>
+                    <div class="noOptionsText" th:if="${contract.getOptionsDTO().size()==0}"
+                         th:text="'Дополнительных опций нет'"></div>
                 </td>
             </tr>
         </table>
         <div class="buttons">
-            <button>Изменить</button>
+            <button id="changeButton">Изменить</button>
+        </div>
+        <div class="buttons">
+            <form th:method="POST" th:action="@{/admin/contract/changeStatus}">
+                <input hidden type="text" name="contract_number" th:value="${contract.getContract_number()}"/>
+                <button class="statusButton" name="status" value="lockByAdmin">Заблокировать</button>
+                <button class="statusButton" name="status" value="open">Разблокировать</button>
+            </form>
         </div>
     </div>
 </main>

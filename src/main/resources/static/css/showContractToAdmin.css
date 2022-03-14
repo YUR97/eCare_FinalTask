@@ -64,7 +64,7 @@ main {
     flex-direction: column;
     align-items: center;
     width: 800px;
-    height: 500px;
+    height: 650px;
     margin-top: 40px;
     padding-top: 50px;
     background-color: wheat;
@@ -72,10 +72,10 @@ main {
     overflow: auto;
 }
 
-table td {
+table td:not(.listOfOptionsTd){
     text-align: center;
     width: 200px;
-    height: 40px;
+    height: 20px;
     padding: 20px;
     font-size: 18px;
     border: 2px solid;
@@ -87,7 +87,6 @@ table td {
 }
 
 .buttons button{
-    width: 250px;
     height: 50px;
     background-color: royalblue;
     color: white;
@@ -95,7 +94,46 @@ table td {
     font-size: 18px;
 }
 
+#changeButton{
+    width: 490px;
+}
+
+.statusButton {
+    width: 245px;
+}
+
 .buttons button:hover {
     background-color: #A8E4A0;
     color: black;
+}
+
+.listOfOptionsTd {
+    background-color: #7AC7FA;
+    border: 2px solid black;
+    text-align: left;
+    width: 400px;
+
+}
+.listOfOptions {
+    height: 100px;
+    overflow: auto;
+    font-size: 18px;
+}
+
+.contractInfo {
+    width: 466px;
+    height: 30px;
+    padding: 10px;
+    text-align: center;
+    background-color: #A8E4A0;
+    color: black;
+    border: 2px solid;
+    font-size: 18px;
+}
+
+.noOptionsText {
+    height: 30px;
+    padding: 15px;
+    font-size: 18px;
+    text-align: center;
 }

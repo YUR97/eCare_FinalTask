@@ -76,6 +76,14 @@ public class AdminController {
         return "showContractToAdmin";
     }
 
+    @PostMapping("contract/changeStatus")
+    public String showContractChanged(@RequestParam(name = "contract_number") String contract_number,
+                                      @RequestParam(name = "status") String status, Model model){
+        contractService.setStatusAdmin(contract_number,status);
+        model.addAttribute("contract", contractService.getByContract_number(contract_number));
+        return "showContractToAdmin";
+    }
+
     @GetMapping("/client/{id}")
     public String showClient(@PathVariable("id") int id, Model model) {
         ClientDTO clientDTO = clientService.getById(id);

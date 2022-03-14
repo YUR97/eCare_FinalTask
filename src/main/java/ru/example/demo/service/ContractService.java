@@ -90,7 +90,14 @@ public class ContractService {
     }
 
     @Transactional
-    public void setStatus(String contract_number, String status) {
+    public void setStatusClient(String contract_number, String status) {
+        if (!contractRepository.findContractByContract_number(contract_number).getStatus().contains(Constant.LOCK_BY_ADMIN)) {
+            contractRepository.findContractByContract_number(contract_number).setStatus(status);
+        }
+    }
+
+    @Transactional
+    public void setStatusAdmin(String contract_number, String status) {
         contractRepository.findContractByContract_number(contract_number).setStatus(status);
     }
 

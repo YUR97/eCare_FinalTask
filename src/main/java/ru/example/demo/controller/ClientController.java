@@ -83,7 +83,7 @@ public class ClientController {
 
     @PostMapping("/changeStatus")
     public String changeStatus(@RequestParam("contract_number") String contract_number, @RequestParam("status") String status) {
-        contractService.setStatus(contract_number, status);
+        contractService.setStatusClient(contract_number, status);
         return Constant.REDIRECT;
     }
 

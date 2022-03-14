@@ -77,10 +77,14 @@ public class ClientService {
     }
 
     @Transactional
-    public void update(int id, Client client) {
-        Client clientToUpdate = clientRepository.findClientById(id);
+    public void update(Client client) {
+        Client clientToUpdate = clientRepository.findClientByEmail(client.getEmail());
         clientToUpdate.setName(client.getName());
         clientToUpdate.setSurname(client.getSurname());
+        clientToUpdate.setBirthday(client.getBirthday());
+        clientToUpdate.setAddress(client.getAddress());
+        clientToUpdate.setPassport(client.getPassport());
+        clientToUpdate.setPassword(passwordEncoder.encode(client.getPassword()));
         clientRepository.save(clientToUpdate);
     }
 

@@ -65,7 +65,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 500px;
+    width: 550px;
     height: 600px;
     background-color: wheat;
     margin:40px;
@@ -77,7 +77,7 @@ main {
     width: 410px;
     height: 40px;
     margin-top: 15px;
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
     background-color: #7AC7FA;
     border: 2px solid black;
@@ -90,7 +90,7 @@ main {
     background-color: darkgrey;
     color: black;
     border: 2px solid black;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .divOuter table div {
@@ -104,7 +104,7 @@ main {
     border-radius: 10px;
     background-color: royalblue;
     color: white;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .divOuter button:hover {

@@ -7,16 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.example.demo.constants.Constant;
+import ru.example.demo.model.Client;
 import ru.example.demo.model.DTO.ClientDTO;
 import ru.example.demo.model.DTO.ContractDTO;
-import ru.example.demo.model.DTO.OptionDTO;
-import ru.example.demo.model.DTO.TariffDTO;
 import ru.example.demo.service.ClientService;
 import ru.example.demo.service.ContractService;
 import ru.example.demo.service.OptionService;
 import ru.example.demo.service.TariffService;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -39,6 +40,7 @@ public class AdminController {
     @GetMapping("/clients")
     public String showClients(Model model) {
         List<ClientDTO> clientDTOS = clientService.getAll();
+        Collections.sort(clientDTOS, (Comparator.comparing(o -> o.getRoleDTO().getName())));
         model.addAttribute("finder", Constant.DEFAULT_FINDER);
         model.addAttribute("clients", clientDTOS);
         return "adminClients";
@@ -47,6 +49,7 @@ public class AdminController {
     @PostMapping("/clients")
     public String showFoundClients(@RequestParam(name = "finder", defaultValue = Constant.NOTHING) String finder, Model model) {
         List<ClientDTO> clientDTOS = clientService.getAll();
+        Collections.sort(clientDTOS, (Comparator.comparing(o -> o.getRoleDTO().getName())));
         if (finder.contains("all")) {
             model.addAttribute("finder", finder);
             model.addAttribute("clients", clientDTOS);
@@ -54,12 +57,13 @@ public class AdminController {
             List<ClientDTO> toOutClientDTOS = new ArrayList<>();
             for (ClientDTO client : clientDTOS) {
                 for (ContractDTO contract : client.getContractsDTO()) {
-                    if(contract.getContract_number().contains(finder)){
+                    if (contract.getContract_number().contains(finder)) {
                         toOutClientDTOS.add(client);
                         break;
                     }
                 }
             }
+            Collections.sort(toOutClientDTOS, (Comparator.comparing(o -> o.getRoleDTO().getName())));
             model.addAttribute("finder", finder);
             model.addAttribute("clients", toOutClientDTOS);
         }
@@ -67,13 +71,13 @@ public class AdminController {
     }
 
     @GetMapping("/contract/{id}")
-    public String showContract(@PathVariable("id") String contract_number, Model model){
+    public String showContract(@PathVariable("id") String contract_number, Model model) {
         model.addAttribute("contract", contractService.getByContract_number(contract_number));
         return "showContractToAdmin";
     }
 
     @GetMapping("/client/{id}")
-    public String showClient(@PathVariable("id") int id, Model model){
+    public String showClient(@PathVariable("id") int id, Model model) {
         model.addAttribute("client", clientService.getById(id));
         return "showClientToAdmin";
     }
@@ -82,6 +86,7 @@ public class AdminController {
     public String conclusionContract(Model model) {
         model.addAttribute("tariffs", tariffService.getAll());
         model.addAttribute("options", optionService.getAll());
+        model.addAttribute("clients", clientService.getAll());
         return "adminConclusionContract";
     }
 
@@ -99,24 +104,24 @@ public class AdminController {
     }
 
     @PostMapping("/edit")
-    public String saveEdit(@RequestParam(name = "name") String name, @RequestParam(name = "surname") String surname, @RequestParam(name = "birthday") String birthday, @RequestParam(name = "address") String address, @RequestParam(name = "passport") String passport, @RequestParam(name = "password") String password) {
-        System.out.println(name);
-        System.out.println(surname);
-        System.out.println(birthday);
-        System.out.println(address);
-        System.out.println(passport);
-        System.out.println(password);
+    public String saveEdit(Authentication auth, @RequestParam(name = "name") String name, @RequestParam(name = "surname") String surname,
+                           @RequestParam(name = "birthday") String birthday, @RequestParam(name = "address") String address,
+                           @RequestParam(name = "passport") String passport, @RequestParam(name = "password") String password) {
+        UserDetails user = (UserDetails) auth.getPrincipal();
+        java.sql.Date date = java.sql.Date.valueOf(birthday);
+        Client client = new Client(name, surname, date, passport, address, user.getUsername(), password);
+        clientService.update(client);
         return "redirect:/home";
     }
 
     @GetMapping("/tariffs")
-    public String showTariffs(Model model){
+    public String showTariffs(Model model) {
         model.addAttribute("tariffs", tariffService.getAll());
         return "adminTariffs";
     }
 
     @GetMapping("/options")
-    public String showOptions(Model model){
+    public String showOptions(Model model) {
         model.addAttribute("options", optionService.getAll());
         return "adminOptions";
     }

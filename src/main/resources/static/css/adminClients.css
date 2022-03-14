@@ -155,9 +155,10 @@ td:not(.tdInfo), th:not(.thInfo) {
 .divList {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 150px;
-    padding: 5px;
+    justify-content: start;
+    width: 220px;
+    height: 80px;
+    padding: 10px;
     border: 2px solid;
     overflow: auto;
     background-color: #A8E4A0;

@@ -61,14 +61,14 @@ main {
 
 .divForm {
     width: 500px;
-    height: 720px;
-    margin-top: 40px;
+    height: 770px;
+    margin-top: 20px;
     background-color: wheat;
     border: 3px solid;
 }
 
 form {
-    padding: 30px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -79,7 +79,7 @@ form input:not(.optionList input) {
     width: 310px;
     height: 30px;
     font-size: 16px;
-    margin-bottom: 10px;
+    margin: 10px;
 }
 
 form select {
@@ -116,12 +116,12 @@ form select {
 
 .optionList {
     width: 300px;
-    height: 200px;
+    height: 150px;
     border: 2px solid;
     overflow: auto;
     margin: 10px;
     padding: 20px;
-    background-color: royalblue;
+    background-color: darkgrey;
 }
 
 .optionList input {
@@ -129,9 +129,38 @@ form select {
     height: 20px;
 }
 
-table td:not(.checkboxTd) {
+.optionList td:first-child{
+    text-align: center;
+    padding: 5px;
+    font-size: 18px;
+}
+
+table td:not(.checkboxTd):not(.emailTd) {
     background-color: wheat;
     width: 100px;
     height: 30px;
     border: 2px solid;
+}
+
+.emails {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    background-color: darkgrey;
+    overflow: auto;
+    border: 2px solid;
+    width: 310px;
+    height: 150px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.emailTd:first-child{
+    padding: 10px;
+    text-align: center;
+    background-color: wheat;
+    border: 2px solid;
+}
+.emailTd:nth-child(2) input {
+    width: 50px;
 }

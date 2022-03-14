@@ -21,8 +21,21 @@
         <form th:method="POST" th:action="@{/admin/conclusionContract}">
             <label class="titleLabel" for="number">Введите номер:</label>
             <input type="text" name="contract" placeholder="Номер" id="number">
-            <label class="titleLabel" for="email">Введите Email:</label>
-            <input type="text" name="email" placeholder="Email" id="email">
+            <label class="titleLabel">Выберите Email:</label>
+            <div class="emails">
+                <div th:each="client : ${clients}">
+                    <table>
+                        <tr>
+                            <td class="emailTd">
+                                <label class="titleLabel" for="${client.getEmail()}" th:text="${client.getEmail()}"></label>
+                            </td>
+                            <td class="emailTd">
+                                <input type="radio" name="email" th:value="${client.getEmail()}" id="${client.getEmail()}">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <label class="titleLabel" for="tariff">Выберите тариф:</label>
             <select name="tariffName" id="tariff">
                 <div th:each="tariff : ${tariffs}">

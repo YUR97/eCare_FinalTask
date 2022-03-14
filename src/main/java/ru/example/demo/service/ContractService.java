@@ -3,21 +3,18 @@ package ru.example.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.example.demo.constants.Constant;
 import ru.example.demo.model.Client;
 import ru.example.demo.model.Contract;
 import ru.example.demo.model.DTO.ContractDTO;
 import ru.example.demo.model.DTO.converter.ContractConverterDTO;
-import ru.example.demo.constants.Constant;
 import ru.example.demo.model.Option;
 import ru.example.demo.repo.ClientRepository;
 import ru.example.demo.repo.ContractRepository;
 import ru.example.demo.repo.OptionRepository;
 import ru.example.demo.repo.TariffRepository;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ContractService {
@@ -60,6 +57,7 @@ public class ContractService {
             ContractDTO contractDTO = contractConverterDTO.convert(contract);
             contractDTOS.add(contractDTO);
         }
+        Collections.sort(contractDTOS, Comparator.comparing(ContractDTO::getContract_number));
         return contractDTOS;
     }
 

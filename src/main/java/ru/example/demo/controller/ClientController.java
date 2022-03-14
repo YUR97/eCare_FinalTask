@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.example.demo.constants.Constant;
+import ru.example.demo.model.Client;
 import ru.example.demo.model.DTO.ContractDTO;
 import ru.example.demo.model.DTO.OptionDTO;
 import ru.example.demo.model.DTO.TariffDTO;
@@ -94,13 +95,13 @@ public class ClientController {
     }
 
     @PostMapping("/editClient")
-    public String saveEdit(@RequestParam(name = "name") String name, @RequestParam(name = "surname") String surname, @RequestParam(name = "birthday") String birthday, @RequestParam(name = "address") String address, @RequestParam(name = "passport") String passport, @RequestParam(name = "password") String password) {
-        System.out.println(name);
-        System.out.println(surname);
-        System.out.println(birthday);
-        System.out.println(address);
-        System.out.println(passport);
-        System.out.println(password);
+    public String saveEdit(Authentication auth, @RequestParam(name = "name") String name, @RequestParam(name = "surname") String surname,
+                           @RequestParam(name = "birthday") String birthday, @RequestParam(name = "address") String address,
+                           @RequestParam(name = "passport") String passport, @RequestParam(name = "password") String password) {
+        UserDetails user = (UserDetails) auth.getPrincipal();
+        java.sql.Date date = java.sql.Date.valueOf(birthday);
+        Client client = new Client(name, surname, date, passport, address, user.getUsername(), password);
+        clientService.update(client);
         return "redirect:/home";
     }
 

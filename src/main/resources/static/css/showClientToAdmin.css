@@ -64,9 +64,9 @@ main {
     flex-direction: column;
     align-items: center;
     width: 800px;
-    height: 500px;
+    height: 650px;
     margin-top: 40px;
-    padding-top: 50px;
+    padding-top: 30px;
     background-color: wheat;
     border: 2px solid;
     overflow: auto;
@@ -98,4 +98,40 @@ table td {
 .buttons button:hover {
    background-color: #A8E4A0;
     color: black;
+}
+
+.lockNote {
+    width: 466px;
+    height: 25px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-align: center;
+    background-color: darkred;
+    color: white;
+    border: 2px solid black;
+}
+
+.infoAdmin {
+    width: 466px;
+    height: 25px;
+    padding: 10px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #A8E4A0;
+    color: black;
+    border: 2px solid black;
+}
+
+.infoClient {
+    width: 466px;
+    height: 25px;
+    padding: 10px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    text-align: center;
+    background-color: lightsteelblue;
+    color: black;
+    border: 2px solid black;
 }

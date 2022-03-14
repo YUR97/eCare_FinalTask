@@ -18,6 +18,13 @@
 </header>
 <main>
     <div class="DivShowClient">
+        <div th:if="${client.getRoleDTO().getName().contains('ADMIN')}" class="infoAdmin">
+            Данный пользователь является администратором
+        </div>
+        <div th:if="${isLock}" class="lockNote">Этот клиент заблокирован.</div>
+        <div th:if="${client.getRoleDTO().getName().contains('USER')}" class="infoClient">
+            Данные пользователя
+        </div>
         <table>
             <tr>
                 <td>
@@ -62,9 +69,11 @@
                 </td>
             </tr>
         </table>
-        <div class="buttons">
-            <button id="buttonLock">Заблокировать</button>
-            <button id="buttonUnlock">Разблокировать</button>
+        <div th:if="${client.getRoleDTO().getName().contains('USER')}" class="buttons">
+            <form th:method="POST" th:action="@{/admin/client/{id}(id=${client.getId()})}">
+                <button id="buttonLock" name="isLock" value="lock">Заблокировать</button>
+                <button id="buttonUnlock" name="isLock" value="unlock">Разблокировать</button>
+            </form>
         </div>
     </div>
 </main>

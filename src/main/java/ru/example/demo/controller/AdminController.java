@@ -10,10 +10,7 @@ import ru.example.demo.constants.Constant;
 import ru.example.demo.model.Client;
 import ru.example.demo.model.DTO.ClientDTO;
 import ru.example.demo.model.DTO.ContractDTO;
-import ru.example.demo.service.ClientService;
-import ru.example.demo.service.ContractService;
-import ru.example.demo.service.OptionService;
-import ru.example.demo.service.TariffService;
+import ru.example.demo.service.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,13 +25,16 @@ public class AdminController {
     private ContractService contractService;
     private TariffService tariffService;
     private ClientService clientService;
+    private LockClientService lockClientService;
 
     @Autowired
-    public AdminController(OptionService optionService, ContractService contractService, TariffService tariffService, ClientService clientService) {
+    public AdminController(OptionService optionService, ContractService contractService,
+                           TariffService tariffService, ClientService clientService, LockClientService lockClientService) {
         this.optionService = optionService;
         this.contractService = contractService;
         this.tariffService = tariffService;
         this.clientService = clientService;
+        this.lockClientService = lockClientService;
     }
 
     @GetMapping("/clients")
@@ -78,7 +78,30 @@ public class AdminController {
 
     @GetMapping("/client/{id}")
     public String showClient(@PathVariable("id") int id, Model model) {
-        model.addAttribute("client", clientService.getById(id));
+        ClientDTO clientDTO = clientService.getById(id);
+        model.addAttribute("client", clientDTO);
+        if (lockClientService.getLockedClient(clientDTO.getEmail()) != null) {
+            model.addAttribute("isLock", true);
+        } else {
+            model.addAttribute("isLock", false);
+        }
+        return "showClientToAdmin";
+    }
+
+    @PostMapping("/client/{id}")
+    public String showClientChanged(@RequestParam(name = "isLock") String isLock, @PathVariable("id") int id, Model model) {
+        ClientDTO clientDTO = clientService.getById(id);
+        if (!isLock.contains(Constant.UNLOCK)) {
+            lockClientService.lockClient(clientDTO.getEmail());
+        } else {
+            lockClientService.unlockClient(clientDTO.getEmail());
+        }
+        model.addAttribute("client", clientDTO);
+        if (lockClientService.getLockedClient(clientDTO.getEmail()) != null) {
+            model.addAttribute("isLock", true);
+        } else {
+            model.addAttribute("isLock", false);
+        }
         return "showClientToAdmin";
     }
 
@@ -91,7 +114,11 @@ public class AdminController {
     }
 
     @PostMapping("/conclusionContract")
-    public String createContract(@RequestParam(name = "contract", defaultValue = Constant.NOTHING) String contract_number, @RequestParam(name = "email", defaultValue = Constant.NOTHING) String email, @RequestParam(name = "tariffName", defaultValue = Constant.NOTHING) String tariffName, @RequestParam(name = "status", defaultValue = Constant.NOTHING) String status, @RequestParam(name = "options", defaultValue = Constant.NOTHING) List<String> options) {
+    public String createContract(@RequestParam(name = "contract", defaultValue = Constant.NOTHING) String contract_number,
+                                 @RequestParam(name = "email", defaultValue = Constant.NOTHING) String email,
+                                 @RequestParam(name = "tariffName", defaultValue = Constant.NOTHING) String tariffName,
+                                 @RequestParam(name = "status", defaultValue = Constant.NOTHING) String status,
+                                 @RequestParam(name = "options", defaultValue = Constant.NOTHING) List<String> options) {
         contractService.save(contract_number, email, tariffName, status, options);
         return "redirect:/admin/clients";
     }

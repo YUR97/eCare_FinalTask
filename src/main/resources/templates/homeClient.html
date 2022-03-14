@@ -7,16 +7,28 @@
 </head>
 <body>
 <header>
-    <button onclick="location.href='/home'">Домашняя</button>
-    <button onclick="location.href='/client/contracts'">Мои контракты</button>
-    <button onclick="location.href='/client/tariffs'">Тарифы</button>
-    <button>Корзина</button>
-    <form th:method="POST" th:action="@{/logout}">
+    <button th:if="${!isLock}" onclick="location.href='/home'">Домашняя</button>
+    <button th:if="${!isLock}" onclick="location.href='/client/contracts'">Мои контракты</button>
+    <button th:if="${!isLock}" onclick="location.href='/client/tariffs'">Тарифы</button>
+    <button th:if="${!isLock}"> Корзина</button>
+    <form th:if="${!isLock}" th:method="POST" th:action="@{/logout}">
+        <button>Выход</button>
+    </form>
+    <button th:if="${isLock}">Домашняя</button>
+    <button th:if="${isLock}">Мои контракты</button>
+    <button th:if="${isLock}">Тарифы</button>
+    <button th:if="${isLock}"> Корзина</button>
+    <form th:if="${isLock}" th:method="POST" th:action="@{/logout}">
         <button>Выход</button>
     </form>
 </header>
 <main>
     <div class="divOuter">
+        <div th:if="${isLock}" class="lockNote">
+            Вы были заблокированы администратором.
+            <br>
+            Ваши возможности ограничены.
+        </div>
         <div class="title">Ваши данные:</div>
         <table>
             <tr>
@@ -76,7 +88,8 @@
                 </td>
             </tr>
         </table>
-        <button onclick="location.href='/client/editClient'">Изменить</button>
+        <button th:if="${!isLock}" onclick="location.href='/client/editClient'">Изменить</button>
+        <button th:if="${isLock}">Изменить</button>
     </div>
 </main>
 </body>

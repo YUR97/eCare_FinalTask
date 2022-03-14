@@ -21,7 +21,6 @@ import java.util.Set;
 @Service
 public class ClientService {
 
-
     private ContractRepository contractRepository;
     private TariffRepository tariffRepository;
     private ClientRepository clientRepository;

@@ -20,7 +20,7 @@
         <form th:method="POST" th:action="@{/client/edit}">
             <div id="divInnerForm">
                 <div class="title">Номер:</div>
-                <div th:text="${contract.getContract_number()}" class="info"></div>
+                <div th:text="${contract.getContractNumber()}" class="info"></div>
                 <div class="title">Тариф:</div>
                 <div th:text="${contract.getTariffDTO().getName()}" class="info"></div>
                 <div class="title">Доп. опции контракта:</div>
@@ -36,7 +36,7 @@
                 <div class="title">Статус:</div>
                 <div th:text="${contract.getStatus()}" class="info"></div>
             </div>
-            <input hidden type="text" name="contract_number" th:value="${contract.getContract_number()}"/>
+            <input hidden type="text" name="contractNumber" th:value="${contract.getContractNumber()}"/>
             <button id="changeButton" th:if="${contract.getStatus()}=='open'">Изменить</button>
         </form>
         <form th:method="POST" th:action="@{/client/changeStatus}" class="statusForm">
@@ -45,7 +45,7 @@
                 <br>
                 Вы не можете изменить статус.
             </div>
-            <input hidden type="text" name="contract_number" th:value="${contract.getContract_number()}"/>
+            <input hidden type="text" name="contractNumber" th:value="${contract.getContractNumber()}"/>
             <button th:if="${!contract.getStatus().contains('lockByAdmin')}" class="statusButton" name="status" value="closed">Заблокировать</button>
             <button th:if="${!contract.getStatus().contains('lockByAdmin')}" class="statusButton" name="status" value="open">Разблокировать</button>
         </form>

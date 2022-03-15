@@ -33,7 +33,7 @@ public class OptionService {
 
     @Transactional
     public void saveOption(Option option) {
-        if (!(option.getName().contains(Constant.NOTHING) | option.getPayment().contains(Constant.NOTHING) | option.getConnection_price().contains(Constant.NOTHING))) {
+        if (!(option.getName().contains(Constant.NOTHING) | option.getPayment().contains(Constant.NOTHING) | option.getConnectionPrice().contains(Constant.NOTHING))) {
             optionRepository.save(option);
         }
     }

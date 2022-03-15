@@ -29,7 +29,7 @@
                         <div th:text="${option.getPayment()}"></div>
                     </td>
                     <td>
-                        <div th:text="${option.getConnection_price()}"></div>
+                        <div th:text="${option.getConnectionPrice()}"></div>
                     </td>
                 </tr>
             </table>
@@ -40,7 +40,7 @@
         <form th:method="POST" th:action="@{/admin/createOption}">
             <input type="text" placeholder="Название" name="name">
             <input type="text" placeholder="Платеж" name="payment">
-            <input type="text" placeholder="Стоимость подключения" name="connection_price">
+            <input type="text" placeholder="Стоимость подключения" name="connectionPrice">
             <button>Создать</button>
         </form>
     </div>

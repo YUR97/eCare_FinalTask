@@ -53,8 +53,8 @@
                         <td>
                             <div th:if="${client.getContractsDTO().size}!='0'" class="divList">
                                 <div th:each="contract : ${client.getContractsDTO()}">
-                                    <a th:href="@{/admin/contract/{id}(id=${contract.getContract_number()})}">
-                                        <div th:text="${contract.getContract_number()}" class="infoList"></div>
+                                    <a th:href="@{/admin/contract/{id}(id=${contract.getContractNumber()})}">
+                                        <div th:text="${contract.getContractNumber()}" class="infoList"></div>
                                     </a>
                                 </div>
                             </div>
@@ -85,9 +85,9 @@
                         <td>
                             <div class="divList">
                                 <div th:each="contract : ${client.getContractsDTO()}">
-                                    <a th:href="@{/admin/contract/{id}(id=${contract.getContract_number()})}">
-                                        <div th:text="${contract.getContract_number()}" class="infoList"
-                                             th:if="${contract.getContract_number().contains(finder)}"></div>
+                                    <a th:href="@{/admin/contract/{id}(id=${contract.getContractNumber()})}">
+                                        <div th:text="${contract.getContractNumber()}" class="infoList"
+                                             th:if="${contract.getContractNumber().contains(finder)}"></div>
                                     </a>
                                 </div>
                             </div>

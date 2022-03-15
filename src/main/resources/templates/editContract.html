@@ -21,14 +21,14 @@
             <div class="divFormChangeOuter">
                 <div class="divFormChangeInnerTitle">
                     <div class="headTitle">Контракт:</div>
-                    <div class="title" th:text="'Номер: ' + ${contract.getContract_number()}"></div>
+                    <div class="title" th:text="'Номер: ' + ${contract.getContractNumber()}"></div>
                     <div class="title" th:text="'Тариф: ' + ${contract.getTariffDTO().getName()}"></div>
                     <div class="title" th:text="'Статус: ' + ${contract.getStatus()}"></div>
                 </div>
                 <div class="divFormChangeInnerOptionDelete">
                     <div class="optionDeleteTitle">Удалить Дополнительные опции контракта:</div>
                     <div id="divAddedOptionsDelete">
-                        <input hidden th:value="${contract.getContract_number()}" name="contract">
+                        <input hidden th:value="${contract.getContractNumber()}" name="contractNumber">
                         <div th:each="addedOption : ${contract.getOptionsDTO()}">
                             <table>
                                 <tr>
@@ -73,7 +73,6 @@
                             </tr>
                         </table>
                     </div>
-                    <input hidden name="contract_number" th:value="${contract.getContract_number()}">
                 </div>
                 <div class="divFormChangeInner">
                     <div id="options" th:each="option : ${options}">

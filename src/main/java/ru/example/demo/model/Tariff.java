@@ -20,7 +20,10 @@ public class Tariff {
     @OneToMany(mappedBy = "tariff", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Contract> contracts;
 
-    public Tariff() {}
+    public Tariff() {
+        options = new HashSet<>();
+        contracts = new HashSet<>();
+    }
 
     public Tariff(String name, String payment) {
         this.name = name;

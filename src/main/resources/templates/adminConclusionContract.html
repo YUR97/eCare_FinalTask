@@ -20,8 +20,9 @@
     <div class="divForm">
         <form th:method="POST" th:action="@{/admin/conclusionContract}">
             <label class="titleLabel" for="number">Введите номер:</label>
-            <input type="text" name="contract" placeholder="Номер" id="number">
-            <label class="titleLabel">Выберите Email:</label>
+            <input type="text" name="contractNumber" placeholder="Номер" id="number" required>
+            <label class="titleLabel" th:if="${mayBeConclusion}">Выберите Email:</label>
+            <label class="errorTitleLabel" th:if="${!mayBeConclusion}">Вы не выбрали Email</label>
             <div class="emails">
                 <div th:each="client : ${clients}">
                     <table>

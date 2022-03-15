@@ -1,0 +1,165 @@
+body {
+    opacity: 0;
+    animation: ani 0.5s forwards;
+    animation-timing-function: linear;
+}
+
+@keyframes ani {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+body {
+    background-color: #54B0FF;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 3px solid;
+    border-left: 3px solid;
+    border-right: 3px solid;
+    width: 98%;
+    height: 100px;
+    background-color: #A8E4A0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+header button {
+    width: 200px;
+    height: 50px;
+    background-color: royalblue;
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+button:not(.changeButton):hover {
+    transition: 1s;
+    background-color: greenyellow;
+    color: black;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    width: 98%;
+    height: 820px;
+    border: 3px solid;
+    background-color: #7AC7FA;
+}
+
+.outerDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 700px;
+    height: 600px;
+    background-color: wheat;
+    border: 2px solid;
+    margin-top: 50px;
+    padding: 30px;
+}
+
+.title {
+    height: 20px;
+    padding: 15px;
+    font-size: 20px;
+    border: 2px solid;
+    margin: 15px;
+    text-align: center;
+}
+
+.title:not(#mainTitle) {
+    width: 300px;
+    background-color: #A8E4A0;
+}
+
+#mainTitle {
+    width: 500px;
+    background-color: royalblue;
+    color: white;
+    border-color: black;
+}
+
+.inputTable td {
+    width: 200px;
+}
+
+.inputTable td:first-child {
+    text-align: center;
+    border: 2px solid;
+    background-color: #7AC7FA;
+}
+
+input {
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+label {
+    font-size: 20px;
+}
+
+.listOfOptions {
+    padding: 20px;
+    width: 290px;
+    height: 150px;
+    border: 2px solid;
+    background-color: darkgrey;
+    overflow: auto;
+}
+
+.tableOptions td:first-child {
+    font-size: 20px;
+    text-align: center;
+    width: 150px;
+    height: 40px;
+    border: 2px solid;
+    background-color: wheat;
+}
+
+.tableOptions td:nth-child(2) input {
+    width: 50px;
+}
+
+.divForChangeOption {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.divForChangeOptionInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.changeButton {
+    margin-top: 20px;
+    width: 300px;
+    height: 60px;
+    font-size: 20px;
+    background-color: royalblue;
+    color: white;
+    border-radius: 10px;
+}
+
+.changeButton:hover {
+    transition: 1s;
+    background-color: #A8E4A0;
+    color: black;
+}

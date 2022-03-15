@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/adminTariffEdit.css">
+</head>
+<body>
+<header>
+    <button onclick="location.href='/home'">Домашняя</button>
+    <button onclick="location.href='/admin/clients'">Пользователи</button>
+    <button onclick="location.href='/admin/tariffs'">Тарифы</button>
+    <button onclick="location.href='/admin/options'">Опции</button>
+    <button onclick="location.href='/admin/conclusionContract'">Заключение контракта</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <button>Выход</button>
+    </form>
+</header>
+<main>
+    <form method="POST" th:action="@{/admin/changeTariff}">
+        <input hidden th:value="${tariff.getName()}" name="previousTariffName">
+        <div class="outerDiv">
+            <div class="title" id="mainTitle">Изменение тарифа</div>
+            <table class="inputTable">
+                <tr>
+                    <td>
+                        <label>Название:</label>
+                    </td>
+                    <td>
+                        <input th:value="${tariff.getName()}" name="newTariffName" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Платеж:</label>
+                    </td>
+                    <td>
+                        <input th:value="${tariff.getPayment()}" name="tariffPayment" required>
+                    </td>
+                </tr>
+            </table>
+            <div class="divForChangeOption">
+                <div class="divForChangeOptionInner">
+                    <div class="title">Удалить опции:</div>
+                    <div class="listOfOptions">
+                        <div th:each="option : ${tariff.getOptionsDTO()}">
+                            <table class="tableOptions">
+                                <tr>
+                                    <td>
+                                        <div th:text="${option.getName()}"></div>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" th:value="${option.getName()}" name="optionsToDelete">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="divForChangeOptionInner">
+                    <div class="title">Добавить опции:</div>
+                    <div class="listOfOptions">
+                        <div th:each="option : ${options}">
+                            <table class="tableOptions">
+                                <tr>
+                                    <td>
+                                        <div th:text="${option.getName()}"></div>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" th:value="${option.getName()}" name="optionsToSave">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="changeButton">Внести изменения</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

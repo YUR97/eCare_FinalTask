@@ -12,9 +12,7 @@ import ru.example.demo.repo.OptionRepository;
 import ru.example.demo.repo.TariffRepository;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class TariffService {
@@ -40,12 +38,57 @@ public class TariffService {
     }
 
     @Transactional
+    public TariffDTO getByName(String tariffName) {
+        return tariffConverterDTO.convert(tariffRepository.findTariffByName(tariffName));
+    }
+
+    @Transactional
+    public boolean updateTariff(String previousName, String newName, String payment, List<String> optionsToDelete, List<String> optionsToSave) {
+        boolean mayBeUpdated;
+        Tariff tariffToUpdate = tariffRepository.findTariffByName(newName);
+        if (tariffToUpdate  == null || tariffToUpdate.getName().equals(newName)) {
+            Tariff tariff = tariffRepository.findTariffByName(previousName);
+            tariff.setName(newName);
+            tariff.setPayment(payment);
+            if(!optionsToDelete.contains(Constant.NOTHING)){
+                for (String option : optionsToDelete) {
+                    Option optionToDelete = optionRepository.findByName(option);
+                    tariff.removeOption(optionToDelete);
+                    optionToDelete.removeTariff(tariff);
+                }
+            }
+            if(!optionsToSave.contains(Constant.NOTHING)){
+                for (String option : optionsToSave) {
+                    Option optionToSave = optionRepository.findByName(option);
+                    tariff.addOption(optionToSave);
+                    optionToSave.addTariff(tariff);
+                }
+            }
+            if (tariff.getName() != null & tariff.getPayment() != null) {
+                tariffRepository.save(tariff);
+                mayBeUpdated = true;
+            } else {
+                mayBeUpdated = false;
+            }
+            return mayBeUpdated;
+
+        } else {
+            return false;
+        }
+    }
+
+    @Transactional
     public boolean deleteTariff(String tariffNameToDelete) {
         boolean mayBeDelete;
         Tariff tariff = tariffRepository.findTariffByName(tariffNameToDelete);
-        if (tariff.getContracts().size() == 0) {
+        if (tariff.getContracts().isEmpty()) {
             mayBeDelete = true;
-            tariff.setOptions(null);
+            if (!tariff.getOptions().isEmpty()) {
+                for (Option option : tariff.getOptions()) {
+                    optionRepository.findByName(option.getName()).removeTariff(tariff);
+                }
+                tariff.setOptions(null);
+            }
             tariffRepository.deleteById(tariff.getId());
         } else {
             mayBeDelete = false;
@@ -55,28 +98,32 @@ public class TariffService {
 
     @Transactional
     public boolean createTariff(String tariffName, String payment, List<String> options) {
-        boolean mayBeSave;
-        Tariff tariff = new Tariff();
-        if (!tariffName.contains(Constant.NOTHING)) {
-            tariff.setName(tariffName);
-        }
-        if (!payment.contains(Constant.NOTHING)) {
-            tariff.setPayment(payment);
-        }
-        if (!options.contains(Constant.NOTHING)) {
-            Set<Option> optionsToAdd = new HashSet<>();
-            for (String option : options) {
-                Option optionToAdd = optionRepository.findByName(option);
-                optionsToAdd.add(optionToAdd);
+        Tariff tariffFromDB = tariffRepository.findTariffByName(tariffName);
+        if (tariffFromDB == null) {
+            boolean mayBeSave;
+            Tariff tariff = new Tariff();
+            if (!tariffName.contains(Constant.NOTHING)) {
+                tariff.setName(tariffName);
             }
-            tariff.setOptions(optionsToAdd);
-        }
-        if (tariff.getName() != null & tariff.getPayment() != null & tariff.getOptions() != null) {
-            tariffRepository.save(tariff);
-            mayBeSave = true;
+            if (!payment.contains(Constant.NOTHING)) {
+                tariff.setPayment(payment);
+            }
+            if (!options.contains(Constant.NOTHING)) {
+                for (String option : options) {
+                    Option optionToAdd = optionRepository.findByName(option);
+                    tariff.addOption(optionToAdd);
+                    optionToAdd.addTariff(tariff);
+                }
+            }
+            if (tariff.getName() != null & tariff.getPayment() != null & !tariff.getOptions().isEmpty()) {
+                tariffRepository.save(tariff);
+                mayBeSave = true;
+            } else {
+                mayBeSave = false;
+            }
+            return mayBeSave;
         } else {
-            mayBeSave = false;
+            return false;
         }
-        return mayBeSave;
     }
 }

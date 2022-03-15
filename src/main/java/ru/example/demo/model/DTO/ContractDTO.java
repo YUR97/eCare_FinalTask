@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ContractDTO {
 
-    private String contract_number;
+    private String contractNumber;
     private String status;
     private TariffDTO tariffDTO;
     private List<OptionDTO> optionsDTO;
@@ -14,8 +14,8 @@ public class ContractDTO {
         optionsDTO = new ArrayList<>();
     }
 
-    public ContractDTO(String contract_number, String status, TariffDTO tariffDTO, List<OptionDTO> optionsDTO) {
-        this.contract_number = contract_number;
+    public ContractDTO(String contractNumber, String status, TariffDTO tariffDTO, List<OptionDTO> optionsDTO) {
+        this.contractNumber = contractNumber;
         this.status = status;
         this.tariffDTO = tariffDTO;
         this.optionsDTO = optionsDTO;
@@ -37,8 +37,8 @@ public class ContractDTO {
         return optionsDTO;
     }
 
-    public String getContract_number() {
-        return contract_number;
+    public String getContractNumber() {
+        return contractNumber;
     }
 
     public String getStatus() {
@@ -53,8 +53,8 @@ public class ContractDTO {
         this.optionsDTO = optionsDTO;
     }
 
-    public void setContract_number(String contract_number) {
-        this.contract_number = contract_number;
+    public void setContractNumber(String contractNumber) {
+        this.contractNumber = contractNumber;
     }
 
     public void setStatus(String status) {

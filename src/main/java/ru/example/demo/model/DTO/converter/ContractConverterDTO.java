@@ -24,10 +24,10 @@ public class ContractConverterDTO {
         for (Option option:contract.getTariff().getOptions()) {
             tariffDTO.addOptionDTO(optionConverterDTO.convert(option));
         }
-        contractDTO.setContract_number(contract.getContract_number());
+        contractDTO.setContractNumber(contract.getContractNumber());
         contractDTO.setStatus(contract.getStatus());
         for (Option option:contract.getOptions()) {
-            OptionDTO optionDTO = new OptionDTO(option.getName(),option.getPayment(),option.getConnection_price());
+            OptionDTO optionDTO = new OptionDTO(option.getName(),option.getPayment(),option.getConnectionPrice());
             contractDTO.addOptionDTO(optionDTO);
         }
         contractDTO.setTariffDTO(tariffDTO);

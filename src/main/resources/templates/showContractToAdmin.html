@@ -27,7 +27,7 @@
                     <div th:text="'Номер:'"></div>
                 </td>
                 <td>
-                    <div th:text="${contract.getContract_number()}"></div>
+                    <div th:text="${contract.getContractNumber()}"></div>
                 </td>
             </tr>
             <tr>
@@ -73,7 +73,7 @@
         </div>
         <div class="buttons">
             <form th:method="POST" th:action="@{/admin/contract/changeStatus}">
-                <input hidden type="text" name="contract_number" th:value="${contract.getContract_number()}"/>
+                <input hidden type="text" name="contractNumber" th:value="${contract.getContractNumber()}"/>
                 <button class="statusButton" name="status" value="lockByAdmin">Заблокировать</button>
                 <button class="statusButton" name="status" value="open">Разблокировать</button>
             </form>

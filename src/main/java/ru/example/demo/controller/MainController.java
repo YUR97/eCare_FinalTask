@@ -31,11 +31,7 @@ public class MainController {
         if (clientDTO.getRoleDTO().getName().contains(Constant.ADMIN)) {
             return "homeAdmin";
         } else {
-            if (lockClientService.getLockedClient(user.getUsername()) != null) {
-                model.addAttribute("isLock", true);
-            } else {
-                model.addAttribute("isLock", false);
-            }
+            model.addAttribute("isLock", lockClientService.getLockedClient(user.getUsername()) != null);
             return "homeClient";
         }
     }

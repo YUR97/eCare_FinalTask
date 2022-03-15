@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, String> {
 
-    @Query("from Contract where contract_number=:contract_number")
-    Contract findContractByContract_number(@Param("contract_number") String contract_number);
+    @Query("from Contract where contractNumber=:contractNumber")
+    Contract findContractByContractNumber(@Param("contractNumber") String contractNumber);
 
-    @Query("from Contract order by contract_number")
+    @Query("from Contract order by contractNumber")
     List<Contract> findAll();
 
 }

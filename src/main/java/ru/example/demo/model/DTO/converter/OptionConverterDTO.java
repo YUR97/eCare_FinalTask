@@ -11,7 +11,7 @@ public class OptionConverterDTO {
         OptionDTO optionDTO = new OptionDTO();
         optionDTO.setName(option.getName());
         optionDTO.setPayment(option.getPayment());
-        optionDTO.setConnection_price(option.getConnection_price());
+        optionDTO.setConnectionPrice(option.getConnectionPrice());
         return optionDTO;
     }
 

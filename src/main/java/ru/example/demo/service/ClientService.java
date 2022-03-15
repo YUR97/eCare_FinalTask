@@ -93,7 +93,7 @@ public class ClientService {
         ClientDTO clientDTO = clientConverterDTO.convert(client);
         Set<ContractDTO> contractDTO = clientDTO.getContractsDTO();
         for (ContractDTO contract : contractDTO) {
-            contractRepository.findContractByContract_number(contract.getContract_number())
+            contractRepository.findContractByContractNumber(contract.getContractNumber())
                     .setTariff(tariffRepository.findTariffByName(nameTariff));
         }
     }

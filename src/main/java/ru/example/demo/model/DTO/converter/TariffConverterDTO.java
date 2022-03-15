@@ -15,13 +15,13 @@ public class TariffConverterDTO {
         TariffDTO tariffDTO = new TariffDTO();
 
         for (Option option : tariff.getOptions()) {
-            OptionDTO optionDTO = new OptionDTO(option.getName(), option.getPayment(), option.getConnection_price());
+            OptionDTO optionDTO = new OptionDTO(option.getName(), option.getPayment(), option.getConnectionPrice());
             tariffDTO.addOptionDTO(optionDTO);
         }
 
         for (Contract contract : tariff.getContracts()) {
             ContractDTO contractDTO = new ContractDTO();
-            contractDTO.setContract_number(contract.getContract_number());
+            contractDTO.setContractNumber(contract.getContractNumber());
             tariffDTO.addContractDTO(contractDTO);
         }
 

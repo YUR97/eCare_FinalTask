@@ -58,7 +58,7 @@ public class AdminController {
             List<ClientDTO> toOutClientDTOS = new ArrayList<>();
             for (ClientDTO client : clientDTOS) {
                 for (ContractDTO contract : client.getContractsDTO()) {
-                    if (contract.getContract_number().contains(finder)) {
+                    if (contract.getContractNumber().contains(finder)) {
                         toOutClientDTOS.add(client);
                         break;
                     }
@@ -72,16 +72,16 @@ public class AdminController {
     }
 
     @GetMapping("/contract/{id}")
-    public String showContract(@PathVariable("id") String contract_number, Model model) {
-        model.addAttribute("contract", contractService.getByContract_number(contract_number));
+    public String showContract(@PathVariable("id") String contractNumber, Model model) {
+        model.addAttribute("contract", contractService.getByContractNumber(contractNumber));
         return "showContractToAdmin";
     }
 
     @PostMapping("contract/changeStatus")
-    public String showContractChanged(@RequestParam(name = "contract_number") String contract_number,
+    public String showContractChanged(@RequestParam(name = "contractNumber") String contractNumber,
                                       @RequestParam(name = "status") String status, Model model) {
-        contractService.setStatusAdmin(contract_number, status);
-        model.addAttribute("contract", contractService.getByContract_number(contract_number));
+        contractService.setStatusAdmin(contractNumber, status);
+        model.addAttribute("contract", contractService.getByContractNumber(contractNumber));
         return "showContractToAdmin";
     }
 
@@ -116,6 +116,7 @@ public class AdminController {
 
     @GetMapping("/conclusionContract")
     public String conclusionContract(Model model) {
+        model.addAttribute("mayBeConclusion", true);
         model.addAttribute("tariffs", tariffService.getAll());
         model.addAttribute("options", optionService.getAll());
         model.addAttribute("clients", clientService.getAll());
@@ -123,13 +124,24 @@ public class AdminController {
     }
 
     @PostMapping("/conclusionContract")
-    public String createContract(@RequestParam(name = "contract", defaultValue = Constant.NOTHING) String contract_number,
+    public String createContract(@RequestParam(name = "contractNumber", defaultValue = Constant.NOTHING) String contractNumber,
                                  @RequestParam(name = "email", defaultValue = Constant.NOTHING) String email,
                                  @RequestParam(name = "tariffName", defaultValue = Constant.NOTHING) String tariffName,
                                  @RequestParam(name = "status", defaultValue = Constant.NOTHING) String status,
-                                 @RequestParam(name = "options", defaultValue = Constant.NOTHING) List<String> options) {
-        contractService.save(contract_number, email, tariffName, status, options);
-        return "redirect:/admin/clients";
+                                 @RequestParam(name = "options", defaultValue = Constant.NOTHING) List<String> options, Model model) {
+
+        Boolean mayBeConclusion = contractService.save(contractNumber, email, tariffName, status, options);
+        model.addAttribute("mayBeConclusion", mayBeConclusion);
+        if(!mayBeConclusion){
+            model.addAttribute("tariffs", tariffService.getAll());
+            model.addAttribute("options", optionService.getAll());
+            model.addAttribute("clients", clientService.getAll());
+            return "adminConclusionContract";
+        }
+        else{
+            return "redirect:/admin/clients";
+        }
+
     }
 
     @GetMapping("/edit")
@@ -168,8 +180,8 @@ public class AdminController {
     @PostMapping("/createOption")
     public String createOption(@RequestParam(name = "name", defaultValue = Constant.NOTHING) String optionName,
                                @RequestParam(name = "payment", defaultValue = Constant.NOTHING) String payment,
-                               @RequestParam(name = "connection_price", defaultValue = Constant.NOTHING) String connection_price, Model model) {
-        optionService.saveOption(new Option(optionName, payment, connection_price));
+                               @RequestParam(name = "connectionPrice", defaultValue = Constant.NOTHING) String connectionPrice, Model model) {
+        optionService.saveOption(new Option(optionName, payment, connectionPrice));
         model.addAttribute("options", optionService.getAll());
         return "adminOptions";
     }
@@ -191,6 +203,29 @@ public class AdminController {
         model.addAttribute("mayBeDelete", true);
         model.addAttribute("tariffs", tariffService.getAll());
         model.addAttribute("options", optionService.getAll());
+        return "adminTariffs";
+    }
+
+    @GetMapping("/changeTariff/{tariffName}")
+    public String changeTariff(@PathVariable("tariffName") String tariffName, Model model) {
+        model.addAttribute("options", optionService.getAll());
+        model.addAttribute("tariff", tariffService.getByName(tariffName));
+        return "adminTariffEdit";
+    }
+
+    @PostMapping("/changeTariff")
+    public String saveChangeTariff(@RequestParam(name = "previousTariffName", defaultValue = Constant.NOTHING) String previousTariffName,
+                                   @RequestParam(name = "newTariffName", defaultValue = Constant.NOTHING) String newTariffName,
+                                   @RequestParam(name = "tariffPayment", defaultValue = Constant.NOTHING) String payment,
+                                   @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete,
+                                   @RequestParam(name = "optionsToSave", defaultValue = Constant.NOTHING) List<String> optionsToSave, Model model) {
+
+        tariffService.updateTariff(previousTariffName, newTariffName, payment, optionsToDelete, optionsToSave);
+
+        model.addAttribute("tariffs", tariffService.getAll());
+        model.addAttribute("options", optionService.getAll());
+        model.addAttribute("mayBeSave", true);
+        model.addAttribute("mayBeDelete", true);
         return "adminTariffs";
     }
 

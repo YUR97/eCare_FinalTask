@@ -33,6 +33,7 @@ public class Client {
     private Set<Contract> contracts;
 
     public Client() {
+        contracts = new HashSet<>();
     }
 
     public Client(String name, String surname, Date birthday, String passport, String address, String email, String password) {

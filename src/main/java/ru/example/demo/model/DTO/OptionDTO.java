@@ -4,15 +4,15 @@ public class OptionDTO {
 
     private String name;
     private String payment;
-    private String connection_price;
+    private String connectionPrice;
 
     public OptionDTO() {
     }
 
-    public OptionDTO(String name, String payment, String connection_price) {
+    public OptionDTO(String name, String payment, String connectionPrice) {
         this.name = name;
         this.payment = payment;
-        this.connection_price = connection_price;
+        this.connectionPrice = connectionPrice;
     }
 
     public String getName() {
@@ -23,8 +23,8 @@ public class OptionDTO {
         return payment;
     }
 
-    public String getConnection_price() {
-        return connection_price;
+    public String getConnectionPrice() {
+        return connectionPrice;
     }
 
     public void setName(String name) {
@@ -35,7 +35,7 @@ public class OptionDTO {
         this.payment = payment;
     }
 
-    public void setConnection_price(String connection_price) {
-        this.connection_price = connection_price;
+    public void setConnectionPrice(String connectionPrice) {
+        this.connectionPrice = connectionPrice;
     }
 }

@@ -63,8 +63,8 @@ public class ClientController {
     }
 
     @PostMapping("/edit")
-    public String edit(@RequestParam(name = "contract_number") String contract_number, Model model) {
-        ContractDTO contractDTO = contractService.getByContract_number(contract_number);
+    public String edit(@RequestParam(name = "contractNumber") String contractNumber, Model model) {
+        ContractDTO contractDTO = contractService.getByContractNumber(contractNumber);
         List<TariffDTO> tariffsDTO = tariffService.getAll();
         List<OptionDTO> optionDTOS = optionService.getAll();
         model.addAttribute("options", optionDTOS);
@@ -74,16 +74,19 @@ public class ClientController {
     }
 
     @PostMapping("/saveEdit")
-    public String saveEdit(@RequestParam("contract_number") String contract_number, @RequestParam(value = "tariffChoice", defaultValue = Constant.NOTHING) String tariffChoice, @RequestParam(name = "option", defaultValue = Constant.NOTHING) List<String> options, @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete) {
-        contractService.setOptions(contract_number, options);
-        contractService.setTariff(contract_number, tariffChoice);
-        contractService.removeOption(contract_number, optionsToDelete);
+    public String saveEdit(@RequestParam(name = "contractNumber") String contractNumber,
+                           @RequestParam(value = "tariffChoice", defaultValue = Constant.NOTHING) String tariffChoice,
+                           @RequestParam(name = "option", defaultValue = Constant.NOTHING) List<String> options,
+                           @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete) {
+        contractService.setOptions(contractNumber, options);
+        contractService.setTariff(contractNumber, tariffChoice);
+        contractService.removeOption(contractNumber, optionsToDelete);
         return Constant.REDIRECT;
     }
 
     @PostMapping("/changeStatus")
-    public String changeStatus(@RequestParam("contract_number") String contract_number, @RequestParam("status") String status) {
-        contractService.setStatusClient(contract_number, status);
+    public String changeStatus(@RequestParam("contractNumber") String contractNumber, @RequestParam("status") String status) {
+        contractService.setStatusClient(contractNumber, status);
         return Constant.REDIRECT;
     }
 

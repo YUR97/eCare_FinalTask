@@ -15,7 +15,7 @@ public class ClientConverterDTO {
         RoleDTO roleDTO = new RoleDTO(client.getRole().getName());
         for (Contract contract : client.getContracts()) {
             ContractDTO contractDTO = new ContractDTO();
-            contractDTO.setContract_number(contract.getContract_number());
+            contractDTO.setContractNumber(contract.getContractNumber());
             contractDTO.setStatus(contract.getStatus());
             clientDTO.addContractDTO(contractDTO);
         }

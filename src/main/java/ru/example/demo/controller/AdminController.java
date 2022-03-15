@@ -10,6 +10,7 @@ import ru.example.demo.constants.Constant;
 import ru.example.demo.model.Client;
 import ru.example.demo.model.DTO.ClientDTO;
 import ru.example.demo.model.DTO.ContractDTO;
+import ru.example.demo.model.Option;
 import ru.example.demo.service.*;
 
 import java.util.ArrayList;
@@ -78,8 +79,8 @@ public class AdminController {
 
     @PostMapping("contract/changeStatus")
     public String showContractChanged(@RequestParam(name = "contract_number") String contract_number,
-                                      @RequestParam(name = "status") String status, Model model){
-        contractService.setStatusAdmin(contract_number,status);
+                                      @RequestParam(name = "status") String status, Model model) {
+        contractService.setStatusAdmin(contract_number, status);
         model.addAttribute("contract", contractService.getByContract_number(contract_number));
         return "showContractToAdmin";
     }
@@ -152,6 +153,9 @@ public class AdminController {
     @GetMapping("/tariffs")
     public String showTariffs(Model model) {
         model.addAttribute("tariffs", tariffService.getAll());
+        model.addAttribute("options", optionService.getAll());
+        model.addAttribute("mayBeSave", true);
+        model.addAttribute("mayBeDelete", true);
         return "adminTariffs";
     }
 
@@ -160,4 +164,34 @@ public class AdminController {
         model.addAttribute("options", optionService.getAll());
         return "adminOptions";
     }
+
+    @PostMapping("/createOption")
+    public String createOption(@RequestParam(name = "name", defaultValue = Constant.NOTHING) String optionName,
+                               @RequestParam(name = "payment", defaultValue = Constant.NOTHING) String payment,
+                               @RequestParam(name = "connection_price", defaultValue = Constant.NOTHING) String connection_price, Model model) {
+        optionService.saveOption(new Option(optionName, payment, connection_price));
+        model.addAttribute("options", optionService.getAll());
+        return "adminOptions";
+    }
+
+    @PostMapping("/deleteTariff")
+    public String deleteTariff(@RequestParam(name = "nameTariffToDelete") String tariffName, Model model) {
+        model.addAttribute("mayBeSave", true);
+        model.addAttribute("mayBeDelete", tariffService.deleteTariff(tariffName));
+        model.addAttribute("tariffs", tariffService.getAll());
+        model.addAttribute("options", optionService.getAll());
+        return "adminTariffs";
+    }
+
+    @PostMapping("/createTariff")
+    public String createTariff(@RequestParam(name = "name", defaultValue = Constant.NOTHING) String tariffName,
+                               @RequestParam(name = "payment", defaultValue = Constant.NOTHING) String payment,
+                               @RequestParam(name = "options", defaultValue = Constant.NOTHING) List<String> options, Model model) {
+        model.addAttribute("mayBeSave", tariffService.createTariff(tariffName, payment, options));
+        model.addAttribute("mayBeDelete", true);
+        model.addAttribute("tariffs", tariffService.getAll());
+        model.addAttribute("options", optionService.getAll());
+        return "adminTariffs";
+    }
+
 }

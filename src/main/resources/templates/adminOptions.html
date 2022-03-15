@@ -18,6 +18,7 @@
 </header>
 <main>
     <div class="outerDiv">
+        <div>Опции:</div>
         <div th:each="option : ${options}">
             <table>
                 <tr>
@@ -33,6 +34,15 @@
                 </tr>
             </table>
         </div>
+    </div>
+    <div class="outerDiv">
+        <div>Новая опция</div>
+        <form th:method="POST" th:action="@{/admin/createOption}">
+            <input type="text" placeholder="Название" name="name">
+            <input type="text" placeholder="Платеж" name="payment">
+            <input type="text" placeholder="Стоимость подключения" name="connection_price">
+            <button>Создать</button>
+        </form>
     </div>
 </main>
 </body>

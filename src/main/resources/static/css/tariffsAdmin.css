@@ -42,9 +42,10 @@ header button {
     font-size: 20px;
 }
 
-button:hover {
+header button:hover {
     transition: 1s;
     background-color: greenyellow;
+    color: black;
 }
 
 main {
@@ -63,20 +64,158 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
-    padding-top: 40px;
+    padding: 30px;
     background-color: wheat;
-    width: 800px;
-    height: 600px;
-    border: 2px solid;
+    width: 840px;
+    height: 500px;
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    border-right: 2px solid;
     overflow: auto;
 }
 
-table td {
+.formForSave {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table:not(.optionTableToCreate) td {
     text-align: center;
-    width: 200px;
-    height: 50px;
+    width: 150px;
+    height: 60px;
     font-size: 16px;
     background-color: darkgrey;
     border: 2px solid;
+}
+
+.listOfSomething {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    height: 40px;
+    padding: 10px;
+    overflow: auto;
+}
+
+.optionListToCreate {
+    width: 400px;
+    height: 200px;
+    background-color: #7AC7FA;
+    border: 2px solid black;
+    overflow: auto;
+    margin: 20px;
+    padding: 20px;
+}
+
+.optionTableToCreate td:first-child {
+    width: 150px;
+    height: 20px;
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    border: 2px solid;
+    background-color: wheat;
+}
+
+.optionTableToCreate td:nth-child(2) {
+    padding-left: 10px;
+}
+
+.optionTableToCreate td:nth-child(2) input {
+    transform: scale(2);
+}
+
+th {
+    width: 150px;
+    height: 30px;
+    border: 2px solid;
+    background-color: #A8E4A0;
+}
+
+.createInput {
+    width: 200px;
+    height: 20px;
+    padding: 10px;
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.titleCreates {
+    width: 420px;
+    height: 20px;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid;
+    background-color: #A8E4A0;
+    color: black;
+    font-size: 18px;
+}
+
+.titleInfo {
+    text-align: center;
+    width: 880px;
+    padding: 10px;
+    font-size: 18px;
+    background-color: royalblue;
+    color: white;
+    border: 2px solid black;
+    margin-top: 40px;
+}
+
+.errorInfo {
+    text-align: center;
+    width: 880px;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: darkred;
+    color: white;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.warningInfo {
+    text-align: center;
+    width: 880px;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: yellow;
+    color: black;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.buttons {
+    width: 120px;
+    height: 25px;
+    margin: 3px;
+    background-color: royalblue;
+    color: white;
+}
+
+.createButton {
+    width: 444px;
+    height: 50px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+    background-color: royalblue;
+    color: white;
+}
+
+.createButton:hover {
+    transition: 1s;
+    background-color: #A8E4A0;
+    color: black;
+}
+
+.buttons:hover {
+    transition: 1s;
+    background-color: #A8E4A0;
+    color: black;
 }

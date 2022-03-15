@@ -17,23 +17,81 @@
     </form>
 </header>
 <main>
-    <div class="outerDiv">
-        <div th:each="tariff : ${tariffs}">
+    <div>
+        <div class="titleInfo">Тарифы:</div>
+        <div class="outerDiv">
             <table>
-                <tr>
-                    <td>
-                        <div th:text="${tariff.getName()}"></div>
-                    </td>
-                    <td>
-                        <div th:text="${tariff.getPayment()}"></div>
-                    </td>
-                    <td>
-                        <div th:each="option : ${tariff.getOptionsDTO()}">
-                            <div th:text="${option.getName()}"></div>
-                        </div>
-                    </td>
-                </tr>
+                <th>Название</th><th>Платеж</th><th>Опции</th><th>Контракты</th><th>Операция</th>
             </table>
+            <div th:each="tariff : ${tariffs}">
+                <table>
+                    <tr>
+                        <td>
+                            <div th:text="${tariff.getName()}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${tariff.getPayment()}"></div>
+                        </td>
+                        <td>
+                            <div class="listOfSomething">
+                                <div th:each="option : ${tariff.getOptionsDTO()}">
+                                    <div th:text="${option.getName()}"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="listOfSomething" th:if="${tariff.getContractsDTO().size()!=0}">
+                                <div th:each="contract : ${tariff.getContractsDTO()}" class="contractsForTariff">
+                                    <div th:text="${contract.getContract_number()}"></div>
+                                </div>
+                            </div>
+                            <div th:if="${tariff.getContractsDTO().size()==0}" th:text="'Контрактов нет'"
+                                 id="divContractInfo"></div>
+                        </td>
+                        <td>
+                            <button class="buttons">Изменить</button>
+                            <form th:method="POST" th:action="@{/admin/deleteTariff}">
+                                <input hidden th:value="${tariff.getName()}" name="nameTariffToDelete">
+                                <button class="buttons">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div th:if="${!mayBeDelete}">
+            <div class="errorInfo">Тариф не может быть удален, пока есть использующие его номера</div>
+        </div>
+    </div>
+    <div>
+        <div class="titleInfo">Создать тариф:</div>
+        <div class="outerDiv">
+            <form th:method="POST" th:action="@{/admin/createTariff}" class="formForSave">
+                <div class="titleCreates">Введите данные тарифа:</div>
+                <div>
+                    <input type="text" placeholder="Название" name="name" class="createInput">
+                    <input type="text" placeholder="Платеж" name="payment" class="createInput">
+                </div>
+                <div class="titleCreates">Выберите опции тарифа:</div>
+                <div class="optionListToCreate">
+                    <div th:each="option : ${options}">
+                        <table class="optionTableToCreate">
+                            <tr>
+                                <td>
+                                    <label th:text="${option.getName()}"></label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" th:value="${option.getName()}" name="options">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <button class="createButton">Создать</button>
+            </form>
+        </div>
+        <div th:if="${!mayBeSave}">
+            <div class="warningInfo">Проверьте, все ли заполнено!</div>
         </div>
     </div>
 </main>

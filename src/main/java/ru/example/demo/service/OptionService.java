@@ -2,6 +2,7 @@ package ru.example.demo.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.example.demo.constants.Constant;
 import ru.example.demo.model.DTO.OptionDTO;
 import ru.example.demo.model.DTO.converter.OptionConverterDTO;
 import ru.example.demo.model.Option;
@@ -28,6 +29,13 @@ public class OptionService {
             optionDTOS.add(optionConverterDTO.convert(option));
         }
         return optionDTOS;
+    }
+
+    @Transactional
+    public void saveOption(Option option) {
+        if (!(option.getName().contains(Constant.NOTHING) | option.getPayment().contains(Constant.NOTHING) | option.getConnection_price().contains(Constant.NOTHING))) {
+            optionRepository.save(option);
+        }
     }
 
 }

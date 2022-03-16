@@ -44,13 +44,12 @@
                             </div>
                         </td>
                         <td>
-                            <div class="listOfSomething" th:if="${tariff.getContractsDTO().size()!=0}">
-                                <div th:each="contract : ${tariff.getContractsDTO()}" class="contractsForTariff">
-                                    <div th:text="${contract.getContractNumber()}"></div>
-                                </div>
+                            <div class="useful" th:if="${tariff.getContractsDTO().size()!=0}">
+                                Используется
                             </div>
-                            <div th:if="${tariff.getContractsDTO().size()==0}" th:text="'Контрактов нет'"
-                                 id="divContractInfo"></div>
+                            <div th:if="${tariff.getContractsDTO().size()==0}" class="useless">
+                                Не используется
+                            </div>
                         </td>
                         <td>
                             <form th:method="GET" th:action="@{/admin/changeTariff/{id}(id=${tariff.getName()})}">

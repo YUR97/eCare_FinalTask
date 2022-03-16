@@ -10,6 +10,8 @@ import ru.example.demo.constants.Constant;
 import ru.example.demo.model.Client;
 import ru.example.demo.model.DTO.ClientDTO;
 import ru.example.demo.model.DTO.ContractDTO;
+import ru.example.demo.model.DTO.OptionDTO;
+import ru.example.demo.model.DTO.TariffDTO;
 import ru.example.demo.model.Option;
 import ru.example.demo.service.*;
 
@@ -132,13 +134,12 @@ public class AdminController {
 
         Boolean mayBeConclusion = contractService.save(contractNumber, email, tariffName, status, options);
         model.addAttribute("mayBeConclusion", mayBeConclusion);
-        if(!mayBeConclusion){
+        if (!mayBeConclusion) {
             model.addAttribute("tariffs", tariffService.getAll());
             model.addAttribute("options", optionService.getAll());
             model.addAttribute("clients", clientService.getAll());
             return "adminConclusionContract";
-        }
-        else{
+        } else {
             return "redirect:/admin/clients";
         }
 
@@ -164,7 +165,9 @@ public class AdminController {
 
     @GetMapping("/tariffs")
     public String showTariffs(Model model) {
-        model.addAttribute("tariffs", tariffService.getAll());
+        List<TariffDTO> tariffsDTO = tariffService.getAll();
+        Collections.sort(tariffsDTO, (Comparator.comparing(TariffDTO::getName)));
+        model.addAttribute("tariffs", tariffsDTO);
         model.addAttribute("options", optionService.getAll());
         model.addAttribute("mayBeSave", true);
         model.addAttribute("mayBeDelete", true);
@@ -173,7 +176,10 @@ public class AdminController {
 
     @GetMapping("/options")
     public String showOptions(Model model) {
-        model.addAttribute("options", optionService.getAll());
+        List<OptionDTO> optionsDTO = optionService.getAll();
+        Collections.sort(optionsDTO, (Comparator.comparing(OptionDTO::getName)));
+        model.addAttribute("mayBeSave", true);
+        model.addAttribute("options", optionsDTO);
         return "adminOptions";
     }
 
@@ -181,9 +187,15 @@ public class AdminController {
     public String createOption(@RequestParam(name = "name", defaultValue = Constant.NOTHING) String optionName,
                                @RequestParam(name = "payment", defaultValue = Constant.NOTHING) String payment,
                                @RequestParam(name = "connectionPrice", defaultValue = Constant.NOTHING) String connectionPrice, Model model) {
-        optionService.saveOption(new Option(optionName, payment, connectionPrice));
+        model.addAttribute("mayBeSave", optionService.saveOption(new Option(optionName, payment, connectionPrice)));
         model.addAttribute("options", optionService.getAll());
         return "adminOptions";
+    }
+
+    @GetMapping("/deleteOption/{optionName}")
+    public String deleteOption(@PathVariable(name = "optionName") String optionName) {
+        optionService.deleteOption(optionName);
+        return "redirect:/admin/options";
     }
 
     @PostMapping("/deleteTariff")
@@ -208,6 +220,7 @@ public class AdminController {
 
     @GetMapping("/changeTariff/{tariffName}")
     public String changeTariff(@PathVariable("tariffName") String tariffName, Model model) {
+        model.addAttribute("mayBeUpdated", true);
         model.addAttribute("options", optionService.getAll());
         model.addAttribute("tariff", tariffService.getByName(tariffName));
         return "adminTariffEdit";
@@ -220,13 +233,20 @@ public class AdminController {
                                    @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete,
                                    @RequestParam(name = "optionsToSave", defaultValue = Constant.NOTHING) List<String> optionsToSave, Model model) {
 
-        tariffService.updateTariff(previousTariffName, newTariffName, payment, optionsToDelete, optionsToSave);
+        boolean mayBeUpdated = tariffService.updateTariff(previousTariffName, newTariffName, payment, optionsToDelete, optionsToSave);
+        model.addAttribute("mayBeUpdated", mayBeUpdated);
 
-        model.addAttribute("tariffs", tariffService.getAll());
-        model.addAttribute("options", optionService.getAll());
-        model.addAttribute("mayBeSave", true);
-        model.addAttribute("mayBeDelete", true);
-        return "adminTariffs";
+        if (mayBeUpdated) {
+            model.addAttribute("tariffs", tariffService.getAll());
+            model.addAttribute("options", optionService.getAll());
+            model.addAttribute("mayBeSave", true);
+            model.addAttribute("mayBeDelete", true);
+            return "adminTariffs";
+        } else {
+            model.addAttribute("options", optionService.getAll());
+            model.addAttribute("tariff", tariffService.getByName(newTariffName));
+            return "adminTariffEdit";
+        }
     }
 
 }

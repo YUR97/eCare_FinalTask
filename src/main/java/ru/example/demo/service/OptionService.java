@@ -9,6 +9,7 @@ import ru.example.demo.model.Option;
 import ru.example.demo.repo.OptionRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -32,10 +33,24 @@ public class OptionService {
     }
 
     @Transactional
-    public void saveOption(Option option) {
+    public boolean saveOption(Option option) {
+        boolean mayBeSave;
         if (!(option.getName().contains(Constant.NOTHING) | option.getPayment().contains(Constant.NOTHING) | option.getConnectionPrice().contains(Constant.NOTHING))) {
-            optionRepository.save(option);
+            if (optionRepository.findByName(option.getName()) == null) {
+                optionRepository.save(option);
+                mayBeSave = true;
+            } else {
+                mayBeSave = false;
+            }
+        } else {
+            mayBeSave = false;
         }
+        return mayBeSave;
+    }
+
+    @Transactional
+    public void deleteOption(String optionName) {
+        optionRepository.deleteById(optionRepository.findByName(optionName).getId());
     }
 
 }

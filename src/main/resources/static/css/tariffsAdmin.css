@@ -80,6 +80,15 @@ main {
     align-items: center;
 }
 
+.listOfSomething {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    height: 40px;
+    padding: 10px;
+    overflow: auto;
+}
+
 table:not(.optionTableToCreate) td {
     text-align: center;
     width: 150px;
@@ -89,13 +98,21 @@ table:not(.optionTableToCreate) td {
     border: 2px solid;
 }
 
-.listOfSomething {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
+table:not(.optionTableToCreate) td:nth-child(4) {
+    background-color: black;
+}
+
+.useful {
     height: 40px;
-    padding: 10px;
-    overflow: auto;
+    padding-top: 20px;
+    background-color: #A8E4A0;
+}
+
+.useless {
+    height: 45px;
+    padding-top: 15px;
+    background-color: darkred;
+    color: white;
 }
 
 .optionListToCreate {

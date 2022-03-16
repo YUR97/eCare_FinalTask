@@ -50,8 +50,8 @@ button:not(.changeButton):hover {
 
 main {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
     margin-left: auto;
     margin-right: auto;
     width: 98%;
@@ -68,7 +68,6 @@ main {
     height: 600px;
     background-color: wheat;
     border: 2px solid;
-    margin-top: 50px;
     padding: 30px;
 }
 
@@ -162,4 +161,22 @@ label {
     transition: 1s;
     background-color: #A8E4A0;
     color: black;
+}
+
+.errorInfo {
+    width: 760px;
+    height: 40px;
+    margin-top: 20px;
+    padding-top: 20px;
+    font-size: 20px;
+    color: white;
+    background-color: darkred;
+    border-left: 2px solid;
+    border-right: 2px solid;
+    border-top: 2px solid;
+    border-color: black;
+    text-align: center;
+}
+.replace {
+    height: 70px;
 }

@@ -46,7 +46,7 @@ public class TariffService {
     public boolean updateTariff(String previousName, String newName, String payment, List<String> optionsToDelete, List<String> optionsToSave) {
         boolean mayBeUpdated;
         Tariff tariffToUpdate = tariffRepository.findTariffByName(newName);
-        if (tariffToUpdate  == null || tariffToUpdate.getName().equals(newName)) {
+        if (tariffToUpdate == null || newName.equals(previousName)) {
             Tariff tariff = tariffRepository.findTariffByName(previousName);
             tariff.setName(newName);
             tariff.setPayment(payment);

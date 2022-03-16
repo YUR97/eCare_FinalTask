@@ -66,18 +66,132 @@ main {
     margin-top: 40px;
     padding-top: 40px;
     padding-bottom: 40px;
-    background-color: wheat;
-    width: 800px;
+    width: 900px;
     height: 600px;
-    border: 2px solid;
-    overflow: auto;
 }
 
-table td {
-    text-align: center;
-    width: 200px;
-    height: 50px;
-    font-size: 16px;
-    background-color: darkgrey;
+.innerDiv {
+    overflow: auto;
+    width: 800px;
+    height: 500px;
     border: 2px solid;
+    padding: 10px;
+    background-color: darkgrey;
+}
+
+.title {
+    text-align: center;
+    width: 820px;
+    height: 40px;
+    padding-top: 10px;
+    font-size: 20px;
+    background-color: royalblue;
+    color: white;
+    border-top: 2px solid;
+    border-right: 2px solid;
+    border-left: 2px solid;
+    border-color: black;
+}
+
+table:not(.createTable) td {
+    text-align: center;
+    width: 130px;
+    height: 70px;
+    font-size: 16px;
+    background-color: wheat;
+    border: 2px solid;
+}
+
+table:not(.createTable) td:nth-child(4) {
+    background-color: black;
+}
+
+table th {
+    text-align: center;
+    width: 130px;
+    height: 30px;
+    font-size: 16px;
+    background-color: yellow;
+    border: 2px solid;
+}
+
+.useful {
+    height: 55px;
+    padding-top: 15px;
+    background-color: #A8E4A0;
+    color: black;
+}
+
+.useless {
+    height: 55px;
+    padding-top: 15px;
+    background-color: darkred;
+    color: white;
+}
+
+.currentOptionButton {
+    width: 100px;
+    height: 20px;
+    background-color: royalblue;
+    color: white;
+    margin: 5px;
+}
+
+.currentOptionButton:hover {
+    background-color: #A8E4A0;
+    color: black;
+}
+
+.errorInfo {
+    height: 40px;
+    padding-top: 15px;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+    background-color: darkred;
+    color: white;
+    border: 2px solid black;
+}
+
+.createForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createForm input {
+    width: 250px;
+    height: 50px;
+    font-size: 20px;
+}
+
+.createForm button {
+    width: 470px;
+    height: 50px;
+    font-size: 20px;
+    margin-top: 15px;
+    background-color: royalblue;
+    color: white;
+    border-radius: 10px;
+}
+
+.createForm button:hover {
+    background-color: #A8E4A0;
+    color: black;
+}
+
+.createTable {
+    margin-top: 15px;
+}
+
+.createTable td {
+    width: 250px;
+    text-align: center;
+}
+.createTable td:first-child {
+    width: 200px;
+    height: 50px ;
+    border:2px solid;
+    background-color: wheat;
+    font-size: 20px;
 }

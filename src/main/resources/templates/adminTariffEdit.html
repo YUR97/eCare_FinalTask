@@ -17,6 +17,8 @@
     </form>
 </header>
 <main>
+    <div th:if="${!mayBeUpdated}" class="errorInfo">Выбранное название уже существует</div>
+    <div th:if="${mayBeUpdated}" class="replace"></div>
     <form method="POST" th:action="@{/admin/changeTariff}">
         <input hidden th:value="${tariff.getName()}" name="previousTariffName">
         <div class="outerDiv">

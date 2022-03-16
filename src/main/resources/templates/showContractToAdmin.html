@@ -69,7 +69,9 @@
             </tr>
         </table>
         <div class="buttons">
-            <button id="changeButton">Изменить</button>
+            <form th:method="GET" th:action="@{/admin/changeContract/{contractNumber}(contractNumber=${contract.getContractNumber()})}">
+                <button id="changeButton">Изменить</button>
+            </form>
         </div>
         <div class="buttons">
             <form th:method="POST" th:action="@{/admin/contract/changeStatus}">

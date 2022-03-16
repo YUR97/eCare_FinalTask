@@ -60,184 +60,233 @@ main {
     background-color: #7AC7FA;
 }
 
-.divFormChange {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 1600px;
-    height: 730px;
-}
-
-.divFormChangeOuter {
+main form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 700px;
-    height: 650px;
-    margin-top: 40px;
-    background-color: wheat;
-    border: 2px solid;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
 }
 
-.divFormChangeInner {
-    margin: 20px auto;
-    padding: 20px;
-    width: 600px;
-    height: 220px;
-    background-color: #54B0FF;
-    border: 2px solid;
-    overflow: auto;
+.divFormChange {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.divFormChangeOuter:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    margin-top: 30px;
+}
+
+.divFormChangeOuter:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 100%;
+    margin-top: 30px;
 }
 
 .divFormChangeInnerTitle {
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
-    width: 600px;
-    height: 200px;
-    background-color: #54B0FF;
-    border-top: 2px solid;
-    border-left: 2px solid;
-    border-right: 2px solid;
-    font-size: 20px;
+    width: 100%;
+    height: 206px;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
 }
 
 .divFormChangeInnerOptionDelete {
-    padding: 20px;
-    width: 600px;
-    height: 280px;
-    background-color: #A8E4A0;
-    border: 2px solid;
-    font-size: 20px;
+    width: 100%;
+    border: 2px solid black;
+}
+
+.headTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background-color: royalblue;
+    color: white;
+    font-weight: bold;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 50px;
+    background-color: lightsteelblue;
+    border-top: 2px solid black;
+    padding-left: 10px;
 }
 
 .optionDeleteTitle {
-    text-align: center;
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background-color: #A8E4A0;
+    color: black;
+    border-bottom: 2px solid black;
 }
 
 #divAddedOptionsDelete {
-    background-color: #999999;
-    margin-left: auto;
-    margin-right: auto;
-    width: 600px;
-    height: 180px;
-    border: 2px solid;
+    height: 250px;
     overflow: auto;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    background-color: wheat;
 }
 
 #divAddedOptionsDelete table {
-    padding-left: 20px;
+    margin: 20px;
+    border: 2px solid;
+    background-color: #A8E4A0;
 }
 
-#divAddedOptionsDelete table td {
-    width: 150px;
+#divAddedOptionsDelete table td:first-child {
+    width: 300px;
     height: 50px;
-
+    text-align: center;
+    border: 2px solid;
 }
 
-#divAddedOptionsDelete table td:first-child{
-    background-color: wheat;
+#divAddedOptionsDelete table td:nth-child(2) {
+    width: 50px;
+    height: 50px;
+    padding-left: 30px;
+    background-color: royalblue;
     border: 2px solid;
 }
 
 #divAddedOptionsDelete table td:nth-child(2) input {
-    margin-left: 20px;
     transform: scale(2);
 }
 
-.title {
-    width: 300px;
-    border-left: 2px solid;
-    border-right: 2px solid;
-    border-top: 2px solid;
+.divFormChangeInner {
+    border: 2px solid black;
+}
+
+.divFormChangeInner:nth-child(2) {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+    height: 370px;
     background-color: wheat;
-    padding: 10px;
+    overflow: auto;
 }
 
-.title:last-child{
-    border-bottom: 2px solid;
+.divFormChangeInner:nth-child(4) {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 200px;
+    background-color: wheat;
+    overflow: auto;
+    flex-wrap: wrap;
 }
 
-.headTitle {
-    width: 300px;
+.divFormChangeOuter:nth-child(2) .headTitle:first-child {
+    width: 100%;
+    border-top: 2px solid black;
     border-left: 2px solid black;
     border-right: 2px solid black;
-    border-top: 2px solid black;
+}
+
+.divFormChangeOuter:nth-child(2) .headTitle:nth-child(3) {
+    width: 100%;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.tableTariffs {
+    width: 300px;
+    margin: 20px 30px;
+    border: 2px solid black;
+    background-color: darkgrey;
+}
+
+.titleTd {
+    height: 40px;
+    text-align: center;
+    background-color: #A8E4A0;
+    border: 2px solid black;
+}
+
+.listOfOptions {
+    height: 100px;
+    overflow: auto;
+    background-color: lightsteelblue;
+    border: 2px solid black;
+}
+
+.tableTariffs tr:nth-child(2) td {
+    height: 40px;
+    text-align: center;
+    background-color: wheat;
+    border: 2px solid black;
+}
+
+.tableTariffs tr:last-child td {
+    text-align: center;
+    height: 40px;
     background-color: royalblue;
     color: white;
-    padding: 10px;
+    border: 2px solid black;
 }
 
-.infoList {
-    display: flex;
-    justify-content: left;
-    align-content: center;
-    height: 40px;
-    padding-top: 8px;
+.tableTariffs tr:last-child td input {
+    margin-left: 10px;
+    transform: scale(2);
 }
 
-#divAddedOptions {
-    overflow: auto;
-    height: 200px;
-    background-color: #999999;
+.tableOptions {
+    background-color: #A8E4A0;
+    border: 2px solid black;
+    margin: 20px;
 }
 
-.tableTariffs td {
-    margin: 5px;
-    width: 150px;
-    height: 50px;
-    background-color: wheat;
-    border: 2px solid;
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.radioInput {
-    transform: scale(2.5);
+#options {
+    width: 40%;
 }
 
 .tableOptions td:first-child {
-    margin: 5px;
-    width: 150px;
+    width: 300px;
     height: 50px;
-    background-color: wheat;
+    text-align: center;
     border: 2px solid;
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 20px;
-    font-weight: bold;
 }
 
 .tableOptions td:nth-child(2) {
     width: 50px;
-    padding-left: 20px;
+    height: 50px;
+    padding-left: 30px;
+    background-color: royalblue;
+    border: 2px solid;
 }
 
-.tableOptions td:nth-child(2) input {
+.tableOptions input {
     transform: scale(2);
 }
 
-.divButton {
-    text-align: center;
-}
-
 .changeButton {
-    width: 500px;
-    height: 50px;
-    align-items: center;
+    margin-top: 50px;
+    width: 400px;
+    height: 70px;
+    font-size: 20px;
     border-radius: 10px;
     background-color: royalblue;
-    color: wheat;
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 20px;
-    font-weight: bold;
+    color: white;
 }
 
 .changeButton:hover {
+    transition: 1s;
     background-color: #A8E4A0;
     color: black;
 }

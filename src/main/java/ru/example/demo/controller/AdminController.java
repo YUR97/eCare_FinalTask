@@ -87,15 +87,30 @@ public class AdminController {
         return "showContractToAdmin";
     }
 
+    @GetMapping("/changeContract/{contractNumber}")
+    public String changeContract(@PathVariable("contractNumber") String contractNumber, Model model) {
+        model.addAttribute("contract", contractService.getByContractNumber(contractNumber));
+        model.addAttribute("options", optionService.getAll());
+        model.addAttribute("tariffs", tariffService.getAll());
+        return "adminEditContract";
+    }
+
+    @PostMapping("/saveEditContract")
+    public String saveEditContract(@RequestParam(name = "contractNumber") String contractNumber,
+                                   @RequestParam(value = "tariffChoice", defaultValue = Constant.NOTHING) String tariffChoice,
+                                   @RequestParam(name = "option", defaultValue = Constant.NOTHING) List<String> options,
+                                   @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete) {
+        contractService.setOptions(contractNumber, options);
+        contractService.setTariff(contractNumber, tariffChoice);
+        contractService.removeOption(contractNumber, optionsToDelete);
+        return "redirect:/admin/contract/" + contractNumber;
+    }
+
     @GetMapping("/client/{id}")
     public String showClient(@PathVariable("id") int id, Model model) {
         ClientDTO clientDTO = clientService.getById(id);
         model.addAttribute("client", clientDTO);
-        if (lockClientService.getLockedClient(clientDTO.getEmail()) != null) {
-            model.addAttribute("isLock", true);
-        } else {
-            model.addAttribute("isLock", false);
-        }
+        model.addAttribute("isLock", lockClientService.getLockedClient(clientDTO.getEmail()) != null);
         return "showClientToAdmin";
     }
 
@@ -108,11 +123,7 @@ public class AdminController {
             lockClientService.unlockClient(clientDTO.getEmail());
         }
         model.addAttribute("client", clientDTO);
-        if (lockClientService.getLockedClient(clientDTO.getEmail()) != null) {
-            model.addAttribute("isLock", true);
-        } else {
-            model.addAttribute("isLock", false);
-        }
+        model.addAttribute("isLock", lockClientService.getLockedClient(clientDTO.getEmail()) != null);
         return "showClientToAdmin";
     }
 
@@ -244,7 +255,7 @@ public class AdminController {
             return "adminTariffs";
         } else {
             model.addAttribute("options", optionService.getAll());
-            model.addAttribute("tariff", tariffService.getByName(newTariffName));
+            model.addAttribute("tariff", tariffService.getByName(previousTariffName));
             return "adminTariffEdit";
         }
     }

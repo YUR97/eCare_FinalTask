@@ -2,15 +2,16 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Изменение</title>
-    <link rel="stylesheet" type="text/css" href="../css/editContract.css">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/editContract.css">
 </head>
 <body>
 <header>
     <button onclick="location.href='/home'">Домашняя</button>
-    <button onclick="location.href='/client/contracts'">Мои контракты</button>
-    <button onclick="location.href='/client/tariffs'">Тарифы</button>
-    <button>Корзина</button>
+    <button onclick="location.href='/admin/clients'">Пользователи</button>
+    <button onclick="location.href='/admin/tariffs'">Тарифы</button>
+    <button onclick="location.href='/admin/options'">Опции</button>
+    <button onclick="location.href='/admin/conclusionContract'">Заключение контракта</button>
     <form th:method="POST" th:action="@{/logout}">
         <button>Выход</button>
     </form>

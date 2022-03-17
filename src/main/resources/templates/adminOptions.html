@@ -50,7 +50,9 @@
                             </div>
                         </td>
                         <td>
-                            <button class="currentOptionButton">Изменить</button>
+                            <form th:method="GET" th:action="@{/admin/editOption/{name}(name=${option.getName()})}">
+                                <button class="currentOptionButton">Изменить</button>
+                            </form>
                             <form th:method="GET"
                                   th:action="@{/admin/deleteOption/{optionName}(optionName=${option.getName()})}"
                                   th:if="${((option.getTariffsDTO().size()==0)&&(option.getContractsDTO().size()==0))}">

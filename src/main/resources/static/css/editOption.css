@@ -1,0 +1,135 @@
+body {
+    opacity: 0;
+    animation: ani 0.5s forwards;
+    animation-timing-function: linear;
+}
+
+@keyframes ani {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+body {
+    background-color: #54B0FF;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 3px solid;
+    border-left: 3px solid;
+    border-right: 3px solid;
+    width: 98%;
+    height: 100px;
+    background-color: #A8E4A0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+header button {
+    width: 200px;
+    height: 50px;
+    background-color: royalblue;
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+header button:hover {
+    transition: 1s;
+    background-color: greenyellow;
+    color: black;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    width: 98%;
+    height: 820px;
+    border: 3px solid;
+    background-color: #7AC7FA;
+}
+
+main form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+    height: 400px;
+    background-color: wheat;
+    border: 2px solid black;
+    margin-top: 50px;
+    padding: 50px 20px 20px;
+    font-size: 20px;
+}
+
+table {
+    border: 2px solid black;
+    padding: 5px;
+    background-color: lightsteelblue;
+}
+
+.headTitle {
+    text-align: center;
+    background-color: royalblue;
+    color: white;
+    height: 40px;
+    padding-top: 15px;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+td {
+    width: 200px;
+    height: 50px;
+}
+
+td:first-child {
+    padding-left: 10px;
+    border: 2px solid;
+    background-color: wheat;
+}
+
+input {
+    padding-left: 10px;
+    height: 80%;
+    font-size: 20px;
+}
+
+.changeButton {
+    width: 400px;
+    height:50px;
+    background-color: royalblue;
+    color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.changeButton:hover {
+    transition: 1s;
+    background-color: #A8E4A0;
+    color: black;
+}
+
+.warningInfo {
+    width: 400px;
+    height: 40px;
+    text-align: center;
+    padding-top: 15px;
+    background-color: darkred;
+    color: white;
+    border: 2px solid black;
+    margin-top: 10px;
+}

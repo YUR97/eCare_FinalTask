@@ -15,13 +15,11 @@ window.onload = function () {
         optionsAll.push(text);
     }
 
-
     for (let i = 0; i < optionsContractSize; i++) {
         for (let j = 0; j < optionsAllSize; j++) {
             if (optionsContract[i] === optionsAll[j]) {
                 let element = document.getElementsByClassName("divWithTableOptions").item(j);
                 element.style.display = "none";
-
             }
         }
     }

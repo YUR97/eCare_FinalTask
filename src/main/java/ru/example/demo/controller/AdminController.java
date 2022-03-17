@@ -194,6 +194,33 @@ public class AdminController {
         return "adminOptions";
     }
 
+    @GetMapping("/editOption/{name}")
+    public String editOption(@PathVariable(name = "name") String optionName, Model model) {
+        model.addAttribute("option", optionService.getByName(optionName));
+        model.addAttribute("mayBeUpdated", true);
+        return "editOption";
+    }
+
+    @PostMapping("/editOption")
+    public String saveEditOption(@RequestParam(name = "previousName") String previousName, @RequestParam(name = "newName") String newName,
+                                 @RequestParam(name = "payment") String payment, @RequestParam(name = "connectionPrice") String connectionPrice, Model model) {
+
+        Boolean mayBeUpdated = optionService.update(previousName,newName,payment,connectionPrice);
+        model.addAttribute("mayBeUpdated", mayBeUpdated);
+        if(!mayBeUpdated) {
+            model.addAttribute("option", optionService.getByName(previousName));
+            return "editOption";
+        }
+        else {
+            List<OptionDTO> optionsDTO = optionService.getAll();
+            Collections.sort(optionsDTO, (Comparator.comparing(OptionDTO::getName)));
+            model.addAttribute("mayBeSave", true);
+            model.addAttribute("options", optionsDTO);
+            return "adminOptions";
+        }
+
+    }
+
     @PostMapping("/createOption")
     public String createOption(@RequestParam(name = "name", defaultValue = Constant.NOTHING) String optionName,
                                @RequestParam(name = "payment", defaultValue = Constant.NOTHING) String payment,

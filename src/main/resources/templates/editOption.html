@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/editOption.css">
+</head>
+<body>
+<header>
+    <button onclick="location.href='/home'">Домашняя</button>
+    <button onclick="location.href='/admin/clients'">Пользователи</button>
+    <button onclick="location.href='/admin/tariffs'">Тарифы</button>
+    <button onclick="location.href='/admin/options'">Опции</button>
+    <button onclick="location.href='/admin/conclusionContract'">Заключение контракта</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <button>Выход</button>
+    </form>
+</header>
+<main>
+    <form th:method="POST" th:action="@{/admin/editOption}">
+        <div>
+            <input hidden th:value="${option.getName()}" name="previousName">
+            <table>
+                <tr>
+                    <div class="headTitle">Изменение опции</div>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Название:</label>
+                    </td>
+                    <td>
+                        <input th:value="${option.getName()}" name="newName" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Платеж:</label>
+                    </td>
+                    <td>
+                        <input th:value="${option.getPayment()}" name="payment" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Цена подключения:</label>
+                    </td>
+                    <td>
+                        <input th:value="${option.getConnectionPrice()}" name="connectionPrice" required>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div th:if="${!mayBeUpdated}" class="warningInfo">Такое название опции уже существует</div>
+        <div>
+            <button class="changeButton">Изменить</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

@@ -6,10 +6,10 @@ import ru.example.demo.constants.Constant;
 import ru.example.demo.model.DTO.OptionDTO;
 import ru.example.demo.model.DTO.converter.OptionConverterDTO;
 import ru.example.demo.model.Option;
+import ru.example.demo.model.Tariff;
 import ru.example.demo.repo.OptionRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -33,6 +33,11 @@ public class OptionService {
     }
 
     @Transactional
+    public OptionDTO getByName(String optionName) {
+        return optionConverterDTO.convert(optionRepository.findByName(optionName));
+    }
+
+    @Transactional
     public boolean saveOption(Option option) {
         boolean mayBeSave;
         if (!(option.getName().contains(Constant.NOTHING) | option.getPayment().contains(Constant.NOTHING) | option.getConnectionPrice().contains(Constant.NOTHING))) {
@@ -46,6 +51,24 @@ public class OptionService {
             mayBeSave = false;
         }
         return mayBeSave;
+    }
+
+    @Transactional
+    public boolean update(String previousName, String newName, String payment, String connectionPrice){
+        boolean mayBeUpdated;
+        Option optionToUpdate = optionRepository.findByName(newName);
+        if (optionToUpdate == null || newName.equals(previousName)) {
+            Option option = optionRepository.findByName(previousName);
+            option.setName(newName);
+            option.setPayment(payment);
+            option.setConnectionPrice(connectionPrice);
+            optionRepository.save(option);
+            mayBeUpdated = true;
+        }
+        else {
+            mayBeUpdated = false;
+        }
+        return mayBeUpdated;
     }
 
     @Transactional

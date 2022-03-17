@@ -16,7 +16,7 @@
     </form>
 </header>
 <main>
-    <form th:method="POST" th:action="@{/admin/saveEditContract}">
+    <form th:method="POST" th:action="@{/client/saveEdit}">
         <div class="divFormChange">
             <div class="divFormChangeOuter">
                 <div class="divFormChangeInnerTitle">
@@ -29,11 +29,11 @@
                     <div class="optionDeleteTitle">Удалить дополнительные опции контракта:</div>
                     <div id="divAddedOptionsDelete">
                         <input hidden th:value="${contract.getContractNumber()}" name="contractNumber">
-                        <div th:each="addedOption : ${contract.getOptionsDTO()}">
+                        <div th:each="addedOption : ${contract.getOptionsDTO()}" class="divOptionToDelete">
                             <table>
                                 <tr>
                                     <td>
-                                        <div th:text="${addedOption.getName()}"></div>
+                                        <div th:text="${addedOption.getName()}" class="contractOptionNames"></div>
                                     </td>
                                     <td>
                                         <input type="checkbox" th:value="${addedOption.getName()}"
@@ -96,7 +96,7 @@
                 </div>
                 <div class="headTitle">Выберите дополнительные опции</div>
                 <div class="divFormChangeInner">
-                    <div id="options" th:each="option : ${options}">
+                    <div id="options" th:each="option : ${options}" class="divWithTableOptions">
                         <table class="tableOptions">
                             <tr>
                                 <td>
@@ -105,17 +105,23 @@
                                 <td>
                                     <div>
                                         <input type="checkbox" id="${option.getName()}" name="option"
-                                               th:value="${option.getName()}">
+                                               th:value="${option.getName()}" class="allOptionsName">
                                         <label for="${option.getName()}"></label>
                                     </div>
                                 </td>
                             </tr>
                         </table>
                     </div>
+                    <div id="ifNewOptionsEmpty">
+                        Нечего добавить.
+                        <br>
+                        Контракт имеет все возможные опции.
+                    </div>
                 </div>
             </div>
         </div>
     </form>
 </main>
+<script src="/js/editContract.js"></script>
 </body>
 </html>

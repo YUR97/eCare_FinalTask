@@ -21,12 +21,12 @@ import java.util.Set;
 @Service
 public class ClientService {
 
-    private ContractRepository contractRepository;
-    private TariffRepository tariffRepository;
-    private ClientRepository clientRepository;
-    private RoleRepository roleRepository;
-    private ClientConverterDTO clientConverterDTO;
-    private PasswordEncoder passwordEncoder;
+    private final ContractRepository contractRepository;
+    private final TariffRepository tariffRepository;
+    private final ClientRepository clientRepository;
+    private final RoleRepository roleRepository;
+    private final ClientConverterDTO clientConverterDTO;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public ClientService(ContractRepository contractRepository, TariffRepository tariffRepository, ClientRepository clientRepository,

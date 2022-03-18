@@ -30,7 +30,10 @@ public class LockClientService {
 
     @Transactional
     public void unlockClient(String email) {
-        lockClientRepository.delete(lockClientRepository.findLockClientByEmail(email));
+        LockClient lockClient = lockClientRepository.findLockClientByEmail(email);
+        if (lockClient != null) {
+            lockClientRepository.delete(lockClient);
+        }
     }
 
     @Transactional

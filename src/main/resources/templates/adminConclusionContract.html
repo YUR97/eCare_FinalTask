@@ -19,7 +19,8 @@
 <main>
     <div class="divForm">
         <form th:method="POST" th:action="@{/admin/conclusionContract}">
-            <label class="titleLabel" for="number">Введите номер:</label>
+            <label th:if="${!contractExist}" class="titleLabel" for="number">Введите номер:</label>
+            <label th:if="${contractExist}" class="errorTitleLabel">Этот номер уже существует</label>
             <input type="text" name="contractNumber" placeholder="Номер" id="number" required>
             <label class="titleLabel" th:if="${mayBeConclusion}">Выберите Email:</label>
             <label class="errorTitleLabel" th:if="${!mayBeConclusion}">Вы не выбрали Email</label>

@@ -104,9 +104,8 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <input type="checkbox" id="${option.getName()}" name="option"
+                                        <input type="checkbox" th:id="${option.getName()}" name="option"
                                                th:value="${option.getName()}" class="allOptionsName">
-                                        <label for="${option.getName()}"></label>
                                     </div>
                                 </td>
                             </tr>
@@ -122,6 +121,14 @@
         </div>
     </form>
 </main>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    let together = /*[[${together}]]*/ "Test";
+    /*]]>*/
+
+    console.log(together)
+</script>
 <script src="/js/editContract.js"></script>
 </body>
 </html>

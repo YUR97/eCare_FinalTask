@@ -13,6 +13,7 @@ import ru.example.demo.model.DTO.ContractDTO;
 import ru.example.demo.model.DTO.OptionDTO;
 import ru.example.demo.model.DTO.TariffDTO;
 import ru.example.demo.model.Option;
+import ru.example.demo.repo.ContractRepository;
 import ru.example.demo.service.*;
 
 import java.util.ArrayList;
@@ -24,20 +25,22 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private OptionService optionService;
-    private ContractService contractService;
-    private TariffService tariffService;
-    private ClientService clientService;
-    private LockClientService lockClientService;
+    private final OptionService optionService;
+    private final ContractService contractService;
+    private final TariffService tariffService;
+    private final ClientService clientService;
+    private final LockClientService lockClientService;
+    private final ContractRepository contractRepository;
 
     @Autowired
-    public AdminController(OptionService optionService, ContractService contractService,
-                           TariffService tariffService, ClientService clientService, LockClientService lockClientService) {
+    public AdminController(OptionService optionService, ContractService contractService, TariffService tariffService,
+                           ClientService clientService, LockClientService lockClientService, ContractRepository contractRepository) {
         this.optionService = optionService;
         this.contractService = contractService;
         this.tariffService = tariffService;
         this.clientService = clientService;
         this.lockClientService = lockClientService;
+        this.contractRepository = contractRepository;
     }
 
     @GetMapping("/clients")
@@ -92,6 +95,38 @@ public class AdminController {
         model.addAttribute("contract", contractService.getByContractNumber(contractNumber));
         model.addAttribute("options", optionService.getAll());
         model.addAttribute("tariffs", tariffService.getAll());
+        String[] num1 = {"10 Гб", "10 минут"};
+        String[] num2 = {"10 минут", "10 Гб"};
+
+        String[] num3 = {"40 Гб", "100 минут"};
+        String[] num4 = {"100 минут", "40 Гб"};
+
+        String[] num5 = {"40 Гб", "100 минут"};
+        String[] num6 = {"100 минут", "40 Гб"};
+
+        String[] neNum1 = {"10 Гб", "40 Гб"};
+        String[] neNum2 = {"40 Гб", "10 Гб"};
+
+        String[] neNum3 = {"100 смс", "10 смс"};
+        String[] neNum4 = {"10 смс", "100 смс"};
+
+        List<String[]> strings = new ArrayList<>();
+        List<String[]> neString = new ArrayList<>();
+
+
+        strings.add(num1);
+        strings.add(num2);
+        strings.add(num3);
+        strings.add(num4);
+
+
+        neString.add(neNum1);
+        neString.add(neNum2);
+        neString.add(neNum3);
+        neString.add(neNum4);
+
+        model.addAttribute("together", strings);
+        model.addAttribute("noTogether", neString);
         return "adminEditContract";
     }
 
@@ -130,6 +165,7 @@ public class AdminController {
     @GetMapping("/conclusionContract")
     public String conclusionContract(Model model) {
         model.addAttribute("mayBeConclusion", true);
+        model.addAttribute("contractExist", false);
         model.addAttribute("tariffs", tariffService.getAll());
         model.addAttribute("options", optionService.getAll());
         model.addAttribute("clients", clientService.getAll());
@@ -144,16 +180,25 @@ public class AdminController {
                                  @RequestParam(name = "options", defaultValue = Constant.NOTHING) List<String> options, Model model) {
 
         Boolean mayBeConclusion = contractService.save(contractNumber, email, tariffName, status, options);
-        model.addAttribute("mayBeConclusion", mayBeConclusion);
-        if (!mayBeConclusion) {
+        if (contractRepository.findContractByContractNumber(contractNumber) != null) {
+            model.addAttribute("mayBeConclusion", true);
+            model.addAttribute("contractExist", true);
             model.addAttribute("tariffs", tariffService.getAll());
             model.addAttribute("options", optionService.getAll());
             model.addAttribute("clients", clientService.getAll());
             return "adminConclusionContract";
         } else {
-            return "redirect:/admin/clients";
+            model.addAttribute("contractExist", false);
+            model.addAttribute("mayBeConclusion", mayBeConclusion);
+            if (!mayBeConclusion) {
+                model.addAttribute("tariffs", tariffService.getAll());
+                model.addAttribute("options", optionService.getAll());
+                model.addAttribute("clients", clientService.getAll());
+                return "adminConclusionContract";
+            } else {
+                return "redirect:/admin/clients";
+            }
         }
-
     }
 
     @GetMapping("/edit")
@@ -205,13 +250,12 @@ public class AdminController {
     public String saveEditOption(@RequestParam(name = "previousName") String previousName, @RequestParam(name = "newName") String newName,
                                  @RequestParam(name = "payment") String payment, @RequestParam(name = "connectionPrice") String connectionPrice, Model model) {
 
-        Boolean mayBeUpdated = optionService.update(previousName,newName,payment,connectionPrice);
+        Boolean mayBeUpdated = optionService.update(previousName, newName, payment, connectionPrice);
         model.addAttribute("mayBeUpdated", mayBeUpdated);
-        if(!mayBeUpdated) {
+        if (!mayBeUpdated) {
             model.addAttribute("option", optionService.getByName(previousName));
             return "editOption";
-        }
-        else {
+        } else {
             List<OptionDTO> optionsDTO = optionService.getAll();
             Collections.sort(optionsDTO, (Comparator.comparing(OptionDTO::getName)));
             model.addAttribute("mayBeSave", true);

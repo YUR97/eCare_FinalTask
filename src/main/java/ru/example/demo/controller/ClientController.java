@@ -14,10 +14,7 @@ import ru.example.demo.model.Client;
 import ru.example.demo.model.DTO.ContractDTO;
 import ru.example.demo.model.DTO.OptionDTO;
 import ru.example.demo.model.DTO.TariffDTO;
-import ru.example.demo.service.ClientService;
-import ru.example.demo.service.ContractService;
-import ru.example.demo.service.OptionService;
-import ru.example.demo.service.TariffService;
+import ru.example.demo.service.*;
 
 import java.util.List;
 
@@ -29,13 +26,16 @@ public class ClientController {
     private ContractService contractService;
     private ClientService clientService;
     private TariffService tariffService;
+    private ManagerOptionService managerOptionService;
 
     @Autowired
-    public ClientController(OptionService optionService, ContractService contractService, ClientService clientService, TariffService tariffService) {
+    public ClientController(OptionService optionService, ContractService contractService, ClientService clientService,
+                            TariffService tariffService, ManagerOptionService managerOptionService) {
         this.optionService = optionService;
         this.contractService = contractService;
         this.clientService = clientService;
         this.tariffService = tariffService;
+        this.managerOptionService = managerOptionService;
     }
 
     @PostMapping("/me")
@@ -70,6 +70,13 @@ public class ClientController {
         model.addAttribute("options", optionDTOS);
         model.addAttribute("tariffs", tariffsDTO);
         model.addAttribute("contract", contractDTO);
+
+        List<String[]> together = managerOptionService.getAllOptionsTogether();
+        List<String[]> apart = managerOptionService.getAllOptionsApart();
+
+        model.addAttribute("together", together);
+        model.addAttribute("apart", apart);
+
         return "editContract";
     }
 

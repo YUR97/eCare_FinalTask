@@ -31,16 +31,19 @@ public class AdminController {
     private final ClientService clientService;
     private final LockClientService lockClientService;
     private final ContractRepository contractRepository;
+    private final ManagerOptionService managerOptionService;
 
     @Autowired
     public AdminController(OptionService optionService, ContractService contractService, TariffService tariffService,
-                           ClientService clientService, LockClientService lockClientService, ContractRepository contractRepository) {
+                           ClientService clientService, LockClientService lockClientService,
+                           ContractRepository contractRepository, ManagerOptionService managerOptionService) {
         this.optionService = optionService;
         this.contractService = contractService;
         this.tariffService = tariffService;
         this.clientService = clientService;
         this.lockClientService = lockClientService;
         this.contractRepository = contractRepository;
+        this.managerOptionService = managerOptionService;
     }
 
     @GetMapping("/clients")
@@ -95,38 +98,13 @@ public class AdminController {
         model.addAttribute("contract", contractService.getByContractNumber(contractNumber));
         model.addAttribute("options", optionService.getAll());
         model.addAttribute("tariffs", tariffService.getAll());
-        String[] num1 = {"10 Гб", "10 минут"};
-        String[] num2 = {"10 минут", "10 Гб"};
 
-        String[] num3 = {"40 Гб", "100 минут"};
-        String[] num4 = {"100 минут", "40 Гб"};
+        List<String[]> together = managerOptionService.getAllOptionsTogether();
+        List<String[]> apart = managerOptionService.getAllOptionsApart();
 
-        String[] num5 = {"40 Гб", "100 минут"};
-        String[] num6 = {"100 минут", "40 Гб"};
+        model.addAttribute("together", together);
+        model.addAttribute("apart", apart);
 
-        String[] neNum1 = {"10 Гб", "40 Гб"};
-        String[] neNum2 = {"40 Гб", "10 Гб"};
-
-        String[] neNum3 = {"100 смс", "10 смс"};
-        String[] neNum4 = {"10 смс", "100 смс"};
-
-        List<String[]> strings = new ArrayList<>();
-        List<String[]> neString = new ArrayList<>();
-
-
-        strings.add(num1);
-        strings.add(num2);
-        strings.add(num3);
-        strings.add(num4);
-
-
-        neString.add(neNum1);
-        neString.add(neNum2);
-        neString.add(neNum3);
-        neString.add(neNum4);
-
-        model.addAttribute("together", strings);
-        model.addAttribute("noTogether", neString);
         return "adminEditContract";
     }
 

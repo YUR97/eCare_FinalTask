@@ -1,7 +1,6 @@
 package ru.example.demo.model;
 
 import javax.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +16,7 @@ public class Role {
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Client> clients;
 
-    public Role(){
+    public Role() {
         clients = new HashSet<>();
     }
 
@@ -26,32 +25,33 @@ public class Role {
         clients = new HashSet<>();
     }
 
-    public void addClient(Client client){
+    public void addClient(Client client) {
         client.setRole(this);
         clients.add(client);
     }
-    public void removeClient(Client client){
+
+    public void removeClient(Client client) {
         clients.remove(client);
     }
 
     public void setName(String name) {
         this.name = name;
     }
-    public void setClients(Set<Client> clients) { this.clients = clients; }
+
+    public void setClients(Set<Client> clients) {
+        this.clients = clients;
+    }
 
     public int getId() {
         return id;
     }
+
     public String getName() {
         return name;
     }
-    public Set<Client> getClients() { return clients; }
 
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public Set<Client> getClients() {
+        return clients;
     }
+
 }

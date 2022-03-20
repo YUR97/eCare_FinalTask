@@ -6,4 +6,7 @@ import ru.example.demo.model.ManagerApartOption;
 
 @Repository
 public interface ManagerApartOptionRepository extends JpaRepository<ManagerApartOption, Integer> {
+
+    ManagerApartOption findByFirstOptionAndSecondOption(String firstOption, String secondOption);
+
 }

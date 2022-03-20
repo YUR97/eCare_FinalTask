@@ -156,6 +156,33 @@ public class ManagerOptionService {
     }
 
     @Transactional
+    public boolean removeTogetherPair(String option) {
+
+        boolean mayBeDelete = true;
+
+        List<ManagerTogetherOption> result = new ArrayList<>();
+        List<ManagerTogetherOption> firsLines = managerTogetherOptionRepository.findByFirstOption(option);
+        List<ManagerTogetherOption> secondLines = managerTogetherOptionRepository.findBySecondOption(option);
+
+        if (!firsLines.isEmpty()) {
+            result.addAll(firsLines);
+        }
+
+        if (!secondLines.isEmpty()) {
+            result.addAll(secondLines);
+        }
+
+        if (!result.isEmpty()) {
+            managerTogetherOptionRepository.deleteAll(result);
+        } else {
+            mayBeDelete = false;
+        }
+
+        return mayBeDelete;
+
+    }
+
+    @Transactional
     public boolean addApartPair(String anotherFirst, String anotherSecond) {
 
         String[] anotherPair = {anotherFirst, anotherSecond};
@@ -189,6 +216,25 @@ public class ManagerOptionService {
         } else {
             return false;
         }
+
+    }
+
+    @Transactional
+    public boolean removeApartPair(String firstOption, String secondOption) {
+
+        boolean mayBeDelete = true;
+
+        ManagerApartOption result = managerApartOptionRepository.findByFirstOptionAndSecondOption(firstOption, secondOption);
+        ManagerApartOption resultReverse = managerApartOptionRepository.findByFirstOptionAndSecondOption(secondOption, firstOption);
+
+        if (result != null && resultReverse != null) {
+            managerApartOptionRepository.delete(result);
+            managerApartOptionRepository.delete(resultReverse);
+        } else {
+            mayBeDelete = false;
+        }
+
+        return mayBeDelete;
 
     }
 

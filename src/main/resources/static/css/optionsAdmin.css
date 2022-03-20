@@ -188,10 +188,51 @@ table th {
     width: 250px;
     text-align: center;
 }
+
 .createTable td:first-child {
     width: 200px;
-    height: 50px ;
-    border:2px solid;
+    height: 50px;
+    border: 2px solid;
     background-color: wheat;
     font-size: 20px;
+}
+
+.divAddTogetherOrApart {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.divRemoveTogetherOrApart {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.addTogether {
+    width: 350px;
+    height: 100px;
+    margin: 20px;
+    border: 2px solid black;
+}
+
+.addApart {
+    width: 350px;
+    height: 100px;
+    margin: 20px;
+    border: 2px solid black;
+}
+
+.removeTogether{
+    width: 350px;
+    height: 100px;
+    margin: 20px;
+    border: 2px solid black;
+}
+
+.removeApart{
+    width: 350px;
+    height: 100px;
+    margin: 20px;
+    border: 2px solid black;
 }

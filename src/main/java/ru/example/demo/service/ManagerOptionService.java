@@ -4,11 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.demo.model.DTO.ManagerOptionDTO;
+import ru.example.demo.model.DTO.OptionDTO;
 import ru.example.demo.model.DTO.converter.ManagerOptionConverterDTO;
+import ru.example.demo.model.DTO.converter.OptionConverterDTO;
 import ru.example.demo.model.ManagerApartOption;
 import ru.example.demo.model.ManagerTogetherOption;
+import ru.example.demo.model.Option;
 import ru.example.demo.repo.ManagerApartOptionRepository;
 import ru.example.demo.repo.ManagerTogetherOptionRepository;
+import ru.example.demo.repo.OptionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +20,18 @@ import java.util.List;
 @Service
 public class ManagerOptionService {
 
+    private OptionRepository optionRepository;
+    private OptionConverterDTO optionConverterDTO;
     private ManagerTogetherOptionRepository managerTogetherOptionRepository;
     private ManagerApartOptionRepository managerApartOptionRepository;
     private ManagerOptionConverterDTO managerOptionConverterDTO;
 
     @Autowired
-    public ManagerOptionService(ManagerTogetherOptionRepository managerTogetherOptionRepository,
-                                ManagerApartOptionRepository managerApartOptionRepository,
-                                ManagerOptionConverterDTO managerOptionConverterDTO) {
+    public ManagerOptionService(OptionRepository optionRepository, OptionConverterDTO optionConverterDTO,
+                                ManagerTogetherOptionRepository managerTogetherOptionRepository,
+                                ManagerApartOptionRepository managerApartOptionRepository, ManagerOptionConverterDTO managerOptionConverterDTO) {
+        this.optionRepository = optionRepository;
+        this.optionConverterDTO = optionConverterDTO;
         this.managerTogetherOptionRepository = managerTogetherOptionRepository;
         this.managerApartOptionRepository = managerApartOptionRepository;
         this.managerOptionConverterDTO = managerOptionConverterDTO;
@@ -236,6 +244,71 @@ public class ManagerOptionService {
 
         return mayBeDelete;
 
+    }
+
+    @Transactional
+    public List<List<String>> getTogethers() {
+
+        List<OptionDTO> optionList = new ArrayList<>();
+        List<List<String>> listToShowFinal = new ArrayList<>();
+        List<Option> allOptions = optionRepository.findAll();
+        if (!allOptions.isEmpty()) {
+
+            for (Option option : allOptions) {
+                optionList.add(optionConverterDTO.convert(option));
+            }
+
+            List<String[]> togetherList = getAllOptionsTogether();
+            List<List<String>> listToShow = new ArrayList<>();
+
+            for (OptionDTO optionDTO : optionList) {
+                List<String> listLine = new ArrayList<>();
+                for (String[] together : togetherList) {
+                    if (optionDTO.getName().equals(together[0])) {
+                        listLine.add(together[1]);
+                    }
+                }
+                if (!listLine.isEmpty()) {
+                    listLine.add(optionDTO.getName());
+                    listToShow.add(listLine);
+                }
+            }
+
+            int counter = 0;
+            listToShowFinal.add(listToShow.get(0));
+            for (List<String> trace : listToShow) {
+                for (String string : trace) {
+                    for (List<String> innerTrace : listToShowFinal) {
+                        for (String innerString : innerTrace) {
+                            if (string.equals(innerString)) {
+                                counter++;
+                            }
+                        }
+                    }
+                }
+                if (counter == 0) {
+                    listToShowFinal.add(trace);
+                } else {
+                    counter = 0;
+                }
+            }
+
+        }
+        return listToShowFinal;
+
+    }
+
+    @Transactional
+    public List<String[]> getApart() {
+
+        List<String[]> apartList = getAllOptionsApart();
+        List<String[]> apartListFinal = new ArrayList<>();
+
+        for (int i =0; i<apartList.size(); i+=2) {
+            apartListFinal.add(apartList.get(i));
+        }
+
+        return apartListFinal;
     }
 
 }

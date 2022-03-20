@@ -211,9 +211,19 @@ public class AdminController {
     @GetMapping("/options")
     public String showOptions(Model model) {
         List<OptionDTO> optionsDTO = optionService.getAll();
+        List<String[]> apartList = managerOptionService.getApart();
+        List<List<String>> togetherList = managerOptionService.getTogethers();
+
         Collections.sort(optionsDTO, (Comparator.comparing(OptionDTO::getName)));
+
+        model.addAttribute("mayAddTogether", true);
+        model.addAttribute("mayAddApart", true);
         model.addAttribute("mayBeSave", true);
+
         model.addAttribute("options", optionsDTO);
+        model.addAttribute("togetherList", togetherList);
+        model.addAttribute("apartList", apartList);
+
         return "adminOptions";
     }
 
@@ -257,6 +267,65 @@ public class AdminController {
         optionService.deleteOption(optionName);
         return "redirect:/admin/options";
     }
+
+    @PostMapping("/addTogether")
+    public String addTogether(@RequestParam(name = "firstOptionTogether") String firstOption,
+                              @RequestParam(name = "secondOptionTogether") String secondOption, Model model) {
+
+        boolean mayAddTogether;
+
+        if (!firstOption.equals(secondOption)) {
+            mayAddTogether = managerOptionService.addTogetherPair(firstOption, secondOption);
+        } else {
+            mayAddTogether = false;
+        }
+
+        List<OptionDTO> optionsDTO = optionService.getAll();
+        List<String[]> apartList = managerOptionService.getApart();
+        List<List<String>> togetherList = managerOptionService.getTogethers();
+
+        Collections.sort(optionsDTO, (Comparator.comparing(OptionDTO::getName)));
+
+        model.addAttribute("mayAddTogether", mayAddTogether);
+        model.addAttribute("mayAddApart", true);
+        model.addAttribute("mayBeSave", true);
+
+        model.addAttribute("options", optionsDTO);
+        model.addAttribute("togetherList", togetherList);
+        model.addAttribute("apartList", apartList);
+
+        return "adminOptions";
+    }
+
+    @PostMapping("/addApart")
+    public String addApart(@RequestParam(name = "firstOptionApart") String firstOption,
+                           @RequestParam(name = "secondOptionApart") String secondOption, Model model) {
+
+        boolean mayAddApart;
+
+        if (!firstOption.equals(secondOption)) {
+            mayAddApart = managerOptionService.addApartPair(firstOption, secondOption);
+        } else {
+            mayAddApart = false;
+        }
+
+        List<OptionDTO> optionsDTO = optionService.getAll();
+        List<String[]> apartList = managerOptionService.getApart();
+        List<List<String>> togetherList = managerOptionService.getTogethers();
+
+        Collections.sort(optionsDTO, (Comparator.comparing(OptionDTO::getName)));
+
+        model.addAttribute("mayAddTogether", true);
+        model.addAttribute("mayAddApart", mayAddApart);
+        model.addAttribute("mayBeSave", true);
+
+        model.addAttribute("options", optionsDTO);
+        model.addAttribute("togetherList", togetherList);
+        model.addAttribute("apartList", apartList);
+
+        return "adminOptions";
+    }
+
 
     @PostMapping("/deleteTariff")
     public String deleteTariff(@RequestParam(name = "nameTariffToDelete") String tariffName, Model model) {

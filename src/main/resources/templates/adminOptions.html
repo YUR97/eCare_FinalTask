@@ -99,6 +99,52 @@
                 <button>Создать</button>
             </form>
             <div th:if="${!mayBeSave}" class="errorInfo">Такое название уже существует</div>
+            <div class="divAddTogetherOrApart">
+                <form class="addTogether" th:method="POST" th:action="@{/admin/addTogether}">
+                    <div>Сочетание опций:</div>
+                    <select name="firstOptionTogether">
+                        <div th:each="option : ${options}">
+                            <option th:value="${option.getName()}" th:text="${option.getName()}"></option>
+                        </div>
+                    </select>
+                    <select name="secondOptionTogether">
+                        <div th:each="option : ${options}">
+                            <option th:value="${option.getName()}" th:text="${option.getName()}"></option>
+                        </div>
+                    </select>
+                    <button>Добавить</button>
+                    <div th:if="${!mayAddTogether}">Такое сочетание добавить нельзя!</div>
+                </form>
+                <form class="addApart" th:method="POST" th:action="@{/admin/addApart}">
+                    <div>Несовместимость опций:</div>
+                    <select name="firstOptionApart">
+                        <div th:each="option : ${options}">
+                            <option th:value="${option.getName()}" th:text="${option.getName()}"></option>
+                        </div>
+                    </select>
+                    <select name="secondOptionApart">
+                        <div th:each="option : ${options}">
+                            <option th:value="${option.getName()}" th:text="${option.getName()}"></option>
+                        </div>
+                    </select>
+                    <button>Добавить</button>
+                    <div th:if="${!mayAddApart}">Такую несовместимость установить нельзя!</div>
+                </form>
+            </div>
+            <div class="divRemoveTogetherOrApart">
+                <form class="removeTogether">
+                    <div th:each="traceTogethers : ${togetherList}">
+                        <div th:each="together : ${traceTogethers}">
+                            <div th:text="${together}"></div>
+                        </div>
+                    </div>
+                </form>
+                <form class="removeApart">
+                    <div th:each="apart : ${apartList}">
+                        <div th:text="${apart[0] + ', ' + apart[1]}"></div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </main>

@@ -304,7 +304,7 @@ public class ManagerOptionService {
         List<String[]> apartList = getAllOptionsApart();
         List<String[]> apartListFinal = new ArrayList<>();
 
-        for (int i =0; i<apartList.size(); i+=2) {
+        for (int i = 0; i < apartList.size(); i += 2) {
             apartListFinal.add(apartList.get(i));
         }
 

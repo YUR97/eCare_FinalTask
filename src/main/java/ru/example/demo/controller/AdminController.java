@@ -326,6 +326,18 @@ public class AdminController {
         return "adminOptions";
     }
 
+    @PostMapping("/removeTogether")
+    public String removeTogether(@RequestParam(name = "together") String optionName) {
+        managerOptionService.removeTogetherPair(optionName);
+        return "redirect:/admin/options";
+    }
+
+    @PostMapping("/removeApart")
+    public String removeApart(@RequestParam(name = "firstOption") String firstOption, @RequestParam(name = "secondOption") String secondOption) {
+        managerOptionService.removeApartPair(firstOption, secondOption);
+        return "redirect:/admin/options";
+    }
+
 
     @PostMapping("/deleteTariff")
     public String deleteTariff(@RequestParam(name = "nameTariffToDelete") String tariffName, Model model) {

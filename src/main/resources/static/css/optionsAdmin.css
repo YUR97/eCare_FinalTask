@@ -93,7 +93,7 @@ main {
     border-color: black;
 }
 
-table:not(.createTable) td {
+table:not(.createTable):not(.tableRemove) td {
     text-align: center;
     width: 130px;
     height: 70px;
@@ -210,6 +210,7 @@ table th {
 }
 
 .addTogether {
+    padding: 10px;
     width: 350px;
     height: 100px;
     margin: 20px;
@@ -217,22 +218,45 @@ table th {
 }
 
 .addApart {
+    padding: 10px;
     width: 350px;
     height: 100px;
     margin: 20px;
     border: 2px solid black;
 }
 
-.removeTogether{
+.removeTogether {
+    padding: 10px;
     width: 350px;
-    height: 100px;
+    height: 250px;
     margin: 20px;
+    border: 2px solid black;
+    overflow: auto;
+}
+
+.removeApart {
+    padding: 10px;
+    width: 350px;
+    height: 250px;
+    margin: 20px;
+    border: 2px solid black;
+    overflow: auto;
+}
+
+.traceTogethers {
+    padding: 10px;
+    margin-bottom: 10px;
+    height: 100px;
+    width: 250px;
+    overflow: auto;
     border: 2px solid black;
 }
 
-.removeApart{
-    width: 350px;
-    height: 100px;
-    margin: 20px;
+.tableRemove td:first-child {
+    text-align: center;
+    margin: 5px;
+    width: 150px;
+    height: 40px;
     border: 2px solid black;
+    background-color: wheat;
 }

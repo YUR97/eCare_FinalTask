@@ -132,18 +132,43 @@
                 </form>
             </div>
             <div class="divRemoveTogetherOrApart">
-                <form class="removeTogether">
-                    <div th:each="traceTogethers : ${togetherList}">
+                <div class="removeTogether">
+                    <div th:each="traceTogethers : ${togetherList}" class="traceTogethers">
                         <div th:each="together : ${traceTogethers}">
-                            <div th:text="${together}"></div>
+                            <form th:method="POST" th:action="@{/admin/removeTogether}">
+                                <table class="tableRemove">
+                                    <tr>
+                                        <td>
+                                            <div th:text="${together}"></div>
+                                        </td>
+                                        <td>
+                                            <input hidden th:value="${together}" name="together">
+                                            <button>-</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
                         </div>
                     </div>
-                </form>
-                <form class="removeApart">
+                </div>
+                <div class="removeApart">
                     <div th:each="apart : ${apartList}">
-                        <div th:text="${apart[0] + ', ' + apart[1]}"></div>
+                        <form th:method="POST" th:action="@{/admin/removeApart}">
+                            <table class="tableRemove">
+                                <tr>
+                                    <td>
+                                        <div th:text="${apart[0] + ', ' + apart[1]}"></div>
+                                    </td>
+                                    <td>
+                                        <input hidden name="firstOption" th:value="${apart[0]}">
+                                        <input hidden name="secondOption" th:value="${apart[1]}">
+                                        <button>-</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

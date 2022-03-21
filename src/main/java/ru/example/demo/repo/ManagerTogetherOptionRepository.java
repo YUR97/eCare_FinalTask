@@ -9,7 +9,8 @@ import java.util.List;
 @Repository
 public interface ManagerTogetherOptionRepository extends JpaRepository<ManagerTogetherOption, Integer> {
 
-    List<ManagerTogetherOption> findByFirstOption (String firstOption);
-    List<ManagerTogetherOption> findBySecondOption (String secondOption);
+    List<ManagerTogetherOption> findByFirstOption(String firstOption);
+
+    List<ManagerTogetherOption> findBySecondOption(String secondOption);
 
 }

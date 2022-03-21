@@ -304,8 +304,23 @@ public class ManagerOptionService {
         List<String[]> apartList = getAllOptionsApart();
         List<String[]> apartListFinal = new ArrayList<>();
 
-        for (int i = 0; i < apartList.size(); i += 2) {
-            apartListFinal.add(apartList.get(i));
+        int counter = 0;
+
+        apartListFinal.add(apartList.get(0));
+
+        for (int i = 1; i < apartList.size(); i++) {
+            int size = apartListFinal.size();
+            for (int j = 0; j < size; j++) {
+                if (!(apartList.get(i)[0].equals(apartListFinal.get(j)[0]) && apartList.get(i)[1].equals(apartListFinal.get(j)[1]))) {
+                    if (!(apartList.get(i)[0].equals(apartListFinal.get(j)[1]) && apartList.get(i)[1].equals(apartListFinal.get(j)[0]))) {
+                        counter++;
+                    }
+                }
+            }
+            if (size == counter) {
+                apartListFinal.add(apartList.get(i));
+            }
+            counter = 0;
         }
 
         return apartListFinal;

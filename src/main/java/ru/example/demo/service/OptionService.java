@@ -1,12 +1,16 @@
 package ru.example.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.demo.constants.Constant;
 import ru.example.demo.model.DTO.OptionDTO;
 import ru.example.demo.model.DTO.converter.OptionConverterDTO;
+import ru.example.demo.model.ManagerApartOption;
+import ru.example.demo.model.ManagerTogetherOption;
 import ru.example.demo.model.Option;
-import ru.example.demo.model.Tariff;
+import ru.example.demo.repo.ManagerApartOptionRepository;
+import ru.example.demo.repo.ManagerTogetherOptionRepository;
 import ru.example.demo.repo.OptionRepository;
 
 import java.util.ArrayList;
@@ -15,12 +19,18 @@ import java.util.List;
 @Service
 public class OptionService {
 
-    OptionRepository optionRepository;
-    OptionConverterDTO optionConverterDTO;
+    private OptionRepository optionRepository;
+    private OptionConverterDTO optionConverterDTO;
+    private ManagerTogetherOptionRepository managerTogetherOptionRepository;
+    private ManagerApartOptionRepository managerApartOptionRepository;
 
-    public OptionService(OptionRepository optionRepository, OptionConverterDTO optionConverterDTO) {
+    @Autowired
+    public OptionService(OptionRepository optionRepository, OptionConverterDTO optionConverterDTO, ManagerTogetherOptionRepository managerTogetherOptionRepository,
+                         ManagerApartOptionRepository managerApartOptionRepository) {
         this.optionRepository = optionRepository;
         this.optionConverterDTO = optionConverterDTO;
+        this.managerTogetherOptionRepository = managerTogetherOptionRepository;
+        this.managerApartOptionRepository = managerApartOptionRepository;
     }
 
     @Transactional
@@ -54,18 +64,42 @@ public class OptionService {
     }
 
     @Transactional
-    public boolean update(String previousName, String newName, String payment, String connectionPrice){
+    public boolean update(String previousName, String newName, String payment, String connectionPrice) {
         boolean mayBeUpdated;
         Option optionToUpdate = optionRepository.findByName(newName);
+        List<ManagerTogetherOption> firstTogether = managerTogetherOptionRepository.findByFirstOption(previousName);
+        List<ManagerTogetherOption> secondTogether = managerTogetherOptionRepository.findBySecondOption(previousName);
+        List<ManagerApartOption> firstApart = managerApartOptionRepository.findByFirstOption(previousName);
+        List<ManagerApartOption> secondApart = managerApartOptionRepository.findBySecondOption(previousName);
         if (optionToUpdate == null || newName.equals(previousName)) {
             Option option = optionRepository.findByName(previousName);
             option.setName(newName);
+
+            for (ManagerTogetherOption managerTogetherOption : firstTogether) {
+                managerTogetherOption.setFirstOption(newName);
+            }
+            managerTogetherOptionRepository.saveAll(firstTogether);
+
+            for (ManagerTogetherOption managerTogetherOption : secondTogether) {
+                managerTogetherOption.setSecondOption(newName);
+            }
+            managerTogetherOptionRepository.saveAll(secondTogether);
+
+            for (ManagerApartOption managerApartOption : firstApart) {
+                managerApartOption.setFirstOption(newName);
+            }
+            managerApartOptionRepository.saveAll(firstApart);
+
+            for (ManagerApartOption managerApartOption : secondApart) {
+                managerApartOption.setSecondOption(newName);
+            }
+            managerApartOptionRepository.saveAll(secondApart);
+
             option.setPayment(payment);
             option.setConnectionPrice(connectionPrice);
             optionRepository.save(option);
             mayBeUpdated = true;
-        }
-        else {
+        } else {
             mayBeUpdated = false;
         }
         return mayBeUpdated;

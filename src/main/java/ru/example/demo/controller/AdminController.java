@@ -245,9 +245,18 @@ public class AdminController {
             return "editOption";
         } else {
             List<OptionDTO> optionsDTO = optionService.getAll();
+            List<String[]> apartList = managerOptionService.getApart();
+            List<List<String>> togetherList = managerOptionService.getTogethers();
+
             Collections.sort(optionsDTO, (Comparator.comparing(OptionDTO::getName)));
+
+            model.addAttribute("mayAddTogether", true);
+            model.addAttribute("mayAddApart", true);
             model.addAttribute("mayBeSave", true);
             model.addAttribute("options", optionsDTO);
+            model.addAttribute("togetherList", togetherList);
+            model.addAttribute("apartList", apartList);
+         
             return "adminOptions";
         }
 

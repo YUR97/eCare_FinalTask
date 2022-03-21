@@ -252,10 +252,10 @@ table th {
     border: 2px solid black;
 }
 
-.tableRemove td:first-child {
+.tableRemove td:not(.tdWithButton) {
     text-align: center;
     margin: 5px;
-    width: 150px;
+    width: 120px;
     height: 40px;
     border: 2px solid black;
     background-color: wheat;

@@ -141,7 +141,7 @@
                                         <td>
                                             <div th:text="${together}"></div>
                                         </td>
-                                        <td>
+                                        <td class="tdWithButton">
                                             <input hidden th:value="${together}" name="together">
                                             <button>-</button>
                                         </td>
@@ -157,12 +157,15 @@
                             <table class="tableRemove">
                                 <tr>
                                     <td>
-                                        <div th:text="${apart[0] + ', ' + apart[1]}"></div>
+                                        <div th:text="${apart[0]}"></div>
                                     </td>
-                                    <td>
+                                    <td class="tdWithButton">
                                         <input hidden name="firstOption" th:value="${apart[0]}">
                                         <input hidden name="secondOption" th:value="${apart[1]}">
                                         <button>-</button>
+                                    </td>
+                                    <td>
+                                        <div th:text="${apart[1]}"></div>
                                     </td>
                                 </tr>
                             </table>

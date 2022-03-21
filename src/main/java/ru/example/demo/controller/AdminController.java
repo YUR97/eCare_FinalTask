@@ -147,6 +147,8 @@ public class AdminController {
         model.addAttribute("tariffs", tariffService.getAll());
         model.addAttribute("options", optionService.getAll());
         model.addAttribute("clients", clientService.getAll());
+        model.addAttribute("together", managerOptionService.getAllOptionsTogether());
+        model.addAttribute("apart", managerOptionService.getAllOptionsApart());
         return "adminConclusionContract";
     }
 

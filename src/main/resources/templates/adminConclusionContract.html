@@ -29,10 +29,12 @@
                     <table>
                         <tr>
                             <td class="emailTd">
-                                <label class="titleLabel" for="${client.getEmail()}" th:text="${client.getEmail()}"></label>
+                                <label class="titleLabel" for="${client.getEmail()}"
+                                       th:text="${client.getEmail()}"></label>
                             </td>
                             <td class="emailTd">
-                                <input type="radio" name="email" th:value="${client.getEmail()}" id="${client.getEmail()}">
+                                <input type="radio" name="email" th:value="${client.getEmail()}"
+                                       id="${client.getEmail()}">
                             </td>
                         </tr>
                     </table>
@@ -50,11 +52,11 @@
                     <table>
                         <tr>
                             <td>
-                                <label for="${option.getName()}" th:text="${option.getName()}"></label>
+                                <label th:text="${option.getName()}"></label>
                             </td>
                             <td class="checkboxTd">
                                 <input type="checkbox" th:value="${option.getName()}" name="options"
-                                       id="${option.getName()}">
+                                       th:id="${option.getName()}" onclick="editStatus(value)">
                             </td>
                         </tr>
                     </table>
@@ -65,5 +67,17 @@
         </form>
     </div>
 </main>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    let together = /*[[${together}]]*/ "Test";
+    /*]]>*/
+
+    /*<![CDATA[*/
+    let apart = /*[[${apart}]]*/ "Test";
+    /*]]>*/
+
+</script>
+<script src="/js/editContract.js"></script>
 </body>
 </html>

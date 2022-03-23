@@ -252,50 +252,51 @@ public class ManagerOptionService {
         List<OptionDTO> optionList = new ArrayList<>();
         List<List<String>> listToShowFinal = new ArrayList<>();
         List<Option> allOptions = optionRepository.findAll();
-        if (!allOptions.isEmpty()) {
+        List<String[]> togetherList = getAllOptionsTogether();
+        if (!togetherList.isEmpty()) {
+            if (!allOptions.isEmpty()) {
 
-            for (Option option : allOptions) {
-                optionList.add(optionConverterDTO.convert(option));
-            }
+                for (Option option : allOptions) {
+                    optionList.add(optionConverterDTO.convert(option));
+                }
 
-            List<String[]> togetherList = getAllOptionsTogether();
-            List<List<String>> listToShow = new ArrayList<>();
+                List<List<String>> listToShow = new ArrayList<>();
 
-            for (OptionDTO optionDTO : optionList) {
-                List<String> listLine = new ArrayList<>();
-                for (String[] together : togetherList) {
-                    if (optionDTO.getName().equals(together[0])) {
-                        listLine.add(together[1]);
+                for (OptionDTO optionDTO : optionList) {
+                    List<String> listLine = new ArrayList<>();
+                    for (String[] together : togetherList) {
+                        if (optionDTO.getName().equals(together[0])) {
+                            listLine.add(together[1]);
+                        }
+                    }
+                    if (!listLine.isEmpty()) {
+                        listLine.add(optionDTO.getName());
+                        listToShow.add(listLine);
                     }
                 }
-                if (!listLine.isEmpty()) {
-                    listLine.add(optionDTO.getName());
-                    listToShow.add(listLine);
-                }
-            }
 
-            int counter = 0;
-            listToShowFinal.add(listToShow.get(0));
-            for (List<String> trace : listToShow) {
-                for (String string : trace) {
-                    for (List<String> innerTrace : listToShowFinal) {
-                        for (String innerString : innerTrace) {
-                            if (string.equals(innerString)) {
-                                counter++;
+                int counter = 0;
+                listToShowFinal.add(listToShow.get(0));
+                for (List<String> trace : listToShow) {
+                    for (String string : trace) {
+                        for (List<String> innerTrace : listToShowFinal) {
+                            for (String innerString : innerTrace) {
+                                if (string.equals(innerString)) {
+                                    counter++;
+                                }
                             }
                         }
                     }
-                }
-                if (counter == 0) {
-                    listToShowFinal.add(trace);
-                } else {
-                    counter = 0;
+                    if (counter == 0) {
+                        listToShowFinal.add(trace);
+                    } else {
+                        counter = 0;
+                    }
                 }
             }
-
         }
-        return listToShowFinal;
 
+        return listToShowFinal;
     }
 
     @Transactional
@@ -304,23 +305,25 @@ public class ManagerOptionService {
         List<String[]> apartList = getAllOptionsApart();
         List<String[]> apartListFinal = new ArrayList<>();
 
-        int counter = 0;
+        if (!apartList.isEmpty()) {
+            int counter = 0;
 
-        apartListFinal.add(apartList.get(0));
+            apartListFinal.add(apartList.get(0));
 
-        for (int i = 1; i < apartList.size(); i++) {
-            int size = apartListFinal.size();
-            for (int j = 0; j < size; j++) {
-                if (!(apartList.get(i)[0].equals(apartListFinal.get(j)[0]) && apartList.get(i)[1].equals(apartListFinal.get(j)[1]))) {
-                    if (!(apartList.get(i)[0].equals(apartListFinal.get(j)[1]) && apartList.get(i)[1].equals(apartListFinal.get(j)[0]))) {
-                        counter++;
+            for (int i = 1; i < apartList.size(); i++) {
+                int size = apartListFinal.size();
+                for (int j = 0; j < size; j++) {
+                    if (!(apartList.get(i)[0].equals(apartListFinal.get(j)[0]) && apartList.get(i)[1].equals(apartListFinal.get(j)[1]))) {
+                        if (!(apartList.get(i)[0].equals(apartListFinal.get(j)[1]) && apartList.get(i)[1].equals(apartListFinal.get(j)[0]))) {
+                            counter++;
+                        }
                     }
                 }
+                if (size == counter) {
+                    apartListFinal.add(apartList.get(i));
+                }
+                counter = 0;
             }
-            if (size == counter) {
-                apartListFinal.add(apartList.get(i));
-            }
-            counter = 0;
         }
 
         return apartListFinal;

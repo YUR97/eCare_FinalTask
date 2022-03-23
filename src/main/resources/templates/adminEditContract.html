@@ -38,7 +38,8 @@
                                     </td>
                                     <td>
                                         <input type="checkbox" th:value="${addedOption.getName()}"
-                                               name="optionsToDelete">
+                                               name="optionsToDelete" th:id="${'delete_' + addedOption.getName()}"
+                                               onclick="editStatusIfTogether(id)">
                                     </td>
                                 </tr>
                             </table>

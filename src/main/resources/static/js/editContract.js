@@ -32,6 +32,28 @@ window.onload = function () {
         elementIsEmpty.style.display = "inline";
     }
 
+    incompatibleWithInContract();
+
+}
+
+function editStatusIfTogether(id) {
+
+    for (let i = 0; i < together.length; i++) {
+        let compositeId = "delete_" + together[i][0];
+        let elementTogetherInContract = document.getElementById(compositeId);
+        if (elementTogetherInContract !== null) {
+            if (id === compositeId) {
+                let compositeIdPaired = "delete_" + together[i][1];
+                let elementInPair = document.getElementById(compositeIdPaired);
+                if (elementTogetherInContract.checked) {
+                    elementInPair.checked = true;
+                } else {
+                    elementInPair.checked = false;
+                }
+            }
+        }
+    }
+
 }
 
 function editStatus(value) {
@@ -94,6 +116,30 @@ function editStatus(value) {
                     if (together[i][0] === apart[j][1]) {
                         let elementElseTogether = document.getElementById(together[i][1]);
                         elementElseTogether.disabled = false;
+                    }
+                }
+            }
+        }
+    }
+
+    incompatibleWithInContract();
+
+}
+
+function incompatibleWithInContract() {
+
+    for (let i = 0; i < apart.length; i++) {
+        let elementDelete = document.getElementById("delete_" + apart[i][0]);
+        if (elementDelete !== null) {
+            for (j = 0; j < apart.length; j++) {
+                if (apart[i][0] === apart[j][0]) {
+                    let elementOuter = document.getElementById(apart[j][1]);
+                    elementOuter.disabled = true;
+                    for (let k = 0; k < together.length; k++) {
+                        if (apart[j][1] === together[k][0]) {
+                            let elementInner = document.getElementById(together[k][1]);
+                            elementInner.disabled = true;
+                        }
                     }
                 }
             }

@@ -25,14 +25,19 @@ public class MainController {
 
     @GetMapping("/home")
     public String hello(Authentication authentication, Model model) {
-        UserDetails user = (UserDetails) authentication.getPrincipal();
-        ClientDTO clientDTO = clientService.getByEmail(user.getUsername());
-        model.addAttribute("client", clientDTO);
-        if (clientDTO.getRoleDTO().getName().contains(Constant.ADMIN)) {
-            return "homeAdmin";
+        if (authentication != null) {
+            UserDetails user = (UserDetails) authentication.getPrincipal();
+            ClientDTO clientDTO = clientService.getByEmail(user.getUsername());
+            model.addAttribute("client", clientDTO);
+            if (clientDTO.getRoleDTO().getName().contains(Constant.ADMIN)) {
+                return "homeAdmin";
+            } else {
+                model.addAttribute("isLock", lockClientService.getLockedClient(user.getUsername()) != null);
+                return "homeClient";
+            }
         } else {
-            model.addAttribute("isLock", lockClientService.getLockedClient(user.getUsername()) != null);
-            return "homeClient";
+            return "redirect:/login";
         }
+
     }
 }

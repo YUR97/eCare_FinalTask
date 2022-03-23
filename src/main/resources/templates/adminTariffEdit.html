@@ -45,14 +45,15 @@
                 <div class="divForChangeOptionInner">
                     <div class="title">Удалить опции:</div>
                     <div class="listOfOptions">
-                        <div th:each="option : ${tariff.getOptionsDTO()}">
+                        <div th:each="option : ${tariff.getOptionsDTO()}" class="divOptionToDelete">
                             <table class="tableOptions">
                                 <tr>
                                     <td>
                                         <div th:text="${option.getName()}"></div>
                                     </td>
                                     <td>
-                                        <input type="checkbox" th:value="${option.getName()}" name="optionsToDelete">
+                                        <input type="checkbox" th:value="${option.getName()}" name="optionsToDelete"
+                                               class="tariffOptionNames">
                                     </td>
                                 </tr>
                             </table>
@@ -62,17 +63,23 @@
                 <div class="divForChangeOptionInner">
                     <div class="title">Добавить опции:</div>
                     <div class="listOfOptions">
-                        <div th:each="option : ${options}">
+                        <div th:each="option : ${options}" class="divWithTableOptions">
                             <table class="tableOptions">
                                 <tr>
                                     <td>
                                         <div th:text="${option.getName()}"></div>
                                     </td>
                                     <td>
-                                        <input type="checkbox" th:value="${option.getName()}" name="optionsToSave">
+                                        <input type="checkbox" th:value="${option.getName()}" name="optionsToSave"
+                                               class="allOptionsName">
                                     </td>
                                 </tr>
                             </table>
+                        </div>
+                        <div id="ifNewOptionsEmpty">
+                            Нечего добавить.
+                            <br>
+                            Тариф имеет все возможные опции.
                         </div>
                     </div>
                 </div>
@@ -81,5 +88,17 @@
         </div>
     </form>
 </main>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    let together = /*[[${together}]]*/ "Test";
+    /*]]>*/
+
+    /*<![CDATA[*/
+    let apart = /*[[${apart}]]*/ "Test";
+    /*]]>*/
+
+</script>
+<script src="/js/editTariff.js"></script>
 </body>
 </html>

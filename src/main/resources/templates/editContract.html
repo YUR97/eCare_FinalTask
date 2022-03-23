@@ -37,7 +37,8 @@
                                     </td>
                                     <td>
                                         <input type="checkbox" th:value="${addedOption.getName()}"
-                                               name="optionsToDelete">
+                                               name="optionsToDelete" th:id="${'delete_' + addedOption.getName()}"
+                                               onclick="editStatusIfTogether(id)">
                                     </td>
                                 </tr>
                             </table>
@@ -105,7 +106,8 @@
                                 <td>
                                     <div>
                                         <input type="checkbox" th:id="${option.getName()}" name="option"
-                                               th:value="${option.getName()}" class="allOptionsName" onclick="editStatus(value)">
+                                               th:value="${option.getName()}" class="allOptionsName"
+                                               onclick="editStatus(value)">
                                     </div>
                                 </td>
                             </tr>

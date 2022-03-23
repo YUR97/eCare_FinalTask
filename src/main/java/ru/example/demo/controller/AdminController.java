@@ -159,8 +159,9 @@ public class AdminController {
                                  @RequestParam(name = "status", defaultValue = Constant.NOTHING) String status,
                                  @RequestParam(name = "options", defaultValue = Constant.NOTHING) List<String> options, Model model) {
 
+        boolean isExist = contractRepository.findContractByContractNumber(contractNumber) != null;
         Boolean mayBeConclusion = contractService.save(contractNumber, email, tariffName, status, options);
-        if (contractRepository.findContractByContractNumber(contractNumber) != null) {
+        if (isExist) {
             model.addAttribute("mayBeConclusion", true);
             model.addAttribute("contractExist", true);
             model.addAttribute("tariffs", tariffService.getAll());
@@ -258,7 +259,7 @@ public class AdminController {
             model.addAttribute("options", optionsDTO);
             model.addAttribute("togetherList", togetherList);
             model.addAttribute("apartList", apartList);
-         
+
             return "adminOptions";
         }
 
@@ -268,8 +269,17 @@ public class AdminController {
     public String createOption(@RequestParam(name = "name", defaultValue = Constant.NOTHING) String optionName,
                                @RequestParam(name = "payment", defaultValue = Constant.NOTHING) String payment,
                                @RequestParam(name = "connectionPrice", defaultValue = Constant.NOTHING) String connectionPrice, Model model) {
+
+        List<String[]> apartList = managerOptionService.getApart();
+        List<List<String>> togetherList = managerOptionService.getTogethers();
+
         model.addAttribute("mayBeSave", optionService.saveOption(new Option(optionName, payment, connectionPrice)));
+        model.addAttribute("mayAddTogether", true);
+        model.addAttribute("mayAddApart", true);
         model.addAttribute("options", optionService.getAll());
+        model.addAttribute("togetherList", togetherList);
+        model.addAttribute("apartList", apartList);
+
         return "adminOptions";
     }
 
@@ -372,6 +382,11 @@ public class AdminController {
 
     @GetMapping("/changeTariff/{tariffName}")
     public String changeTariff(@PathVariable("tariffName") String tariffName, Model model) {
+        List<String[]> together = managerOptionService.getAllOptionsTogether();
+        List<String[]> apart = managerOptionService.getAllOptionsApart();
+
+        model.addAttribute("together", together);
+        model.addAttribute("apart", apart);
         model.addAttribute("mayBeUpdated", true);
         model.addAttribute("options", optionService.getAll());
         model.addAttribute("tariff", tariffService.getByName(tariffName));
@@ -395,6 +410,11 @@ public class AdminController {
             model.addAttribute("mayBeDelete", true);
             return "adminTariffs";
         } else {
+            List<String[]> together = managerOptionService.getAllOptionsTogether();
+            List<String[]> apart = managerOptionService.getAllOptionsApart();
+
+            model.addAttribute("together", together);
+            model.addAttribute("apart", apart);
             model.addAttribute("options", optionService.getAll());
             model.addAttribute("tariff", tariffService.getByName(previousTariffName));
             return "adminTariffEdit";

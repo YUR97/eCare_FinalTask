@@ -18,7 +18,7 @@ body {
     flex-direction: column;
     align-content: center;
     justify-content: end;
-    background-color: #54B0FF;
+    background-color: #bbc9ed;
 }
 
 form {
@@ -26,14 +26,14 @@ form {
     margin-right: auto;
     height: 500px;
     width: 450px;
-    background: linear-gradient(dodgerblue, white);
+    background: linear-gradient(white, #bbc9ed);
     border-radius: 12px;
-    box-shadow: 4px 4px 4px 4px #6a90b4;
+    box-shadow: 3px 3px 3px 3px #2B4281;
 }
 
 label {
     font-size: 20px;
-    font-family: "Trebuchet MS", serif;
+    font-family: 'Noto Sans', sans-serif;
     margin-right: 20px;
     padding-left: 10px;
     padding-right: 10px;
@@ -44,7 +44,7 @@ table input {
     margin-bottom: 10px;
     background: white;
     color: black;
-    font-family: "Trebuchet MS", serif;
+    font-family: 'Noto Sans', sans-serif;
     padding-left: 12px;
 }
 
@@ -67,49 +67,62 @@ table input:-webkit-autofill {
     width: 100%;
 }
 
-#signUpButton:hover {
-    transition: 1s;
-    background-color: greenyellow;
-    color: black;
-}
-
 #signUpButton {
     font-size: 20px;
-    margin: 20px auto;
+    margin: auto auto 20px;
     height: 55px;
     width: 360px;
     border-radius: 4px;
-    background: royalblue;
     color: white;
-    font-family: "Comic Sans MS", serif;
+    font-family: 'Noto Sans', sans-serif;
     font-weight: bold;
     padding: 5px;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 3px 3px 3px grey;
+}
+
+#signUpButton:disabled {
+    background-color: grey;
+}
+
+#signUpButton:enabled {
+    background-color: #062270;
+}
+
+#signUpButton:hover:not(:disabled) {
+    background-color: #476DD5;
+    color: white;
 }
 
 #textBeforeForm {
-    background: royalblue;
+    background: #062270;
     padding-top: 30px;
     padding-bottom: 30px;
     margin-bottom: 30px;
     text-align: center;
     color: white;
     font-size: 25px;
-    font-family: "Comic Sans MS", serif;
+    font-family: 'Noto Sans', sans-serif;
     font-weight: bold;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
 
 header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     font-size: 40px;
-    font-family: "Trebuchet MS", serif;
-    align-self: center;
-    height: 60px;
-    width: 800px;
-    background: linear-gradient(greenyellow, deepskyblue);
-    border: 10px ridge white;
-    box-shadow: 5px 5px 5px black;
+    font-family: 'Noto Sans', sans-serif;
+    height: 100px;
+    width: 100%;
+    background-color: #062270;
+    text-align: center;
+}
+
+header div {
+    margin-left: 15px;
+    color: white;
 }
 
 footer {
@@ -120,24 +133,24 @@ footer {
     height: 150px;
     width: 450px;
     margin-top: 30px;
-    background-color: #54B0FF;
+    background-color: #bbc9ed;
 }
 
 footer button {
     height: 50px;
     width: 200px;
-    background: #7AC7FA;
+    background: #062270;
     color: white;
     border-radius: 8px;
     font-size: 20px;
-    font-family: "Comic Sans MS", serif;
+    font-family: 'Noto Sans', sans-serif;
     font-weight: bold;
 }
 
 #toLogin {
     text-align: center;
     font-size: 16px;
-    font-family: "Trebuchet MS", serif;
+    font-family: 'Noto Sans', sans-serif;
     font-weight: bold;
 }
 
@@ -150,7 +163,7 @@ footer button {
     color: darkred;
     font-size: 22px;
     font-weight: bold;
-    font-family: "Trebuchet MS", serif;
+    font-family: 'Noto Sans', sans-serif;
     padding-top: 20px;
     text-align: center;
     height: 30px;
@@ -166,12 +179,14 @@ footer button {
     border-bottom-right-radius: 4px;
     width: 293px;
     height: 45px;
+    box-shadow: 3px 3px 3px grey;
 }
 
 #name, #surname {
     border-radius: 4px;
     width: 160px;
     height: 45px;
+    box-shadow: 3px 3px 3px grey;
 }
 
 .tdWithIcon {
@@ -187,19 +202,40 @@ footer button {
     border-bottom: 2px inset grey;
     border-left: 2px inset grey;
     border-top: 2px inset grey;
-    background-color: #54B0FF;
+    background-color: #062270;
+    box-shadow: 3px 3px 3px grey;
 }
 
-img {
-    height: 47px;
-    width: 47px;
+img:not(.titleImg) {
+    height: 35px;
+    width: 35px;
+    margin: 6px;
 }
 
+.titleImg {
+    height: 65px;
+    width: 65px;
+    filter: invert();
+}
 
 #firstImg {
-    filter: hue-rotate(2deg);
+    filter: invert();
 }
 
 #secondImg {
-    filter: hue-rotate(5deg);
+    filter: invert();
+}
+
+.errorInput {
+    border-color: red;
+}
+
+#errorText {
+    text-align: center;
+    height: 20px;
+    width: 100%;
+    font-size: 16px;
+    color: darkred;
+    margin-bottom: 10px;
+    font-family: 'Noto Sans', sans-serif;
 }

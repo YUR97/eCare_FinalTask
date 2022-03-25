@@ -83,6 +83,12 @@ public class ClientService {
         clientToUpdate.setBirthday(client.getBirthday());
         clientToUpdate.setAddress(client.getAddress());
         clientToUpdate.setPassport(client.getPassport());
+        clientRepository.save(clientToUpdate);
+    }
+
+    @Transactional
+    public void updatePassword(Client client) {
+        Client clientToUpdate = clientRepository.findClientByEmail(client.getEmail());
         clientToUpdate.setPassword(passwordEncoder.encode(client.getPassword()));
         clientRepository.save(clientToUpdate);
     }

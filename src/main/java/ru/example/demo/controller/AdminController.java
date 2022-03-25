@@ -182,21 +182,30 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/edit")
-    public String editAdmin(Authentication auth, Model model) {
-        UserDetails user = (UserDetails) auth.getPrincipal();
-        model.addAttribute("client", clientService.getByEmail(user.getUsername()));
-        return "editAdmin";
-    }
-
     @PostMapping("/edit")
     public String saveEdit(Authentication auth, @RequestParam(name = "name") String name, @RequestParam(name = "surname") String surname,
                            @RequestParam(name = "birthday") String birthday, @RequestParam(name = "address") String address,
-                           @RequestParam(name = "passport") String passport, @RequestParam(name = "password") String password) {
+                           @RequestParam(name = "passport") String passport) {
         UserDetails user = (UserDetails) auth.getPrincipal();
         java.sql.Date date = java.sql.Date.valueOf(birthday);
-        Client client = new Client(name, surname, date, passport, address, user.getUsername(), password);
+        Client client = new Client();
+        client.setName(name);
+        client.setSurname(surname);
+        client.setBirthday(date);
+        client.setAddress(address);
+        client.setPassport(passport);
+        client.setEmail(user.getUsername());
         clientService.update(client);
+        return "redirect:/home";
+    }
+
+    @PostMapping("/editPassword")
+    public String saveEditPassword(Authentication auth, @RequestParam(name = "password") String password) {
+        UserDetails user = (UserDetails) auth.getPrincipal();
+        Client client = new Client();
+        client.setEmail(user.getUsername());
+        client.setPassword(password);
+        clientService.updatePassword(client);
         return "redirect:/home";
     }
 

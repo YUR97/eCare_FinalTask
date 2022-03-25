@@ -36,7 +36,7 @@ public class LoginController {
             clientService.signUp(clientDTO, role);
             return "redirect:/login";
         } catch (Exception e) {
-            model.addAttribute("error", "Выбранный Email уже используется");
+            model.addAttribute("error", "emailExist");
             return "signUp";
         }
     }

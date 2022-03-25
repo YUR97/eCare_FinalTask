@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <title>Регистрация</title>
     <link rel="stylesheet" type="text/css" href="../css/signUp.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
-<header hidden></header>
+<header>
+    <img th:src="@{images/3.png}" class="titleImg">
+    <div>eCare</div>
+</header>
 <div id="divWithForm">
-    <div th:text="${error}" id="email_error"></div>
+    <div id="email_error"></div>
     <form th:method="POST" th:action="@{/signup}" th:object="${client}">
         <div id="textBeforeForm">Регистрация</div>
         <input hidden type="text" th:value="USER" name="role_name"/>
@@ -16,9 +22,9 @@
             <tr>
                 <td>
                     <label hidden for="name">Имя: </label>
-                    <input type="text" th:field="*{name}" id="name" placeholder="Имя"/>
+                    <input type="text" th:field="*{name}" id="name" placeholder="Имя" onblur="checkInput()" required/>
                     <label hidden for="surname">Фамилия: </label>
-                    <input type="text" th:field="*{surname}" id="surname" placeholder="Фамилия"/>
+                    <input type="text" th:field="*{surname}" id="surname" placeholder="Фамилия" onblur="checkInput()" required/>
                 </td>
             </tr>
             <tr>
@@ -27,23 +33,31 @@
                         <img id="firstImg" th:src="@{images/1.png}">
                     </div>
                     <label hidden for="email">Email: </label>
-                    <input type="text" th:field="*{email}" id="email" placeholder="Email"/>
+                    <input type="text" th:field="*{email}" id="email" placeholder="Email" onblur="checkInput()" required/>
                 </td>
             </tr>
             <tr>
                 <td class="tdWithIcon">
                     <div class="divWithIcon">
-                        <img id="secondImg" th:src="@{images/2.jpg}">
+                        <img id="secondImg" th:src="@{images/2.png}">
                     </div>
                     <label hidden for="password">Пароль: </label>
-                    <input type="text" th:field="*{password}" id="password" placeholder="Пароль"/>
+                    <input type="text" th:field="*{password}" id="password" placeholder="Пароль" onblur="checkInput()" required/>
                 </td>
             </tr>
         </table>
-        <div id="signUpDiv"><input type="submit" value="Регистрация" id="signUpButton"/></div>
+        <div id="errorText"></div>
+        <div id="signUpDiv"><input type="submit" value="Регистрация" id="signUpButton" onclick="validation()"/></div>
         <div id="toLogin">Уже есть аккаунт? <a href="/login">Войти</a></div>
     </form>
 </div>
-<footer hidden></footer>
+<footer></footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+
+    var error = [[${error}]];
+
+</script>
+<script src="/js/signUp.js"></script>
 </body>
 </html>

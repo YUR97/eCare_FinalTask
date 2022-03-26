@@ -4,93 +4,204 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="../css/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
-    <button th:if="${!isLock}" onclick="location.href='/home'">Домашняя</button>
-    <button th:if="${!isLock}" onclick="location.href='/client/contracts'">Мои контракты</button>
-    <button th:if="${!isLock}" onclick="location.href='/client/tariffs'">Тарифы</button>
-    <button th:if="${!isLock}"> Корзина</button>
+    <div class="brandTitle">
+        <img th:src="@{images/3.png}" class="titleImg">
+        <div id="headerText">eCare</div>
+    </div>
+    <button th:if="${!isLock}" onclick="location.href='/home'"><img th:src="@{images/4.png}" class="menuImg">Домашняя
+    </button>
+    <button th:if="${!isLock}" onclick="location.href='/client/contracts'"><img th:src="@{images/7.png}"
+                                                                                class="menuImg">Мои контракты
+    </button>
+    <button th:if="${!isLock}" onclick="location.href='/client/tariffs'"><img th:src="@{images/8.png}" class="menuImg">Опции
+        и тарифы
+    </button>
+    <button th:if="${!isLock}"><img th:src="@{images/12.png}" class="menuImg">Корзина</button>
+    <div th:if="${!isLock}" class="mover"></div>
     <form th:if="${!isLock}" th:method="POST" th:action="@{/logout}">
-        <button>Выход</button>
+        <button><img th:src="@{images/6.png}" class="menuImg">Выход</button>
     </form>
-    <button th:if="${isLock}">Домашняя</button>
-    <button th:if="${isLock}">Мои контракты</button>
-    <button th:if="${isLock}">Тарифы</button>
-    <button th:if="${isLock}"> Корзина</button>
+    <button th:if="${isLock}"><img th:src="@{images/4.png}" class="menuImg">Домашняя</button>
+    <button th:if="${isLock}"><img th:src="@{images/7.png}" class="menuImg">Мои контракты</button>
+    <button th:if="${isLock}"><img th:src="@{images/8.png}" class="menuImg">Опции и тарифы</button>
+    <button th:if="${isLock}"><img th:src="@{images/12.png}" class="menuImg">Корзина</button>
+    <div th:if="${isLock}" class="mover"></div>
     <form th:if="${isLock}" th:method="POST" th:action="@{/logout}">
-        <button>Выход</button>
+        <button><img th:src="@{images/6.png}" class="menuImg">Выход</button>
     </form>
 </header>
 <main>
     <div class="divOuter">
         <div th:if="${isLock}" class="lockNote">
-            Вы были заблокированы администратором.
-            <br>
-            Ваши возможности ограничены.
+            Вы заблокированы администратором.
         </div>
-        <div class="title">Ваши данные:</div>
-        <table>
-            <tr>
-                <td>
-                    <div th:text="'Имя: '"></div>
-                </td>
-                <td>
-                    <div th:text="${client.getName()}"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div th:text="'Фамилия: '"></div>
-                </td>
-                <td>
-                    <div th:text="${client.getSurname()}"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div th:text="'Дата рождения: '"></div>
-                </td>
-                <td>
-                    <div th:text="${client.getBirthday()}"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div th:text="'Паспортные данные: '"></div>
-                </td>
-                <td>
-                    <div th:text="${client.getPassport()}"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div th:text="'Адрес: '"></div>
-                </td>
-                <td>
-                    <div th:text="${client.getAddress()}"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div th:text="'Почта: '"></div>
-                </td>
-                <td>
-                    <div th:text="${client.getEmail()}"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div th:text="'Роль: '"></div>
-                </td>
-                <td>
-                    <div th:text="${client.getRoleDTO().getName()}"></div>
-                </td>
-            </tr>
-        </table>
-        <button th:if="${!isLock}" onclick="location.href='/client/editClient'">Изменить</button>
-        <button th:if="${isLock}">Изменить</button>
+        <div class="divOuter">
+            <div th:text="${client.getName() + ', вы на домашней странице.'}"></div>
+            <hr class="hr">
+            <details class="detail">
+                <summary>Данные профиля</summary>
+                <table>
+                    <tr>
+                        <td>
+                            <div th:text="'Имя: '"></div>
+                        </td>
+                        <td>
+                            <div th:text="${client.getName()}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="'Фамилия: '"></div>
+                        </td>
+                        <td>
+                            <div th:text="${client.getSurname()}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="'Дата рождения: '"></div>
+                        </td>
+                        <td>
+                            <div th:text="${client.getBirthday()}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="'Паспорт: '"></div>
+                        </td>
+                        <td>
+                            <div th:text="${client.getPassport()}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="'Адрес: '"></div>
+                        </td>
+                        <td>
+                            <div th:text="${client.getAddress()}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="'Почта: '"></div>
+                        </td>
+                        <td>
+                            <div th:text="${client.getEmail()}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="'Роль: '"></div>
+                        </td>
+                        <td>
+                            <div>Пользователь</div>
+                        </td>
+                    </tr>
+                </table>
+                <button th:if="${!isLock}" onclick="openPop()" id="changeButton"><img th:src="@{images/10.png}"
+                                                                                      class="buttonImg">
+                    Изменить
+                </button>
+            </details>
+            <hr class="hr">
+        </div>
     </div>
 </main>
+<div class="overlay">
+    <div class="popup">
+        <div class="divWithClose">
+            <div class="changeTitle">Изменение данных</div>
+            <button onclick="closePop()" class="closePop"><img th:src="@{images/11.png}" class="closeImg"></button>
+        </div>
+        <hr>
+        <details>
+            <summary>Личные данные</summary>
+            <form th:method="POST" th:action="@{/client/editClient}">
+                <table class="changeTable">
+                    <tr>
+                        <td>
+                            <div th:text="'Имя: '"></div>
+                        </td>
+                        <td>
+                            <input type="text" th:value="${client.getName()}" name="name" onblur="checkInput()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="'Фамилия: '"></div>
+                        </td>
+                        <td>
+                            <input type="text" th:value="${client.getSurname()}" name="surname" onblur="checkInput()"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="'Дата рождения: '"></div>
+                        </td>
+                        <td>
+                            <input type="date" th:value="${client.getBirthday()}" name="birthday"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="'Паспортные данные: '"></div>
+                        </td>
+                        <td>
+                            <input type="text" th:value="${client.getPassport()}" name="passport" onblur="checkInput()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="'Адрес: '"></div>
+                        </td>
+                        <td>
+                            <input type="text" th:value="${client.getAddress()}" name="address" onblur="checkInput()">
+                        </td>
+                    </tr>
+                </table>
+                <div class="containerButtonError">
+                    <button id="changeButtonInfo" class="changeButtonPop" onclick="validationInfo()">Изменить</button>
+                    <div id="errorPersonData" class="errorInfo"></div>
+                </div>
+            </form>
+        </details>
+        <details>
+            <summary>Пароль</summary>
+            <form th:method="POST" th:action="@{/client/editClientPassword}">
+                <table class="changeTable">
+                    <tr>
+                        <td>
+                            <label>Новый пароль:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="newPassword" onblur="checkInputPassword()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Повторите пароль:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="password" onblur="checkInputPassword()">
+                        </td>
+                    </tr>
+                </table>
+                <div class="containerButtonError">
+                    <button id="changeButtonPassword" class="changeButtonPop" onclick="validationPassword()">Изменить
+                    </button>
+                    <div id="errorPassword" class="errorInfo"></div>
+                </div>
+            </form>
+        </details>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/home.js"></script>
 </body>
 </html>

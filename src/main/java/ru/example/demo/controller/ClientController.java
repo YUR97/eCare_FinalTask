@@ -97,21 +97,30 @@ public class ClientController {
         return Constant.REDIRECT;
     }
 
-    @GetMapping("/editClient")
-    public String editClient(Authentication auth, Model model) {
-        UserDetails user = (UserDetails) auth.getPrincipal();
-        model.addAttribute("client", clientService.getByEmail(user.getUsername()));
-        return "editClient";
-    }
-
     @PostMapping("/editClient")
     public String saveEdit(Authentication auth, @RequestParam(name = "name") String name, @RequestParam(name = "surname") String surname,
                            @RequestParam(name = "birthday") String birthday, @RequestParam(name = "address") String address,
-                           @RequestParam(name = "passport") String passport, @RequestParam(name = "password") String password) {
+                           @RequestParam(name = "passport") String passport) {
         UserDetails user = (UserDetails) auth.getPrincipal();
         java.sql.Date date = java.sql.Date.valueOf(birthday);
-        Client client = new Client(name, surname, date, passport, address, user.getUsername(), password);
+        Client client = new Client();
+        client.setName(name);
+        client.setSurname(surname);
+        client.setBirthday(date);
+        client.setPassport(passport);
+        client.setAddress(address);
+        client.setEmail(user.getUsername());
         clientService.update(client);
+        return "redirect:/home";
+    }
+
+    @PostMapping("/editClientPassword")
+    public String saveEditPassword(Authentication auth, @RequestParam(name = "password") String password) {
+        UserDetails user = (UserDetails) auth.getPrincipal();
+        Client client = new Client();
+        client.setPassword(password);
+        client.setEmail(user.getUsername());
+        clientService.updatePassword(client);
         return "redirect:/home";
     }
 

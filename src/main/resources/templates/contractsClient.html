@@ -4,26 +4,55 @@
     <meta charset="UTF-8">
     <title>Контракты</title>
     <link rel="stylesheet" type="text/css" href="../css/contractsClient.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
-    <button onclick="location.href='/home'">Домашняя</button>
-    <button onclick="location.href='/client/contracts'">Мои контракты</button>
-    <button onclick="location.href='/client/tariffs'">Тарифы</button>
-    <button>Корзина</button>
+    <div class="brandTitle">
+        <img th:src="@{/images/3.png}" class="titleImg">
+        <div id="headerText">eCare</div>
+    </div>
+    <button onclick="location.href='/home'"><img th:src="@{/images/4.png}" class="menuImg">Домашняя
+    </button>
+    <button onclick="location.href='/client/contracts'"><img th:src="@{/images/7.png}"
+                                                             class="menuImg">Мои контракты
+    </button>
+    <button onclick="location.href='/client/tariffs'"><img th:src="@{/images/8.png}" class="menuImg">Опции
+        и тарифы
+    </button>
+    <button><img th:src="@{/images/12.png}" class="menuImg">Корзина</button>
+    <div class="mover"></div>
     <form th:method="POST" th:action="@{/logout}">
-        <button>Выход</button>
+        <button><img th:src="@{/images/6.png}" class="menuImg">Выход</button>
     </form>
 </header>
 <main>
-    <div th:each="contract : ${contracts}">
+    <div th:each="contract : ${contracts}" class="divContract">
         <form th:method="POST" th:action="@{/client/edit}">
             <div id="divInnerForm">
-                <div class="title">Номер:</div>
-                <div th:text="${contract.getContractNumber()}" class="info"></div>
-                <div class="title">Тариф:</div>
-                <div th:text="${contract.getTariffDTO().getName()}" class="info"></div>
-                <div class="title">Доп. опции контракта:</div>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="title">Номер:</div>
+                        </td>
+                        <td>
+                            <div class="title">Тариф:</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div th:text="${contract.getContractNumber()}" class="info"></div>
+                        </td>
+                        <td>
+                            <div th:text="${contract.getTariffDTO().getName()}" class="info"></div>
+                        </td>
+                    </tr>
+                </table>
+                <hr class="hr">
+                <div class="title">Дополнительные опции:</div>
+                <hr class="hr">
                 <div id="divAddedOptions">
                     <ul>
                         <div th:each="option : ${contract.getOptionsDTO()}">
@@ -33,8 +62,9 @@
                         </div>
                     </ul>
                 </div>
-                <div class="title">Статус:</div>
-                <div th:text="${contract.getStatus()}" class="info"></div>
+                <hr class="hr">
+                <div th:text="${'Статус: ' + contract.getStatus()}" class="info"></div>
+                <hr class="hr">
             </div>
             <input hidden type="text" name="contractNumber" th:value="${contract.getContractNumber()}"/>
             <button id="changeButton" th:if="${contract.getStatus()}=='open'">Изменить</button>
@@ -46,8 +76,14 @@
                 Вы не можете изменить статус.
             </div>
             <input hidden type="text" name="contractNumber" th:value="${contract.getContractNumber()}"/>
-            <button th:if="${!contract.getStatus().contains('lockByAdmin')}" class="statusButton" name="status" value="closed">Заблокировать</button>
-            <button th:if="${!contract.getStatus().contains('lockByAdmin')}" class="statusButton" name="status" value="open">Разблокировать</button>
+            <div>
+                <button th:if="${!contract.getStatus().contains('lockByAdmin')}" class="statusButton" name="status"
+                        value="closed">Заблокировать
+                </button>
+                <button th:if="${!contract.getStatus().contains('lockByAdmin')}" class="statusButton" name="status"
+                        value="open">Разблокировать
+                </button>
+            </div>
         </form>
     </div>
 </main>

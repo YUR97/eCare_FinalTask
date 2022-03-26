@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <title>Изменение</title>
     <link rel="stylesheet" type="text/css" href="../css/editContract.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
-    <button onclick="location.href='/home'">Домашняя</button>
-    <button onclick="location.href='/client/contracts'">Мои контракты</button>
-    <button onclick="location.href='/client/tariffs'">Тарифы</button>
-    <button>Корзина</button>
+    <div class="brandTitle">
+        <img th:src="@{/images/3.png}" class="titleImg">
+        <div id="headerText">eCare</div>
+    </div>
+    <button onclick="location.href='/home'"><img th:src="@{/images/4.png}" class="menuImg">Домашняя
+    </button>
+    <button onclick="location.href='/client/contracts'"><img th:src="@{/images/7.png}"
+                                                             class="menuImg">Мои контракты
+    </button>
+    <button onclick="location.href='/client/tariffs'"><img th:src="@{/images/8.png}" class="menuImg">Опции
+        и тарифы
+    </button>
+    <button><img th:src="@{/images/12.png}" class="menuImg">Корзина</button>
+    <div class="mover"></div>
     <form th:method="POST" th:action="@{/logout}">
-        <button>Выход</button>
+        <button><img th:src="@{/images/6.png}" class="menuImg">Выход</button>
     </form>
 </header>
 <main>
@@ -20,44 +33,83 @@
         <div class="divFormChange">
             <div class="divFormChangeOuter">
                 <div class="divFormChangeInnerTitle">
-                    <div class="headTitle">Контракт:</div>
-                    <div class="title" th:text="'Номер: ' + ${contract.getContractNumber()}"></div>
-                    <div class="title" th:text="'Тариф: ' + ${contract.getTariffDTO().getName()}"></div>
-                    <div class="title" th:text="'Статус: ' + ${contract.getStatus()}"></div>
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="title" th:text="'Номер:'"></div>
+                            </td>
+                            <td>
+                                <div class="title" th:text="'Тариф:'"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="title" th:text="${contract.getContractNumber()}"></div>
+                            </td>
+                            <td>
+                                <div class="title" th:text="${contract.getTariffDTO().getName()}"></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr class="hr">
                 </div>
                 <div class="divFormChangeInnerOptionDelete">
-                    <div class="optionDeleteTitle">Удалить дополнительные опции контракта:</div>
+                    <div class="headTitle">Удалить дополнительные опции:</div>
+                    <hr class="hr">
                     <div id="divAddedOptionsDelete">
                         <input hidden th:value="${contract.getContractNumber()}" name="contractNumber">
                         <div th:each="addedOption : ${contract.getOptionsDTO()}" class="divOptionToDelete">
                             <table>
                                 <tr>
                                     <td>
-                                        <div th:text="${addedOption.getName()}" class="contractOptionNames"></div>
-                                    </td>
-                                    <td>
                                         <input type="checkbox" th:value="${addedOption.getName()}"
                                                name="optionsToDelete" th:id="${'delete_' + addedOption.getName()}"
                                                onclick="editStatusIfTogether(id)">
+                                    </td>
+                                    <td>
+                                        <div th:text="${addedOption.getName()}" class="contractOptionNames"></div>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="divButton">
-                    <button class="changeButton">Внести изменения</button>
+                    <hr class="hr">
+                    <div class="headTitle">Добавить опции:</div>
+                    <hr class="hr">
+                    <div class="divOptionsAdd">
+                        <div id="options" th:each="option : ${options}" class="divWithTableOptions">
+                            <table class="tableOptions">
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input type="checkbox" th:id="${option.getName()}" name="option"
+                                                   th:value="${option.getName()}" class="allOptionsName"
+                                                   onclick="editStatus(value)">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div th:text="${option.getName()}"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="ifNewOptionsEmpty">
+                            Нечего добавить.
+                            <br>
+                            Контракт имеет все возможные опции.
+                        </div>
+                    </div>
+                    <hr class="hr">
                 </div>
             </div>
             <div class="divFormChangeOuter">
-                <div class="headTitle">Выберите тариф</div>
+                <div class="divTariffsTitle">Выберите новый тариф:</div>
                 <div class="divFormChangeInner">
-                    <div th:each="tariff : ${tariffs}">
-                        <table class="tableTariffs"
-                               th:if="${!(tariff.getName().equals(contract.getTariffDTO().getName()))}">
+                    <div th:each="tariff : ${tariffs}" class="divTariffs" th:if="${!(tariff.getName().equals(contract.getTariffDTO().getName()))}">
+                        <table class="tableTariffs">
                             <tr>
-                                <td class="titleTd">Название</td>
-                                <td class="titleTd">Цена</td>
+                                <td class="titleTd">Название:</td>
+                                <td class="titleTd">Цена:</td>
                             </tr>
                             <tr>
                                 <td>
@@ -67,59 +119,31 @@
                                     <div th:text="${tariff.getPayment()}"></div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="titleTd" colspan="2">Опции тарифа</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="listOfOptionsTd">
-                                    <div class="listOfOptions">
-                                        <ul>
-                                            <div th:each="option : ${tariff.getOptionsDTO()}">
-                                                <li>
-                                                    <div th:text="${option.getName()}"></div>
-                                                </li>
-                                            </div>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="radioLabelTd">
-                                    <div>
-                                        <label for="${tariff.getName()}" class="radioLabel">Выбрать</label>
-                                        <input name="tariffChoice" type="radio" id="${tariff.getName()}"
-                                               th:value="${tariff.getName()}" class="radioInput">
-                                    </div>
-                                </td>
-                            </tr>
                         </table>
-                    </div>
-                </div>
-                <div class="headTitle">Выберите дополнительные опции</div>
-                <div class="divFormChangeInner">
-                    <div id="options" th:each="option : ${options}" class="divWithTableOptions">
-                        <table class="tableOptions">
-                            <tr>
-                                <td>
-                                    <div th:text="${option.getName()}"></div>
-                                </td>
-                                <td>
-                                    <div>
-                                        <input type="checkbox" th:id="${option.getName()}" name="option"
-                                               th:value="${option.getName()}" class="allOptionsName"
-                                               onclick="editStatus(value)">
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div id="ifNewOptionsEmpty">
-                        Нечего добавить.
-                        <br>
-                        Контракт имеет все возможные опции.
+                        <hr class="hr">
+                        <div class="headTitle">Опции тарифа:</div>
+                        <hr class="hr">
+                        <div class="listOfOptions">
+                            <ul>
+                                <div th:each="option : ${tariff.getOptionsDTO()}">
+                                    <li>
+                                        <div th:text="${option.getName()}"></div>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                        <hr class="hr">
+                        <div class="divChooseTariff">
+                            <label for="${tariff.getName()}" class="radioLabel">Выбрать</label>
+                            <input name="tariffChoice" type="radio" id="${tariff.getName()}"
+                                   th:value="${tariff.getName()}" class="radioInput">
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="divButton">
+            <button class="changeButton">Внести изменения</button>
         </div>
     </form>
 </main>

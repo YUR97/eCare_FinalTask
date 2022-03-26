@@ -7,42 +7,67 @@
 </head>
 <body>
 <header>
-    <button onclick="location.href='/home'">Домашняя</button>
-    <button onclick="location.href='/client/contracts'">Мои контракты</button>
-    <button onclick="location.href='/client/tariffs'">Тарифы</button>
-    <button>Корзина</button>
+    <div class="brandTitle">
+        <img th:src="@{/images/3.png}" class="titleImg">
+        <div id="headerText">eCare</div>
+    </div>
+    <button onclick="location.href='/home'"><img th:src="@{/images/4.png}" class="menuImg">Домашняя
+    </button>
+    <button onclick="location.href='/client/contracts'"><img th:src="@{/images/7.png}"
+                                                             class="menuImg">Мои контракты
+    </button>
+    <button onclick="location.href='/client/tariffs'"><img th:src="@{/images/8.png}" class="menuImg">Опции
+        и тарифы
+    </button>
+    <button><img th:src="@{/images/12.png}" class="menuImg">Корзина</button>
+    <div class="mover"></div>
     <form th:method="POST" th:action="@{/logout}">
-        <button>Выход</button>
+        <button><img th:src="@{/images/6.png}" class="menuImg">Выход</button>
     </form>
 </header>
 <main>
     <div class="outerDiv">
-        <div class="caption">Тарифы</div>
-        <div class="innerDiv">
-            <div th:each="tariff : ${tariffs}">
-                <table>
+        <div class="divTariffsTitle">Тарифы:</div>
+        <div class="divFormChangeInner">
+            <div th:each="tariff : ${tariffs}" class="divTariffs">
+                <table class="tableTariffs">
+                    <tr>
+                        <td class="titleTd">Название:</td>
+                        <td class="titleTd">Цена:</td>
+                    </tr>
                     <tr>
                         <td>
-                            <div th:text="${tariff.getName()}" class="info"></div>
+                            <div th:text="${tariff.getName()}"></div>
                         </td>
                         <td>
-                            <div th:text="${tariff.getPayment()}" class="info"></div>
-                        </td>
-                        <td>
-                            <div id="divOptions">
-                                <div th:each="option : ${tariff.getOptionsDTO()}">
-                                    <div th:text="${option.getName()}" class="infoList"></div>
-                                </div>
-                            </div>
+                            <div th:text="${tariff.getPayment()}"></div>
                         </td>
                     </tr>
                 </table>
+                <hr class="hr">
+                <div class="headTitle">Опции тарифа:</div>
+                <hr class="hr">
+                <div class="listOfOptions">
+                    <ul>
+                        <div th:each="option : ${tariff.getOptionsDTO()}">
+                            <li>
+                                <div th:text="${option.getName()}"></div>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+                <hr class="hr">
             </div>
         </div>
     </div>
     <div class="outerDiv">
-        <div class="caption">Опции</div>
+        <div class="caption">Опции:</div>
         <div class="innerDiv">
+            <table class="headTableOptions">
+                <th>Название</th>
+                <th>Платеж</th>
+                <th>Стоимость подключения</th>
+            </table>
             <div th:each="option : ${options}">
                 <table>
                     <tr>
@@ -57,6 +82,7 @@
                         </td>
                     </tr>
                 </table>
+                <hr class="hr">
             </div>
         </div>
     </div>

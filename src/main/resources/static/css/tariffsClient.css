@@ -14,107 +14,225 @@ body {
 }
 
 body {
-    background-color: #54B0FF;
+    background-color: #bbc9ed;
 }
 
 header {
     display: flex;
-    justify-content: space-around;
+    flex-direction: row;
+    justify-content: start;
     align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    border-top: 3px solid;
-    border-left: 3px solid;
-    border-right: 3px solid;
-    width: 98%;
+    font-family: 'Noto Sans', sans-serif;
     height: 100px;
-    background-color: #A8E4A0;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    background: #062270;
+}
+
+.mover {
+    width: 150px;
+}
+
+.brandTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 260px;
+    height: 70px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+#headerText {
+    color: white;
+    margin-right: 100px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 40px;
+}
+
+.titleImg {
+    height: 65px;
+    width: 65px;
+    margin-left: 30px;
+    filter: invert();
+}
+
+.menuImg {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    filter: invert(100%);
 }
 
 header button {
-    width: 200px;
-    height: 50px;
-    background-color: royalblue;
+    display: flex;
+    align-items: end;
+    height: 60px;
+    margin-left: 40px;
+    margin-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 22px;
+    font-family: 'Noto Sans', sans-serif;
+    background-color: #062270;
     color: white;
-    border-radius: 10px;
-    font-size: 20px;
+    border: none;
+    border-radius: 4px;
+    padding-bottom: 15px;
 }
 
-button:hover {
-    transition: 1s;
-    background-color: greenyellow;
+header button:hover .menuImg {
+    filter: invert(0%);
+}
+
+header button:hover {
+    background-color: ghostwhite;
+    color: black;
+    box-shadow: 0 3px 3px #575555 inset;
+}
+
+header form {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    height: 100%;
+    margin-left: 130px;
+    font-size: 22px;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 main {
+    padding: 30px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    margin-left: auto;
-    margin-right: auto;
-    width: 98%;
-    height: 820px;
-    border: 3px solid;
-    background-color: #7AC7FA;
+    justify-content: start;
+    font-size: 20px;
+    font-family: 'Noto Sans', sans-serif;
+    color: white;
 }
 
 .outerDiv {
-    margin-top: 40px;
-    width: 800px;
-    height: 650px;
-    background-color: gray;
-    border: 3px solid;
+    box-shadow: 3px 3px 3px 3px #575555;
+    margin-right: 70px;
+    border-radius: 8px;
+    height: 590px;
+    background-color: white;
 }
 
-.innerDiv {
-    margin-right: auto;
-    margin-left: auto;
-    padding-top: 20px;
-    padding-bottom: 20px;
+.outerDiv:last-child {
     width: 700px;
-    height: 500px;
-    border: 3px solid;
-    background-color: royalblue;
+    color: black;
+}
+
+.divFormChangeInner {
+    display: flex;
+    flex-direction: row;
+}
+
+.divFormChangeInner:nth-child(2) {
+    background-color: white;
+    width: 950px;
     overflow: auto;
 }
 
-td {
-    text-align: center;
-    width: 200px;
-    height: 20px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border: 2px solid;
-    background-color: wheat;
-
+.divTariffsTitle {
+    width: 950px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    background-color: #062270;
 }
 
-table {
-    margin-right: auto;
-    margin-left: auto;
+.divTariffs {
+    height: 390px;
+    padding: 20px;
+    margin: 30px 50px;
+    background-color: #062270;
+    border-radius: 8px;
+    box-shadow: 3px 3px 3px 3px #575555;
+}
+
+.tableTariffs {
+    width: 400px;
+}
+
+.tableTariffs td {
+    width: 190px;
+    height: 50px;
+    text-align: center;
+}
+
+.tableTariffs tr:first-child td {
+    border: 2px solid white;
+}
+
+.tableTariffs tr:nth-child(2) td {
+    background-color: white;
+    color: black;
+    border: 2px solid #999999;
+}
+
+.listOfOptions {
+    height: 120px;
+    text-align: start;
+    overflow: auto;
+}
+
+.tableTariffs tr:nth-child(3) td {
+    border: 2px solid white;
+}
+
+.tableTariffs tr:nth-child(5) td {
+    border: 2px solid white;
+}
+
+.headTitle {
+    text-align: center;
+}
+
+ul {
+    margin: 0;
+}
+
+.outerDiv:last-child .innerDiv {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding-top: 20px;
+    overflow: auto;
+}
+
+.headTableOptions {
+    margin-bottom: 10px;
+}
+
+th {
+    width: 200px;
+    height: 70px;
+    text-align: center;
+    background-color: #062270;
+    color: white;
+}
+
+.outerDiv:last-child .innerDiv table td {
+    text-align: center;
+    width: 200px;
+    height: 40px;
 }
 
 .caption {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 25px;
-    width: 700px;
-    height: 40px;
-    padding-top: 10px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
     font-size: 20px;
-    font-weight: bold;
-    font-family: "Trebuchet MS", sans-serif;
-    color: black;
-    background-color: #A8E4A0;
-    border-top: 3px solid;
-    border-right: 3px solid;
-    border-left: 3px solid;
-}
-
-.info, .infoList {
-    font-size: 16px;
-    font-weight: bold;
-    font-family: "Trebuchet MS", sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+    background-color: #062270;
+    color: white;
 }

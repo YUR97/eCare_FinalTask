@@ -1,5 +1,6 @@
 package ru.example.demo.controller;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+@Log4j2
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -48,6 +50,7 @@ public class AdminController {
 
     @GetMapping("/clients")
     public String showClients(Model model) {
+        log.info("Получение списка всех клиентов администратором");
         List<ClientDTO> clientDTOS = clientService.getAll();
         Collections.sort(clientDTOS, (Comparator.comparing(o -> o.getRoleDTO().getName())));
         model.addAttribute("finder", Constant.DEFAULT_FINDER);
@@ -88,6 +91,7 @@ public class AdminController {
     @PostMapping("contract/changeStatus")
     public String showContractChanged(@RequestParam(name = "contractNumber") String contractNumber,
                                       @RequestParam(name = "status") String status, Model model) {
+        log.info("Изменение статуса контракта");
         contractService.setStatusAdmin(contractNumber, status);
         model.addAttribute("contract", contractService.getByContractNumber(contractNumber));
         return "showContractToAdmin";
@@ -113,6 +117,7 @@ public class AdminController {
                                    @RequestParam(value = "tariffChoice", defaultValue = Constant.NOTHING) String tariffChoice,
                                    @RequestParam(name = "option", defaultValue = Constant.NOTHING) List<String> options,
                                    @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete) {
+        log.info("Изменение контракта администратором");
         contractService.setOptions(contractNumber, options);
         contractService.setTariff(contractNumber, tariffChoice);
         contractService.removeOption(contractNumber, optionsToDelete);
@@ -186,6 +191,7 @@ public class AdminController {
     public String saveEdit(Authentication auth, @RequestParam(name = "name") String name, @RequestParam(name = "surname") String surname,
                            @RequestParam(name = "birthday") String birthday, @RequestParam(name = "address") String address,
                            @RequestParam(name = "passport") String passport) {
+        log.info("Изменение данных профиля");
         UserDetails user = (UserDetails) auth.getPrincipal();
         java.sql.Date date = java.sql.Date.valueOf(birthday);
         Client client = new Client();
@@ -201,6 +207,7 @@ public class AdminController {
 
     @PostMapping("/editPassword")
     public String saveEditPassword(Authentication auth, @RequestParam(name = "password") String password) {
+        log.info("Изменение пароля");
         UserDetails user = (UserDetails) auth.getPrincipal();
         Client client = new Client();
         client.setEmail(user.getUsername());
@@ -253,9 +260,12 @@ public class AdminController {
         Boolean mayBeUpdated = optionService.update(previousName, newName, payment, connectionPrice);
         model.addAttribute("mayBeUpdated", mayBeUpdated);
         if (!mayBeUpdated) {
+            log.info("Изменение опции отклонено");
             model.addAttribute("option", optionService.getByName(previousName));
             return "editOption";
         } else {
+            log.info("Успешное изменение опции");
+
             List<OptionDTO> optionsDTO = optionService.getAll();
             List<String[]> apartList = managerOptionService.getApart();
             List<List<String>> togetherList = managerOptionService.getTogethers();
@@ -278,6 +288,7 @@ public class AdminController {
     public String createOption(@RequestParam(name = "name", defaultValue = Constant.NOTHING) String optionName,
                                @RequestParam(name = "payment", defaultValue = Constant.NOTHING) String payment,
                                @RequestParam(name = "connectionPrice", defaultValue = Constant.NOTHING) String connectionPrice, Model model) {
+        log.info("Создание опции");
 
         List<String[]> apartList = managerOptionService.getApart();
         List<List<String>> togetherList = managerOptionService.getTogethers();
@@ -301,12 +312,14 @@ public class AdminController {
     @PostMapping("/addTogether")
     public String addTogether(@RequestParam(name = "firstOptionTogether") String firstOption,
                               @RequestParam(name = "secondOptionTogether") String secondOption, Model model) {
-
+        log.info("Добавление совместимости опций");
         boolean mayAddTogether;
 
         if (!firstOption.equals(secondOption)) {
+            log.info("Успешное совмещение опций");
             mayAddTogether = managerOptionService.addTogetherPair(firstOption, secondOption);
         } else {
+            log.info("Ошибка совмещения опций");
             mayAddTogether = false;
         }
 
@@ -334,8 +347,10 @@ public class AdminController {
         boolean mayAddApart;
 
         if (!firstOption.equals(secondOption)) {
+            log.info("Успешное добавление несовместимости опций");
             mayAddApart = managerOptionService.addApartPair(firstOption, secondOption);
         } else {
+            log.info("Ошибка добавления несовместимости опций");
             mayAddApart = false;
         }
 
@@ -358,12 +373,14 @@ public class AdminController {
 
     @PostMapping("/removeTogether")
     public String removeTogether(@RequestParam(name = "together") String optionName) {
+        log.info("Удаление настройки управления опциями (совокупность)");
         managerOptionService.removeTogetherPair(optionName);
         return "redirect:/admin/options";
     }
 
     @PostMapping("/removeApart")
     public String removeApart(@RequestParam(name = "firstOption") String firstOption, @RequestParam(name = "secondOption") String secondOption) {
+        log.info("Удаление настройки управления опциями (несовместимость)");
         managerOptionService.removeApartPair(firstOption, secondOption);
         return "redirect:/admin/options";
     }
@@ -371,6 +388,7 @@ public class AdminController {
 
     @PostMapping("/deleteTariff")
     public String deleteTariff(@RequestParam(name = "nameTariffToDelete") String tariffName, Model model) {
+        log.info("Удаление тарифа");
         model.addAttribute("mayBeSave", true);
         model.addAttribute("mayBeDelete", tariffService.deleteTariff(tariffName));
         model.addAttribute("tariffs", tariffService.getAll());
@@ -382,6 +400,7 @@ public class AdminController {
     public String createTariff(@RequestParam(name = "name", defaultValue = Constant.NOTHING) String tariffName,
                                @RequestParam(name = "payment", defaultValue = Constant.NOTHING) String payment,
                                @RequestParam(name = "options", defaultValue = Constant.NOTHING) List<String> options, Model model) {
+        log.info("Создание тарифа");
         model.addAttribute("mayBeSave", tariffService.createTariff(tariffName, payment, options));
         model.addAttribute("mayBeDelete", true);
         model.addAttribute("tariffs", tariffService.getAll());
@@ -391,6 +410,7 @@ public class AdminController {
 
     @GetMapping("/changeTariff/{tariffName}")
     public String changeTariff(@PathVariable("tariffName") String tariffName, Model model) {
+
         List<String[]> together = managerOptionService.getAllOptionsTogether();
         List<String[]> apart = managerOptionService.getAllOptionsApart();
 
@@ -408,17 +428,19 @@ public class AdminController {
                                    @RequestParam(name = "tariffPayment", defaultValue = Constant.NOTHING) String payment,
                                    @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete,
                                    @RequestParam(name = "optionsToSave", defaultValue = Constant.NOTHING) List<String> optionsToSave, Model model) {
-
+        log.info("Изменение тарифа");
         boolean mayBeUpdated = tariffService.updateTariff(previousTariffName, newTariffName, payment, optionsToDelete, optionsToSave);
         model.addAttribute("mayBeUpdated", mayBeUpdated);
 
         if (mayBeUpdated) {
+            log.info("Успешное изменение тарифа");
             model.addAttribute("tariffs", tariffService.getAll());
             model.addAttribute("options", optionService.getAll());
             model.addAttribute("mayBeSave", true);
             model.addAttribute("mayBeDelete", true);
             return "adminTariffs";
         } else {
+            log.info("Ошибка при изменении тарифа");
             List<String[]> together = managerOptionService.getAllOptionsTogether();
             List<String[]> apart = managerOptionService.getAllOptionsApart();
 

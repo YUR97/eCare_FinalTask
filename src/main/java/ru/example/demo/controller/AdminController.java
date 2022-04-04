@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 import ru.example.demo.constants.Constant;
 import ru.example.demo.model.Client;
 import ru.example.demo.model.DTO.ClientDTO;
@@ -16,7 +18,9 @@ import ru.example.demo.model.DTO.TariffDTO;
 import ru.example.demo.model.Option;
 import ru.example.demo.repo.ContractRepository;
 import ru.example.demo.service.*;
+import ru.example.demo.webSocket.config.WebSocketConfig;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,11 +38,12 @@ public class AdminController {
     private final LockClientService lockClientService;
     private final ContractRepository contractRepository;
     private final ManagerOptionService managerOptionService;
+    private final WebSocketConfig webSocketConfig;
 
     @Autowired
     public AdminController(OptionService optionService, ContractService contractService, TariffService tariffService,
-                           ClientService clientService, LockClientService lockClientService,
-                           ContractRepository contractRepository, ManagerOptionService managerOptionService) {
+                           ClientService clientService, LockClientService lockClientService, ContractRepository contractRepository,
+                           ManagerOptionService managerOptionService, WebSocketConfig webSocketConfig) {
         this.optionService = optionService;
         this.contractService = contractService;
         this.tariffService = tariffService;
@@ -46,6 +51,11 @@ public class AdminController {
         this.lockClientService = lockClientService;
         this.contractRepository = contractRepository;
         this.managerOptionService = managerOptionService;
+        this.webSocketConfig = webSocketConfig;
+    }
+
+    public WebSocketSession getSession() {
+        return webSocketConfig.myHandler().getMySession();
     }
 
     @GetMapping("/clients")
@@ -255,13 +265,14 @@ public class AdminController {
 
     @PostMapping("/editOption")
     public String saveEditOption(@RequestParam(name = "previousName") String previousName, @RequestParam(name = "newName") String newName,
-                                 @RequestParam(name = "payment") String payment, @RequestParam(name = "connectionPrice") String connectionPrice, Model model) {
+                                 @RequestParam(name = "payment") String payment, @RequestParam(name = "connectionPrice") String connectionPrice, Model model) throws IOException {
 
         Boolean mayBeUpdated = optionService.update(previousName, newName, payment, connectionPrice);
         model.addAttribute("mayBeUpdated", mayBeUpdated);
         if (!mayBeUpdated) {
             log.info("Изменение опции отклонено");
             model.addAttribute("option", optionService.getByName(previousName));
+            getSession().sendMessage(new TextMessage("Изменение опции"));
             return "editOption";
         } else {
             log.info("Успешное изменение опции");
@@ -279,6 +290,7 @@ public class AdminController {
             model.addAttribute("togetherList", togetherList);
             model.addAttribute("apartList", apartList);
 
+            getSession().sendMessage(new TextMessage("Изменение опции"));
             return "adminOptions";
         }
 
@@ -287,7 +299,8 @@ public class AdminController {
     @PostMapping("/createOption")
     public String createOption(@RequestParam(name = "name", defaultValue = Constant.NOTHING) String optionName,
                                @RequestParam(name = "payment", defaultValue = Constant.NOTHING) String payment,
-                               @RequestParam(name = "connectionPrice", defaultValue = Constant.NOTHING) String connectionPrice, Model model) {
+                               @RequestParam(name = "connectionPrice", defaultValue = Constant.NOTHING) String connectionPrice, Model model) throws IOException {
+
         log.info("Создание опции");
 
         List<String[]> apartList = managerOptionService.getApart();
@@ -300,12 +313,14 @@ public class AdminController {
         model.addAttribute("togetherList", togetherList);
         model.addAttribute("apartList", apartList);
 
+        getSession().sendMessage(new TextMessage("Создание опции"));
         return "adminOptions";
     }
 
     @GetMapping("/deleteOption/{optionName}")
-    public String deleteOption(@PathVariable(name = "optionName") String optionName) {
+    public String deleteOption(@PathVariable(name = "optionName") String optionName) throws IOException {
         optionService.deleteOption(optionName);
+        getSession().sendMessage(new TextMessage("Удаление опции"));
         return "redirect:/admin/options";
     }
 
@@ -387,24 +402,30 @@ public class AdminController {
 
 
     @PostMapping("/deleteTariff")
-    public String deleteTariff(@RequestParam(name = "nameTariffToDelete") String tariffName, Model model) {
+    public String deleteTariff(@RequestParam(name = "nameTariffToDelete") String tariffName, Model model) throws IOException {
+
         log.info("Удаление тарифа");
         model.addAttribute("mayBeSave", true);
         model.addAttribute("mayBeDelete", tariffService.deleteTariff(tariffName));
         model.addAttribute("tariffs", tariffService.getAll());
         model.addAttribute("options", optionService.getAll());
+
+        getSession().sendMessage(new TextMessage("Удаление тарифа"));
         return "adminTariffs";
     }
 
     @PostMapping("/createTariff")
     public String createTariff(@RequestParam(name = "name", defaultValue = Constant.NOTHING) String tariffName,
                                @RequestParam(name = "payment", defaultValue = Constant.NOTHING) String payment,
-                               @RequestParam(name = "options", defaultValue = Constant.NOTHING) List<String> options, Model model) {
+                               @RequestParam(name = "options", defaultValue = Constant.NOTHING) List<String> options, Model model) throws IOException {
+
         log.info("Создание тарифа");
         model.addAttribute("mayBeSave", tariffService.createTariff(tariffName, payment, options));
         model.addAttribute("mayBeDelete", true);
         model.addAttribute("tariffs", tariffService.getAll());
         model.addAttribute("options", optionService.getAll());
+
+        getSession().sendMessage(new TextMessage("Создание тарифа"));
         return "adminTariffs";
     }
 
@@ -427,7 +448,8 @@ public class AdminController {
                                    @RequestParam(name = "newTariffName", defaultValue = Constant.NOTHING) String newTariffName,
                                    @RequestParam(name = "tariffPayment", defaultValue = Constant.NOTHING) String payment,
                                    @RequestParam(name = "optionsToDelete", defaultValue = Constant.NOTHING) List<String> optionsToDelete,
-                                   @RequestParam(name = "optionsToSave", defaultValue = Constant.NOTHING) List<String> optionsToSave, Model model) {
+                                   @RequestParam(name = "optionsToSave", defaultValue = Constant.NOTHING) List<String> optionsToSave, Model model) throws IOException {
+
         log.info("Изменение тарифа");
         boolean mayBeUpdated = tariffService.updateTariff(previousTariffName, newTariffName, payment, optionsToDelete, optionsToSave);
         model.addAttribute("mayBeUpdated", mayBeUpdated);
@@ -438,6 +460,7 @@ public class AdminController {
             model.addAttribute("options", optionService.getAll());
             model.addAttribute("mayBeSave", true);
             model.addAttribute("mayBeDelete", true);
+            getSession().sendMessage(new TextMessage("Изменение тарифа"));
             return "adminTariffs";
         } else {
             log.info("Ошибка при изменении тарифа");
@@ -448,6 +471,7 @@ public class AdminController {
             model.addAttribute("apart", apart);
             model.addAttribute("options", optionService.getAll());
             model.addAttribute("tariff", tariffService.getByName(previousTariffName));
+            getSession().sendMessage(new TextMessage("Изменение тарифа"));
             return "adminTariffEdit";
         }
     }

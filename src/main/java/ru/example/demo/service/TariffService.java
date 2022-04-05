@@ -64,7 +64,7 @@ public class TariffService {
                     optionToSave.addTariff(tariff);
                 }
             }
-            if (tariff.getName() != null & tariff.getPayment() != null) {
+            if (tariff.getName() != null && tariff.getPayment() != null) {
                 tariffRepository.save(tariff);
                 mayBeUpdated = true;
             } else {
@@ -115,7 +115,7 @@ public class TariffService {
                     optionToAdd.addTariff(tariff);
                 }
             }
-            if (tariff.getName() != null & tariff.getPayment() != null & !tariff.getOptions().isEmpty()) {
+            if (tariff.getName() != null && tariff.getPayment() != null && !tariff.getOptions().isEmpty()) {
                 tariffRepository.save(tariff);
                 mayBeSave = true;
             } else {
